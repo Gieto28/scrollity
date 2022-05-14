@@ -31,7 +31,19 @@
 
 # About <a id="about" name = "about"></a>
 
-React Native application focused on sharing content. You're able to share videos, photos and text and like posts
+React Native application focused on sharing content. You're able to share videos, photos and text and like posts.
+
+## Theme
+
+Link to [palette](https://coolors.co/palette/e63225-24e2e5-e82e8e-fcf7fc-262626) created on [coolors.co](https://www.coolors.co)
+
+- Colors used in the project
+
+  - ![#e63225](https://via.placeholder.com/15/e63225/000000?text=+) `#e63225`
+  - ![#24e2e5](https://via.placeholder.com/15/24e2e5/000000?text=+) `#24e2e5`
+  - ![#e82e8e](https://via.placeholder.com/15/e82e8e/000000?text=+) `#e82e8e`
+  - ![#fcf7fc](https://via.placeholder.com/15/fcf7fc/000000?text=+) `#fcf7fc`
+  - ![#262626](https://via.placeholder.com/15/262626/000000?text=+) `#262626`
 
 # Getting Started <a id = "gettingStarted" name = "gettingStarted"></a>
 
