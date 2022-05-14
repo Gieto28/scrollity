@@ -16,7 +16,7 @@
 
 ---
 
-<p align="center"> Scroll infinitely for the last time with the new Scrollity app. <br> Share Photos video or share a story whenever wherever!
+<p align="center"> Scroll infinitely for the last time with the new Scrollity app. <br> Share photos, videos or share a story whenever wherever!
     <br> 
 </p>
 
@@ -105,7 +105,7 @@ If app is running but nothing happens press `ctrl + c` on the terminal to stop a
   - `npm android` for Android Simulator
   - `npm ios` for IOS Simulator
 
-if app is running but nothing happens
+If app is running but nothing happens
 
 - go to [last resort](#lastResort)
 
