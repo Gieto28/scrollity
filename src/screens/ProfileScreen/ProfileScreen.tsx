@@ -1,10 +1,10 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 
-const Profile = () => {
+const ProfileScreen = () => {
   return (
     <View>
-      <Text>Profile</Text>
+      <Text>ProfileScreen</Text>
       <Text>Name: John Doe</Text>
       <TouchableOpacity>
         <Text>Edit profile</Text>
@@ -13,4 +13,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileScreen;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import {ParentView, Line, Label} from './Styled.SeparatorLine';
+import {ParentView, Line, Label} from './Styled.SeparatorLineComponent';
 
 interface Props {
   labelName: string;

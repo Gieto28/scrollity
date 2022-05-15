@@ -1,5 +1,7 @@
 <p align="center">
   <img width=200px height=200px src="https://i.imgur.com/fa3C1VZ.png" alt="Scrollity"></a>
+  <!--   <img width=200px src="https://i.imgur.com/NSB9gq2.png" alt="Scrollity"></a>
+ -->
   
 </p>
 <h2 align="center"><strong>Scrollity</strong></h2>
@@ -7,10 +9,8 @@
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/gieto28/Scrollity.svg)](https://github.com/gieto28/Scrollity/issues)
+[![GitHub Issues](https://img.shields.io/github/issues/gieto28/Scrollity.svg)](https://github.com/Gieto28/scrollity/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/gieto28/Scrollity.svg)](https://github.com/gieto28/Scrollity/pulls)
-
-<!-- [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE) -->
 
 </div>
 
@@ -39,11 +39,11 @@ Link to [palette](https://coolors.co/palette/e63225-24e2e5-e82e8e-fcf7fc-262626)
 
 - Colors used in the project
 
-  - ![#e63225](https://via.placeholder.com/15/e63225/000000?text=+) `#e63225`
-  - ![#24e2e5](https://via.placeholder.com/15/24e2e5/000000?text=+) `#24e2e5`
-  - ![#e82e8e](https://via.placeholder.com/15/e82e8e/000000?text=+) `#e82e8e`
-  - ![#fcf7fc](https://via.placeholder.com/15/fcf7fc/000000?text=+) `#fcf7fc`
-  - ![#262626](https://via.placeholder.com/15/262626/000000?text=+) `#262626`
+  - <img src="https://via.placeholder.com/15/e63225/000000?text=+"></a> `#e63225`
+  - <img src="https://via.placeholder.com/15/24e2e5/000000?text=+"></a> `#24e2e5`
+  - <img src="https://via.placeholder.com/15/e82e8e/000000?text=+"></a> `#e82e8e`
+  - <img src="https://via.placeholder.com/15/fcf7fc/000000?text=+"></a> `#fcf7fc`
+  - <img src="https://via.placeholder.com/15/262626/000000?text=+"></a> `#262626`
 
 # Getting Started <a id = "gettingStarted" name = "gettingStarted"></a>
 

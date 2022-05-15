@@ -1,13 +1,22 @@
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 
-import {LoginView, LoginTitle} from './Styled.Login';
+import {LoginView, LoginTitle} from './Styled.LoginScreen';
 import InputTextComponent from '../../components/component.Forms/inputText/InputTextComponent';
 import OpacityButtonComponent from '../../components/component.Forms/OpacityButton/OpacityButtonComponent';
 import SeparatorLineComponent from '../../components/component.Forms/SeparatorLineComponent/SeparatorLineComponent';
 import {View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
-const Login: React.FC = () => {
+const LoginScreen: React.FC = () => {
+  // States
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordShown, setPasswordShown] = useState(true);
+
+  // Form handler
+
   const {
     control,
     handleSubmit,
@@ -19,17 +28,17 @@ const Login: React.FC = () => {
     },
   });
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordShown, setPasswordShown] = useState(true);
+  // Functions
 
   const onSubmit = (data: any) => {
     console.log('hello');
     console.log(data);
   };
 
+  const navigation = useNavigation();
+
   const handleRedirectToRegister = () => {
-    console.log('redirect is working');
+    navigation.navigate('SignUp');
   };
 
   return (
@@ -45,7 +54,7 @@ const Login: React.FC = () => {
         // label
         label="Your email"
         // styling color
-        borderColor="blue"
+        borderColor="black"
         backgroundColor="#e5e5e5"
       />
 
@@ -65,14 +74,14 @@ const Login: React.FC = () => {
 
       <OpacityButtonComponent
         name="Sign in"
-        onButtonPress={handleSubmit(onSubmit)}
+        handleSubmit={handleSubmit(onSubmit)}
       />
 
       <SeparatorLineComponent labelName="or" />
 
       <View>
         <OpacityButtonComponent
-          name="Register"
+          name="Sign up"
           fontSize="16px"
           handleRedirectToRegister={handleRedirectToRegister}
         />
@@ -81,4 +90,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default LoginScreen;

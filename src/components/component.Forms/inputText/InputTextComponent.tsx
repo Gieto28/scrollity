@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 
 import {Controller, FieldError} from 'react-hook-form';
 
-import {TextInputStyled, Label} from './Styled.InputText';
+import {TextInputStyled, Label} from './Styled.InputTextComponent';
 
 interface Props {
   placeholder: string;

@@ -6,7 +6,11 @@ interface Props {
   message: string;
 }
 
-import {CardView, CardMessage, CardTitle} from './Styled.NotificationCard';
+import {
+  CardView,
+  CardMessage,
+  CardTitle,
+} from './Styled.NotificationCardComponent';
 
 // Notification with : and the definition of the type and the types it has in it self
 // Also passing in the prop name to be used in the Text below

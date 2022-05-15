@@ -1,10 +1,10 @@
 import {ScrollView} from 'react-native';
 import React from 'react';
-import NotificationCard from '../../components/component.Notifications/notification/NotificationCard';
+import NotificationCard from '../../components/component.Notifications/notification/NotificationCardComponent';
 
 import {ScreenView} from '../../styles/GlobalStyle';
 
-const Notifications = () => {
+const NotificationsScreen = () => {
   return (
     <ScreenView>
       <ScrollView>
@@ -23,4 +23,4 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
+export default NotificationsScreen;
