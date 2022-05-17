@@ -14,7 +14,7 @@ import {
 
 // Notification with : and the definition of the type and the types it has in it self
 // Also passing in the prop name to be used in the Text below
-const NotificationCard: React.FC<Props> = ({name, message}) => {
+const NotificationCardComponent: React.FC<Props> = ({name, message}) => {
   return (
     <CardView>
       <CardTitle>Notification from {name} </CardTitle>
@@ -25,4 +25,4 @@ const NotificationCard: React.FC<Props> = ({name, message}) => {
   );
 };
 
-export default NotificationCard;
+export default NotificationCardComponent;

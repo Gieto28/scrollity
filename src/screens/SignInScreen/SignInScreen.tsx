@@ -1,22 +1,25 @@
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {LoginTitle} from './Styled.SignInScreen';
-import InputTextComponent from '../../components/component.Forms/inputText/InputTextComponent';
-import OpacityButtonComponent from '../../components/component.Forms/OpacityButton/OpacityButtonComponent';
-import SeparatorLineComponent from '../../components/component.Forms/SeparatorLineComponent/SeparatorLineComponent';
+
+import {
+  InputTextComponent,
+  OpacityButtonComponent,
+  SeparatorLineComponent,
+  LightDarkButtonComponent,
+} from '../../components';
+
 import {useNavigation} from '@react-navigation/native';
-import {AuthStackParams} from '../../Navigation/AuthStack/AuthStack';
+import {AuthStackParams} from '../../navigation/AuthStack/AuthStack';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
-import {View} from 'react-native';
+import {Text, View} from 'react-native';
 
 type SignUpNavigationProp = StackNavigationProp<AuthStackParams, 'SignUp'>;
 
 const SignInScreen: React.FC = () => {
   // States
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [passwordShown, setPasswordShown] = useState(true);
 
   // Form handler
@@ -49,6 +52,8 @@ const SignInScreen: React.FC = () => {
 
   return (
     <AuthScrollView>
+      <LightDarkButtonComponent />
+      <Text>goback</Text>
       <AuthView>
         <LoginTitle>Scrollity</LoginTitle>
 

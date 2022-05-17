@@ -4,6 +4,7 @@ import React, {useEffect} from 'react';
 import {Controller, FieldError} from 'react-hook-form';
 
 import {TextInputStyled, Label} from './Styled.InputTextComponent';
+import useDeviceColor from '../../../hooks/useDeviceColor';
 
 interface Props {
   placeholder: string;
@@ -19,6 +20,7 @@ interface Props {
   // customizing component
   borderColor?: string;
   backgroundColor?: string;
+  placeholderColor?: string;
 
   // icon
   icon?: any;
@@ -38,6 +40,7 @@ const InputTextComponent: React.FC<Props> = ({
   // editing css
   borderColor,
   backgroundColor,
+  placeholderColor,
 
   // icon
   icon,
@@ -45,6 +48,8 @@ const InputTextComponent: React.FC<Props> = ({
   useEffect(() => {
     console.log('Error', errors);
   }, [errors]);
+
+  const theme = useDeviceColor();
 
   return (
     <>
@@ -63,6 +68,7 @@ const InputTextComponent: React.FC<Props> = ({
             borderColor={borderColor}
             backgroundColor={backgroundColor}
             secureTextEntry={securedBoolean && true}
+            placeholderTextColor={theme.color}
           />
         )}
         name={controllerName}

@@ -1,13 +1,5 @@
 import styled from 'styled-components/native';
 
-const theme = {
-  light: '#fcf7fc',
-  dark: '#262626',
-  red: '#e63225',
-  blue: '#24e2e5',
-  pink: '#e82e8e',
-};
-
 // make obj here and export theme
 const GlobalView = styled.View`
   background-color: #fcf7fc;
@@ -49,7 +41,6 @@ const StyledText = styled.Text`
 `;
 
 export {
-  theme,
   StyledView,
   StyledText,
   GlobalView,

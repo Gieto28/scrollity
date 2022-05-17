@@ -1,16 +1,24 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import AppStack from './src/Navigation/AppStack/AppStack';
-import AuthStack from './src/Navigation/AuthStack/AuthStack';
+import AppStack from './src/navigation/AppStack/AppStack';
+import AuthStack from './src/navigation/AuthStack/AuthStack';
+import {ThemeProvider} from 'styled-components';
+import useDeviceColor from './src/hooks/useDeviceColor';
 
 const App: React.FC = () => {
+  const isSignedIn = false;
   const renderApp = () => {
-    const isSignedIn = false;
-
     return isSignedIn ? <AppStack /> : <AuthStack />;
   };
 
-  return <NavigationContainer>{renderApp()}</NavigationContainer>;
+  // custom hook that returns the object theme
+  const theme = useDeviceColor();
+
+  return (
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>{renderApp()}</NavigationContainer>
+    </ThemeProvider>
+  );
 };
 
 export default App;

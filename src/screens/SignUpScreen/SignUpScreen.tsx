@@ -1,8 +1,8 @@
 import React from 'react';
 import {SignUpTitle} from './Styled.SignUpScreen';
-import InputTextComponent from '../../components/component.Forms/inputText/InputTextComponent';
+import InputTextComponent from '../../components/Component.Forms/InputTextComponent/InputTextComponent';
 import {useForm} from 'react-hook-form';
-import OpacityButtonComponent from '../../components/component.Forms/OpacityButton/OpacityButtonComponent';
+import OpacityButtonComponent from '../../components/Component.Forms/OpacityButtonComponent/OpacityButtonComponent';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {ScrollView, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native';
