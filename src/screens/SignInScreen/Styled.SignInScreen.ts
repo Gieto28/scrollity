@@ -1,10 +1,10 @@
 import styled from 'styled-components/native';
 
-const SignUpTitle = styled.Text`
+const LoginTitle = styled.Text`
   font-size: 56px;
   color: #0c5156;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 `;
 
-export {SignUpTitle};
+export {LoginTitle};

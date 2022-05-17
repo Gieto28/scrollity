@@ -39,11 +39,11 @@ Link to [palette](https://coolors.co/palette/e63225-24e2e5-e82e8e-fcf7fc-262626)
 
 - Colors used in the project
 
-  - <img src="https://via.placeholder.com/15/e63225/000000?text=+"></a> `#e63225`
-  - <img src="https://via.placeholder.com/15/24e2e5/000000?text=+"></a> `#24e2e5`
-  - <img src="https://via.placeholder.com/15/e82e8e/000000?text=+"></a> `#e82e8e`
-  - <img src="https://via.placeholder.com/15/fcf7fc/000000?text=+"></a> `#fcf7fc`
-  - <img src="https://via.placeholder.com/15/262626/000000?text=+"></a> `#262626`
+  <div style="display: flex; align-items:center; font-size: 16px"><div style="background-color:#e63225; height: 16px; width: 16px"> </div> <span style="margin: 0 8px"> #e63225 ~ Scarlet Lake PC 923</span></div>
+  <div style="display: flex; align-items:center; font-size: 16px"><div style="background-color:#24e2e5; height: 16px; width: 16px"> </div> <span style="margin: 0 8px"> #24e2e5 ~ Electric Blue PC 1040</span></div>
+  <div style="display: flex; align-items:center; font-size: 16px"><div style="background-color:#e82e8e; height: 16px; width: 16px"> </div> <span style="margin: 0 8px"> #e82e8e ~ Neon Pink PC 1038</span></div>
+  <div style="display: flex; align-items:center; font-size: 16px"><div style="background-color:#fcf7fc; height: 16px; width: 16px"> </div> <span style="margin: 0 8px"> #fcf7fc ~ Warm Grey 20% PC 1051</span></div>
+  <div style="display: flex; align-items:center; font-size: 16px"><div style="background-color:#262626; height: 16px; width: 16px"> </div> <span style="margin: 0 8px"> #262626 ~ Dark Umber PC 947</span></div>
 
 # Getting Started <a id = "gettingStarted" name = "gettingStarted"></a>
 
@@ -92,7 +92,7 @@ npm start
 
 # Errors <a id = "errors" name = "errors"></a>
 
-## Read below for list of possibly, but possibly not all, errors
+## Read below for list of possible, but possibly not all, errors
 
 - [Human error with installation](#humanError)
 - [App starts but nothing happens](#appRunsError)
@@ -176,4 +176,4 @@ See also the list of [contributors](https://github.com/gieto28/Scrollity/contrib
 
 # Acknowledgements <a id = "acknowledgements" name = "acknowledgements"></a>
 
-- Huge thanks to [@Francisco Costa](https://github.com/jfcpcosta) for being such an admirable role model, being the best teacher I could ask for and for the remarkable effort he put into inspiring passing on knowledge not just me but the students of the 2021/2022 Web Development class of [ETIC](https://www.etic.pt).
+- Huge thanks to [@Francisco Costa](https://github.com/jfcpcosta) for being such an admirable role model, being the best teacher I could ask for and for the remarkable effort he put into inspiring and passing on knowledge not just to me but the students of the 2021/2022 Web Development class of [ETIC](https://www.etic.pt).

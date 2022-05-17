@@ -1,24 +1,13 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import AppStack from './src/navigation/AppStack/AppStack';
-import AuthStack from './src/navigation/AuthStack/AuthStack';
-
-export type NavigatorProps = {
-  AuthStack: undefined;
-  HomeScreen: undefined;
-  LoginScreen: undefined;
-  NotificationsScreen: undefined;
-  ProfileScreen: undefined;
-};
+import AppStack from './src/Navigation/AppStack/AppStack';
+import AuthStack from './src/Navigation/AuthStack/AuthStack';
 
 const App: React.FC = () => {
   const renderApp = () => {
-    const isLoggedIn = true;
-    if (isLoggedIn) {
-      return <AppStack />;
-    }
+    const isSignedIn = false;
 
-    return <AuthStack />;
+    return isSignedIn ? <AppStack /> : <AuthStack />;
   };
 
   return <NavigationContainer>{renderApp()}</NavigationContainer>;

@@ -4,8 +4,7 @@ import {ButtonLabel, OpacityButton} from './Styled.OpacityButtonComponent';
 
 interface Props {
   name: string;
-  handleSubmit?: () => void;
-  handleRedirectToRegister?: () => void;
+  onPress: () => void;
 
   // css
   backgroundColor?: string;
@@ -23,8 +22,7 @@ interface Props {
  * Functionality
  *
  * @param { string } name
- * @param { () =>Z void } handleSubmit **used to submit forms**
- * @param { () =>Z void } handleRedirectToRegister **used to redirect to register screen**
+ * @param { function } onPress **used to handle the functions on click**
  *
  * Styling
  * @param { string } color **change font color [ default - white ]**
@@ -37,8 +35,7 @@ interface Props {
 
 const OpacityButtonComponent: React.FC<Props> = ({
   name,
-  handleSubmit,
-  handleRedirectToRegister,
+  onPress,
 
   //   styling
   backgroundColor,
@@ -48,9 +45,7 @@ const OpacityButtonComponent: React.FC<Props> = ({
   fontWeight,
 }) => {
   return (
-    <OpacityButton
-      onPress={handleSubmit || handleRedirectToRegister}
-      activeOpacity={0.5}>
+    <OpacityButton onPress={onPress} activeOpacity={0.5}>
       <View>
         <ButtonLabel
           color={color}

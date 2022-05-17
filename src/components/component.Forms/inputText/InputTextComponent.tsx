@@ -68,7 +68,7 @@ const InputTextComponent: React.FC<Props> = ({
         name={controllerName}
       />
       {icon && icon}
-      {errors && <Label>field {controllerName} missing</Label>}
+      {errors && <Label>This field is required!</Label>}
     </>
   );
 };

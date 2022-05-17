@@ -1,5 +1,5 @@
 import {View, Text} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import NotificationsScreen from '../../screens/NotificationsScreen/NotificationsScreen';
 import HomeScreen from '../../screens/HomeScreen/HomeScreen';
 import ProfileScreen from '../../screens/ProfileScreen/ProfileScreen';
@@ -14,7 +14,9 @@ export type NavigatorProps = {
 
 const AppStackNavigation = createBottomTabNavigator<NavigatorProps>();
 
-const AppStack = () => {
+const AppStack: React.FC = () => {
+  const [notificationAmount, setNotificationAmount] = useState([7]);
+
   return (
     <AppStackNavigation.Navigator
       initialRouteName="NotificationsScreen"
@@ -31,7 +33,7 @@ const AppStack = () => {
         component={NotificationsScreen}
         options={{
           tabBarLabel: 'Notifications',
-          tabBarBadge: 2,
+          tabBarBadge: notificationAmount[0],
           tabBarBadgeStyle: {backgroundColor: '#24e2e5'},
         }}
       />

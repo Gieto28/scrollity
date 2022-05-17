@@ -1,11 +1,10 @@
-import {View, Text} from 'react-native';
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import LoginScreen from '../../screens/LoginScreen/LoginScreen';
+import LoginScreen from '../../screens/SignInScreen/SignInScreen';
 import SignUpScreen from '../../screens/SignUpScreen/SignUpScreen';
 
 export type AuthStackParams = {
-  Login: undefined;
+  SignIn: undefined;
   SignUp: undefined;
 };
 
@@ -14,11 +13,11 @@ const AuthStackNavigator = createNativeStackNavigator<AuthStackParams>();
 const AuthStack = () => {
   return (
     <AuthStackNavigator.Navigator
-      initialRouteName="Login"
+      initialRouteName="SignIn"
       screenOptions={{
         headerShown: false,
       }}>
-      <AuthStackNavigator.Screen name="Login" component={LoginScreen} />
+      <AuthStackNavigator.Screen name="SignIn" component={LoginScreen} />
       <AuthStackNavigator.Screen name="SignUp" component={SignUpScreen} />
     </AuthStackNavigator.Navigator>
   );
