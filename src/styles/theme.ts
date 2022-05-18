@@ -22,9 +22,9 @@ const theme = {
   },
   display: {
     display: 'flex',
-    alignSelfCenter: 'center',
-    alignSelfEnd: 'flex-end',
-    alignSelfStart: 'flex-start',
+    alignCenter: 'center',
+    alignEnd: 'flex-end',
+    alignStart: 'flex-start',
   },
   screen: {
     padding: '16px',
@@ -59,6 +59,7 @@ const lightTheme = {
     border: '#262626',
     background: '#fcf7fc',
     text: '#262626',
+    placeholder: '#262626',
   },
   separator: {
     line: '#262626',
@@ -81,6 +82,7 @@ const darkTheme = {
     border: '#fcf7fc',
     background: '#262626',
     text: '#fcf7fc',
+    placeholder: '#fcf7fc',
   },
   separator: {
     line: '#fcf7fc',

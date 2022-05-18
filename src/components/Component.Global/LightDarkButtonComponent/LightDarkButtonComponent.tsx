@@ -1,9 +1,13 @@
-import {TouchableOpacity} from 'react-native';
 import React from 'react';
-import {LightDarkIcon} from './Styled.LightDarkButtonComponent';
+import {
+  IconButton,
+  LightDarkIcon,
+  IconView,
+} from './Styled.LightDarkButtonComponent';
 
 interface Props {
   onPress?: () => void;
+  name?: string;
 }
 
 /**
@@ -16,19 +20,17 @@ interface Props {
  */
 
 const LightDarkButtonComponent: React.FC<Props> = ({onPress}) => {
-  let darkMode = true;
+  let darkMode = false;
 
-  const icons = {
-    sunIcon: require('../../../assets/Images/sun-50.png'),
-    moonIcon: require('../../../assets/Images/moon-30.png'),
-  };
-
-  darkMode ? icons.moonIcon : icons.sunIcon;
+  const sunIcon = require('../../../assets/Images/sun-50.png');
+  const moonIcon = require('../../../assets/Images/moon-30.png');
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      <LightDarkIcon source={require('../../../assets/Images/sun-50.png')} />
-    </TouchableOpacity>
+    <IconView>
+      <IconButton title="dark or light mode" onPress={onPress}>
+        <LightDarkIcon source={darkMode ? moonIcon : sunIcon} />
+      </IconButton>
+    </IconView>
   );
 };
 

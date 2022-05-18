@@ -54,8 +54,6 @@ const SignUpScreen = () => {
           control={control}
           errors={errors.signUpUsername?.ref}
           label="Your Username"
-          borderColor="black"
-          backgroundColor="#e5e5e5"
         />
         <InputTextComponent
           placeholder="Your Email"
@@ -64,8 +62,6 @@ const SignUpScreen = () => {
           control={control}
           errors={errors.signUpEmail}
           label="Your Email"
-          borderColor="black"
-          backgroundColor="#e5e5e5"
         />
         <InputTextComponent
           placeholder="Your Password"
@@ -74,8 +70,6 @@ const SignUpScreen = () => {
           control={control}
           errors={errors.signUpPassword}
           label="Your Password"
-          borderColor="black"
-          backgroundColor="#e5e5e5"
         />
         <InputTextComponent
           placeholder="Confirm Password"
@@ -84,8 +78,6 @@ const SignUpScreen = () => {
           control={control}
           errors={errors.signUpPasswordConfirmation?.type}
           label="Confirm Password"
-          borderColor="black"
-          backgroundColor="#e5e5e5"
         />
 
         <OpacityButtonComponent
