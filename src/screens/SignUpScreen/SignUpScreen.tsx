@@ -1,12 +1,14 @@
 import React from 'react';
 import {SignUpTitle} from './Styled.SignUpScreen';
-import InputTextComponent from '../../components/Component.Forms/InputTextComponent/InputTextComponent';
 import {useForm} from 'react-hook-form';
-import OpacityButtonComponent from '../../components/Component.Forms/OpacityButtonComponent/OpacityButtonComponent';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {ScrollView, Text} from 'react-native';
-import {TouchableOpacity} from 'react-native';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
+import {
+  LightDarkButtonComponent,
+  InputTextComponent,
+  OpacityButtonComponent,
+  GoBackComponent,
+} from '../../components';
 
 const SignUpScreen = () => {
   // Form handler
@@ -39,10 +41,9 @@ const SignUpScreen = () => {
 
   return (
     <AuthScrollView>
+      <LightDarkButtonComponent />
       <AuthView>
-        <TouchableOpacity onPress={handleGoBack}>
-          <Text> « Go back </Text>
-        </TouchableOpacity>
+        <GoBackComponent onPress={handleGoBack} name="« go back" />
 
         <SignUpTitle>Sign Up</SignUpTitle>
 

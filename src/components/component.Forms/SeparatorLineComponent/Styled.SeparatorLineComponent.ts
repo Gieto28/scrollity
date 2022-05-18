@@ -1,4 +1,13 @@
+import {TextProps, ViewProps} from 'react-native';
 import styled from 'styled-components/native';
+
+interface LineProps extends ViewProps {
+  theme: any;
+}
+
+interface LabelProps extends TextProps {
+  theme: any;
+}
 
 const ParentView = styled.View`
   display: flex;
@@ -7,14 +16,15 @@ const ParentView = styled.View`
   justify-content: center;
 `;
 
-const Line = styled.View`
+const Line = styled.View<LineProps>`
   flex: 1;
-  background-color: black;
+  background-color: ${props => props.theme.separator.line};
   height: 1px;
-  max-width: 39%;
+  padding: 0 16px;
 `;
 
-const Label = styled.Text`
+const Label = styled.Text<LabelProps>`
+  color: ${props => props.theme.separator.line};
   text-align: center;
   padding: 0 10px;
   margin: 10px;

@@ -3,6 +3,7 @@ import OpacityButtonComponent from './Component.Forms/OpacityButtonComponent/Opa
 import SeparatorLineComponent from './Component.Forms/SeparatorLineComponent/SeparatorLineComponent';
 import LightDarkButtonComponent from './Component.Global/LightDarkButtonComponent/LightDarkButtonComponent';
 import NotificationCardComponent from './Component.Notifications/NotificationComponent/NotificationCardComponent';
+import GoBackComponent from './Component.Global/GoBackComponent/GoBackComponent';
 
 export {
   InputTextComponent,
@@ -10,4 +11,5 @@ export {
   SeparatorLineComponent,
   LightDarkButtonComponent,
   NotificationCardComponent,
+  GoBackComponent,
 };

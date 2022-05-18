@@ -1,20 +1,20 @@
 import {useEffect, useState} from 'react';
 import {useColorScheme} from 'react-native';
-import Themes from '../styles/Themes';
+import {lightTheme, darkTheme} from '../styles/theme';
 
 const useDeviceColor = () => {
   const deviceTheme = useColorScheme();
-  const [theme, setTheme] = useState(Themes.dark);
+  const [colorTheme, setColorTheme] = useState(darkTheme);
 
   useEffect(() => {
     if (deviceTheme === 'light') {
-      setTheme(Themes.light);
+      setColorTheme(lightTheme);
     } else if (deviceTheme === 'dark') {
-      setTheme(Themes.dark);
+      setColorTheme(darkTheme);
     }
   }, [deviceTheme]);
 
-  return theme;
+  return colorTheme;
 };
 
 export default useDeviceColor;

@@ -1,8 +1,8 @@
 import {View, Text} from 'react-native';
 import React, {useState} from 'react';
-import NotificationsScreen from '../../screens/NotificationsScreen/NotificationsScreen';
-import HomeScreen from '../../screens/HomeScreen/HomeScreen';
-import ProfileScreen from '../../screens/ProfileScreen/ProfileScreen';
+import {NotificationsScreen} from '../../screens';
+import {HomeScreen} from '../../screens';
+import {ProfileScreen} from '../../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 export type NavigatorProps = {

@@ -1,8 +1,13 @@
+import {TextProps} from 'react-native';
 import styled from 'styled-components/native';
 
-const SignUpTitle = styled.Text`
+interface TitleProps extends TextProps {
+  theme: any;
+}
+
+const SignUpTitle = styled.Text<TitleProps>`
   font-size: 56px;
-  color: #0c5156;
+  color: ${props => props.theme.screen.text};
   text-align: center;
   margin-bottom: 30px;
 `;

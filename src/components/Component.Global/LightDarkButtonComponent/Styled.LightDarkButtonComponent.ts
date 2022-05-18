@@ -1,11 +1,17 @@
+import {ImageProps} from 'react-native';
 import styled from 'styled-components/native';
 
-const LightDarkButton = styled.TouchableOpacity`
-  width: 50px;
-`;
-const LightDarkText = styled.Text<{theme: any}>`
-  color: ${({theme}) => theme.color};
-  /* color: ${props => props.theme.color} */
+interface IconProps extends ImageProps {
+  theme: any;
+}
+
+const LightDarkIcon = styled.Image<IconProps>`
+  max-width: ${props => props.theme.darkButton.width};
+  max-height: ${props => props.theme.darkButton.height};
+  display: ${props => props.theme.display.display};
+  align-self: ${props => props.theme.display.alignSelfEnd};
+  margin-top: ${props => props.theme.darkButton.marginTop};
+  margin-right: ${props => props.theme.darkButton.marginRight};
 `;
 
-export {LightDarkButton, LightDarkText};
+export {LightDarkIcon};

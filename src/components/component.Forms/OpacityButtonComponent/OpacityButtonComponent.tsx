@@ -1,15 +1,13 @@
 import {View} from 'react-native';
 import React from 'react';
-import {ButtonLabel, OpacityButton} from './Styled.OpacityButtonComponent';
+import {ButtonLabel} from './Styled.OpacityButtonComponent';
+import {TouchableOpacity} from 'react-native';
 
 interface Props {
   name: string;
   onPress: () => void;
 
   // css
-  backgroundColor?: string;
-  color?: string;
-  borderColor?: string;
   fontSize?: string;
   fontWeight?: string;
 }
@@ -38,25 +36,17 @@ const OpacityButtonComponent: React.FC<Props> = ({
   onPress,
 
   //   styling
-  backgroundColor,
-  color,
-  borderColor,
   fontSize,
   fontWeight,
 }) => {
   return (
-    <OpacityButton onPress={onPress} activeOpacity={0.5}>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.5}>
       <View>
-        <ButtonLabel
-          color={color}
-          fontSize={fontSize}
-          fontWeight={fontWeight}
-          borderColor={borderColor}
-          backgroundColor={backgroundColor}>
+        <ButtonLabel fontSize={fontSize} fontWeight={fontWeight}>
           {name}
         </ButtonLabel>
       </View>
-    </OpacityButton>
+    </TouchableOpacity>
   );
 };
 

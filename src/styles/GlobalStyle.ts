@@ -1,12 +1,15 @@
+import {ViewProps} from 'react-native';
 import styled from 'styled-components/native';
 
-// make obj here and export theme
-const GlobalView = styled.View`
-  background-color: #fcf7fc;
-  color: #2c2c2c;
-`;
+interface ScreenProps extends ViewProps {
+  theme: any;
+}
 
-const GlobalSafeAreaView = styled.SafeAreaView``;
+// make obj here and export theme
+const GlobalView = styled.View<ScreenProps>`
+  background-color: ${props => props.theme.screen.background};
+  color: ${props => props.theme.screen.text};
+`;
 
 const AuthScrollView = styled.ScrollView.attrs({
   contentContainerStyle: {
@@ -14,37 +17,49 @@ const AuthScrollView = styled.ScrollView.attrs({
     justifyContent: 'center',
     flexDirection: 'column',
   },
-})`
+})<ScreenProps>`
   flex-grow: 1;
+  background-color: ${props => props.theme.screen.background};
 `;
 
-const AuthView = styled.View`
+const AuthView = styled.View<ScreenProps>`
   flex: 1;
   display: flex;
   justify-content: center;
-  height: 100%;
+  background-color: ${props => props.theme.screen.background};
+  /* height: 100%; */
   padding: 0 24px;
 `;
 
-const ScreenView = styled.View`
-  background-color: #e5e5e5;
-  color: #2c2c2c;
-  padding: 16px;
+const AppScrollView = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+})<ScreenProps>`
+  flex-grow: 1;
+  background-color: ${props => props.theme.screen.background};
 `;
 
-const StyledView = styled.View`
-  background-color: #e5e5e5;
+const AppView = styled.View<ScreenProps>`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  background-color: ${props => props.theme.screen.background};
+  /* height: 100%; */
+  padding: 0 24px;
 `;
 
-const StyledText = styled.Text`
-  color: #2c2c2c;
+const StyledView = styled.View<ScreenProps>`
+  background-color: ${props => props.theme.screen.background};
 `;
 
 export {
   StyledView,
-  StyledText,
   GlobalView,
-  ScreenView,
   AuthScrollView,
   AuthView,
+  AppScrollView,
+  AppView,
 };

@@ -53,7 +53,6 @@ const SignInScreen: React.FC = () => {
   return (
     <AuthScrollView>
       <LightDarkButtonComponent />
-      <Text>goback</Text>
       <AuthView>
         <LoginTitle>Scrollity</LoginTitle>
 
@@ -65,9 +64,6 @@ const SignInScreen: React.FC = () => {
           errors={errors.email}
           // label
           label="Your email"
-          // styling color
-          borderColor="black"
-          backgroundColor="#e5e5e5"
         />
 
         <InputTextComponent
@@ -79,9 +75,6 @@ const SignInScreen: React.FC = () => {
           securedBoolean={passwordShown}
           // label
           label="Password"
-          // styling color
-          borderColor="black"
-          backgroundColor="#e5e5e5"
         />
 
         <OpacityButtonComponent
@@ -95,6 +88,7 @@ const SignInScreen: React.FC = () => {
           <OpacityButtonComponent
             name="Sign up"
             fontSize="16px"
+            fontWeight="400"
             onPress={handleRedirectToRegister}
           />
         </View>

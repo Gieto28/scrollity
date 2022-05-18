@@ -1,7 +1,6 @@
-import {Text} from 'react-native';
 import React, {useEffect} from 'react';
 
-import {Controller, FieldError} from 'react-hook-form';
+import {Controller} from 'react-hook-form';
 
 import {TextInputStyled, Label} from './Styled.InputTextComponent';
 import useDeviceColor from '../../../hooks/useDeviceColor';
@@ -40,7 +39,6 @@ const InputTextComponent: React.FC<Props> = ({
   // editing css
   borderColor,
   backgroundColor,
-  placeholderColor,
 
   // icon
   icon,
@@ -68,7 +66,7 @@ const InputTextComponent: React.FC<Props> = ({
             borderColor={borderColor}
             backgroundColor={backgroundColor}
             secureTextEntry={securedBoolean && true}
-            placeholderTextColor={theme.color}
+            placeholderTextColor={theme.input.text}
           />
         )}
         name={controllerName}

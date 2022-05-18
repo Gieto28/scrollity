@@ -4,12 +4,15 @@ import styled from 'styled-components/native';
 interface Props extends TextInputProps {
   borderColor?: string;
   backgroundColor?: string;
+
+  // theme
+  theme: any;
 }
 
 const TextInputStyled = styled.TextInput<Props>`
   margin: 10px;
-  border: 1px solid ${props => props.borderColor ?? 'black'};
-  background-color: ${props => props.backgroundColor ?? 'white'};
+  border: 1px solid ${props => props.theme.input.border};
+  background-color: ${props => props.theme.input.background};
   border-radius: 10px;
   padding: 16px;
 `;
