@@ -1,12 +1,13 @@
 import {TextProps} from 'react-native';
 import styled from 'styled-components/native';
+import {ThemeProps} from '../../styles/theme';
 
 interface TitleProps extends TextProps {
   fontSize?: string;
   fontWeight?: string;
 
   // theme
-  theme: any;
+  theme: ThemeProps;
 }
 
 const LoginTitle = styled.Text<TitleProps>`

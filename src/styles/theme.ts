@@ -90,7 +90,10 @@ const darkTheme = {
   },
 };
 
+type ThemeProps = typeof lightTheme;
+
 export {lightTheme, darkTheme};
+export type {ThemeProps};
 
 //   light: '#fcf7fc',
 //   dark: '#262626',

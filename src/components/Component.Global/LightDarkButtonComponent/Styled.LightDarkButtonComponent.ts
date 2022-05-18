@@ -1,16 +1,17 @@
 import {ButtonProps, ImageProps, ViewProps} from 'react-native';
 import styled from 'styled-components/native';
+import {ThemeProps} from '../../../styles/theme';
 
 interface IconProps extends ImageProps {
-  theme: any;
+  theme: ThemeProps;
 }
 
 interface BtnProps extends ButtonProps {
-  theme: any;
+  theme: ThemeProps;
 }
 
 interface IconViewProps extends ViewProps {
-  theme: any;
+  theme: ThemeProps;
 }
 
 const IconView = styled.View<IconViewProps>`

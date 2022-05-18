@@ -1,8 +1,9 @@
 import {ViewProps} from 'react-native';
 import styled from 'styled-components/native';
+import {ThemeProps} from './theme';
 
 interface ScreenProps extends ViewProps {
-  theme: any;
+  theme: ThemeProps;
 }
 
 // make obj here and export theme

@@ -1,12 +1,13 @@
 import {TextProps, ViewProps} from 'react-native';
 import styled from 'styled-components/native';
+import {ThemeProps} from '../../../styles/theme';
 
 interface LineProps extends ViewProps {
-  theme: any;
+  theme: ThemeProps;
 }
 
 interface LabelProps extends TextProps {
-  theme: any;
+  theme: ThemeProps;
 }
 
 const ParentView = styled.View`

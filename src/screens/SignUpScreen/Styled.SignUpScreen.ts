@@ -1,8 +1,9 @@
 import {TextProps} from 'react-native';
 import styled from 'styled-components/native';
+import {ThemeProps} from '../../styles/theme';
 
 interface TitleProps extends TextProps {
-  theme: any;
+  theme: ThemeProps;
 }
 
 const SignUpTitle = styled.Text<TitleProps>`

@@ -1,10 +1,11 @@
 import {TextProps, TouchableOpacityProps} from 'react-native';
 import styled from 'styled-components/native';
+import {ThemeProps} from '../../../styles/theme';
 
 interface PropsLabel extends TextProps {
   fontSize?: string;
   fontWeight?: string;
-  theme: any;
+  theme: ThemeProps;
 }
 
 // const OpacityButton = styled.TouchableOpacity<PropsButton>`

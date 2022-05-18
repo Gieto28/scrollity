@@ -1,12 +1,13 @@
 import {TextInputProps} from 'react-native';
 import styled from 'styled-components/native';
+import {ThemeProps} from '../../../styles/theme';
 
 interface Props extends TextInputProps {
   borderColor?: string;
   backgroundColor?: string;
 
   // theme
-  theme: any;
+  theme: ThemeProps;
 }
 
 const TextInputStyled = styled.TextInput<Props>`

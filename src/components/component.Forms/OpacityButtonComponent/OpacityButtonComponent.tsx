@@ -23,11 +23,8 @@ interface Props {
  * @param { function } onPress **used to handle the functions on click**
  *
  * Styling
- * @param { string } color **change font color [ default - white ]**
  * @param { string } fontSize **change fontSize [ default - 32px ]**
  * @param { string } fontWeight **change Font Weight [ default - 400]**
- * @param { string } backgroundColor **change background color [ default - x ]**
- * @param { string } borderColor **change border color [ default - black ]**
  * @returns **a reusable button component for forms**
  */
 
