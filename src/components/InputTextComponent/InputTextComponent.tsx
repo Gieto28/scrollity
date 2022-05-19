@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import {Controller} from 'react-hook-form';
 
 import {TextInputStyled, Label} from './Styled.InputTextComponent';
-import useDeviceColor from '../../../hooks/useDeviceColor';
+import useDeviceColor from '../../hooks/useDeviceColor';
 
 interface Props {
   placeholder: string;
@@ -14,7 +14,7 @@ interface Props {
   errors?: any;
 
   // label
-  label: string;
+  label?: string;
 
   // customizing component
   borderColor?: string;

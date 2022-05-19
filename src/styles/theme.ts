@@ -42,10 +42,15 @@ const theme = {
     marginRight: '10px',
     marginLeft: '10px',
   },
+  SearchButton: {
+    width: '30px',
+    height: '30px',
+  },
 };
 
 const lightTheme = {
   ...theme,
+  key: 'light',
   screen: {
     background: '#fcf7fc',
     text: '#262626',
@@ -69,6 +74,7 @@ const lightTheme = {
 
 const darkTheme = {
   ...theme,
+  key: 'dark',
   screen: {
     background: '#262626',
     text: '#fcf7fc',

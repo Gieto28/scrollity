@@ -1,6 +1,6 @@
 import {ButtonProps, ImageProps, ViewProps} from 'react-native';
 import styled from 'styled-components/native';
-import {ThemeProps} from '../../../styles/theme';
+import {ThemeProps} from '../../styles/theme';
 
 interface IconProps extends ImageProps {
   theme: ThemeProps;

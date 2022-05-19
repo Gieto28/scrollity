@@ -32,13 +32,7 @@ const AuthView = styled.View<ScreenProps>`
   padding: 0 24px;
 `;
 
-const AppScrollView = styled.ScrollView.attrs({
-  contentContainerStyle: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    flexDirection: 'column',
-  },
-})<ScreenProps>`
+const AppScrollView = styled.ScrollView<ScreenProps>`
   flex-grow: 1;
   background-color: ${props => props.theme.screen.background};
 `;

@@ -5,8 +5,8 @@ import SignInScreen from './SignInScreen/SignInScreen';
 import SignUpScreen from './SignUpScreen/SignUpScreen';
 
 export {
-  NotificationsScreen,
   HomeScreen,
+  NotificationsScreen,
   ProfileScreen,
   SignInScreen,
   SignUpScreen,

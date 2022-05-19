@@ -1,6 +1,6 @@
 import {TextInputProps} from 'react-native';
 import styled from 'styled-components/native';
-import {ThemeProps} from '../../../styles/theme';
+import {ThemeProps} from '../../styles/theme';
 
 interface Props extends TextInputProps {
   borderColor?: string;
@@ -17,6 +17,7 @@ const TextInputStyled = styled.TextInput<Props>`
   border-radius: 10px;
   padding: 16px;
 `;
+
 const Label = styled.Text`
   margin-left: 16px;
   font-weight: 700;

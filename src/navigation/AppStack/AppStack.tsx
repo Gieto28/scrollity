@@ -4,6 +4,7 @@ import {NotificationsScreen} from '../../screens';
 import {HomeScreen} from '../../screens';
 import {ProfileScreen} from '../../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import useDeviceColor from '../../hooks/useDeviceColor';
 
 export type NavigatorProps = {
   HomeScreen: () => JSX.Element;
@@ -15,6 +16,8 @@ export type NavigatorProps = {
 const AppStackNavigation = createBottomTabNavigator<NavigatorProps>();
 
 const AppStack: React.FC = () => {
+  const theme = useDeviceColor();
+
   const [notificationAmount, setNotificationAmount] = useState([7]);
 
   return (

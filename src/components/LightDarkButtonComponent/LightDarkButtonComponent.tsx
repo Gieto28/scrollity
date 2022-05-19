@@ -22,8 +22,8 @@ interface Props {
 const LightDarkButtonComponent: React.FC<Props> = ({onPress}) => {
   let darkMode = false;
 
-  const sunIcon = require('../../../assets/Images/sun-50.png');
-  const moonIcon = require('../../../assets/Images/moon-30.png');
+  const sunIcon = require('../../assets/Images/sun-50.png');
+  const moonIcon = require('../../assets/Images/moon-30.png');
 
   return (
     <IconView>
