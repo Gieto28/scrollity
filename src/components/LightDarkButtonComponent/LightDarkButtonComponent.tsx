@@ -1,4 +1,5 @@
 import React from 'react';
+import useDeviceColor from '../../hooks/useDeviceColor';
 import {
   IconButton,
   LightDarkIcon,
@@ -20,15 +21,16 @@ interface Props {
  */
 
 const LightDarkButtonComponent: React.FC<Props> = ({onPress}) => {
-  let darkMode = false;
+  const theme = useDeviceColor();
 
-  const sunIcon = require('../../assets/Images/sun-50.png');
-  const moonIcon = require('../../assets/Images/moon-30.png');
+  const iconImage = theme.bool
+    ? require('../../assets/Images/moon-30.png')
+    : require('../../assets/Images/sun-50.png');
 
   return (
     <IconView>
       <IconButton title="dark or light mode" onPress={onPress}>
-        <LightDarkIcon source={darkMode ? moonIcon : sunIcon} />
+        <LightDarkIcon source={iconImage} />
       </IconButton>
     </IconView>
   );

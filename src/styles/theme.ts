@@ -18,6 +18,8 @@ const theme = {
     colors: {
       primary: '#e63225',
       secondary: '#24e2e5',
+      light: '#fcf7fc',
+      dark: '#262626',
     },
   },
   display: {
@@ -46,11 +48,15 @@ const theme = {
     width: '30px',
     height: '30px',
   },
+  nav: {
+    inactiveNavOpacity: 0.8,
+  },
 };
 
 const lightTheme = {
   ...theme,
   key: 'light',
+  bool: false,
   screen: {
     background: '#fcf7fc',
     text: '#262626',
@@ -70,11 +76,20 @@ const lightTheme = {
     line: '#262626',
     text: '#262626',
   },
+  nav: {
+    inactiveNav: '#262626',
+    activeNav: '#24e2e5',
+    inactiveNavBackground: '#fcf7fc',
+    activeNavBackground: '#e6e6e6',
+    notificationColor: '#fcf7fc',
+    notificationCircleColor: '38, 38, 38, 0.5',
+  },
 };
 
 const darkTheme = {
   ...theme,
   key: 'dark',
+  bool: true,
   screen: {
     background: '#262626',
     text: '#fcf7fc',
@@ -94,6 +109,14 @@ const darkTheme = {
     line: '#fcf7fc',
     text: '#fcf7fc',
   },
+  nav: {
+    inactiveNav: '#fcf7fc',
+    activeNav: '#24e2e5',
+    inactiveNavBackground: '#262626',
+    activeNavBackground: '#1c1c1c',
+    notificationNumberColor: '#262626',
+    notificationCircleColor: '#262626',
+  },
 };
 
 type ThemeProps = typeof lightTheme;
@@ -106,3 +129,5 @@ export type {ThemeProps};
 //   red: '#e63225',
 //   blue: '#24e2e5',
 //   pink: '#e82e8e',
+// activeNavBackground: '#1c1c1c',
+// activeNavBackground: '#e6e6e6',

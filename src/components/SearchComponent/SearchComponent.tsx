@@ -28,16 +28,10 @@ const SearchComponent: React.FC<Props> = ({
   onPress,
 }) => {
   const theme = useDeviceColor();
-  const [icon, setIcon] = useState('');
-  useEffect(() => {
-    if (theme.key == 'light') {
-      setIcon(require('../../assets/Images/search-24-dark.png'));
-    } else {
-      setIcon(require('../../assets/Images/search-24-light.png'));
-    }
 
-    const searchIcon = icon;
-  }, []);
+  const iconImage = theme.bool
+    ? require('../../assets/Images/search-24-dark.png')
+    : require('../../assets/Images/search-24-light.png');
 
   return (
     <SearchWrapper>
@@ -59,9 +53,7 @@ const SearchComponent: React.FC<Props> = ({
         name={controllerName}
       />
       <SubmitButton onPress={onPress}>
-        <IconImage
-          source={require('../../assets/Images/search-24-light.png')}
-        />
+        <IconImage source={iconImage} />
       </SubmitButton>
     </SearchWrapper>
   );
