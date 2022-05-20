@@ -76,10 +76,11 @@ const HomeScreen = () => {
         <PostComponent
           name="example"
           source={require('../../assets/Images/Logo-NBG.png')}
-          description={'this is a description'}
+          description={'a very long description'}
           upVotes={4}
           downVotes={7}
           postId={'aRandomId'}
+          commentsNumber={2}
         />
       </AppView>
     </AppScrollView>

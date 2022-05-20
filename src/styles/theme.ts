@@ -48,6 +48,13 @@ const theme = {
     width: '30px',
     height: '30px',
   },
+  posts: {
+    icons: {
+      width: '25px',
+      height: '21px',
+      fontSize: '20px',
+    },
+  },
   nav: {
     inactiveNavOpacity: 0.8,
   },

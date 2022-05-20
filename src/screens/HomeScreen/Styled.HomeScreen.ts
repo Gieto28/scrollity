@@ -32,6 +32,7 @@ const CategoryScroll = styled.ScrollView.attrs({
   },
 })`
   flex-grow: 1;
+  margin-bottom: 10px;
 `;
 
 const CategoryView = styled.View<PropsView>`
