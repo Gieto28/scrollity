@@ -22,7 +22,7 @@ const Input = styled.TextInput<Props>`
   padding: 12px 20px 12px 20px;
   min-height: 40px;
   width: 85%;
-  margin-left: 40px;
+  margin-left: 48px;
   /* flex: 1; */
 `;
 
@@ -31,13 +31,14 @@ const SearchWrapper = styled.View<WrapperProps>`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  position: relative;
+  position: static;
+  padding: 0 30px;
 `;
 
 const SubmitButton = styled.TouchableOpacity<IconButtonProps>`
   width: ${props => props.theme.SearchButton.width};
   height: ${props => props.theme.SearchButton.height};
-  position: relative;
+  /* position: relative; */
   right: 50px;
   top: 2px;
   z-index: 100;

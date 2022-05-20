@@ -42,11 +42,8 @@ const SignUpScreen = () => {
   return (
     <AuthScrollView>
       <LightDarkButtonComponent />
+      <GoBackComponent onPress={handleGoBack} name="« go back" />
       <AuthView>
-        <GoBackComponent onPress={handleGoBack} name="« go back" />
-
-        <SignUpTitle>Sign Up</SignUpTitle>
-
         <InputTextComponent
           placeholder="Your Username"
           value={''}

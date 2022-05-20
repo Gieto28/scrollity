@@ -9,7 +9,6 @@ import IconButtonComponent from './IconButtonComponent/IconButtonComponent';
 import PostComponent from './PostComponent/PostComponent';
 import SearchComponent from './SearchComponent/SearchComponent';
 import NavIconComponent from './NavIconComponent/NavIconComponent';
-
 // PLEASE KEEP THIS ORDER THE SAME AS THE ORDER FROM THE FOLDER "components" SO IT IS EASIER TO ORGANIZE AND SEE WHAT'S MISSING
 export {
   CategoryComponent, // -------------- 1

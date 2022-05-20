@@ -18,7 +18,7 @@ const AppStackNavigation = createBottomTabNavigator<NavigatorProps>();
 const AppStack: React.FC = () => {
   const theme = useDeviceColor();
 
-  const [notificationAmount, setNotificationAmount] = useState(3);
+  const [notificationAmount, setNotificationAmount] = useState(5);
 
   const notificationIcon = theme.bool
     ? require('../../assets/Images/notifications-24-dark.png')
@@ -45,8 +45,13 @@ const AppStack: React.FC = () => {
       <AppStackNavigation.Screen
         name="NotificationsScreen"
         component={NotificationsScreen}
+        listeners={{
+          tabPress: () => {
+            setNotificationAmount(0);
+          },
+        }}
         options={{
-          tabBarBadge: notificationAmount,
+          tabBarBadge: notificationAmount ? notificationAmount : undefined,
           tabBarBadgeStyle: {
             backgroundColor: theme.fonts.colors.primary,
             color: theme.nav.notificationNumberColor,

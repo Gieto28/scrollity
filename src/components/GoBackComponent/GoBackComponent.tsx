@@ -1,5 +1,6 @@
-import {Text, TouchableOpacity} from 'react-native';
+import {Text} from 'react-native';
 import React from 'react';
+import {GoBackButton} from './Styled.GoBackComponent';
 
 interface Props {
   onPress: () => void;
@@ -8,9 +9,9 @@ interface Props {
 
 const GoBackComponent: React.FC<Props> = ({onPress, name}) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <GoBackButton onPress={onPress}>
       <Text>{name}</Text>
-    </TouchableOpacity>
+    </GoBackButton>
   );
 };
 
