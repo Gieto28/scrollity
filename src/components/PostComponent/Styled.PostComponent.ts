@@ -7,6 +7,12 @@ import {
 import styled from 'styled-components/native';
 import {ThemeProps} from '../../styles/theme';
 
+// interface Zacarias {
+//   theme: ThemeProps;
+// }
+
+// type PropsImage = ImageProps | Zacarias;
+
 interface PropsImage extends ImageProps {
   theme: ThemeProps;
 }
@@ -29,14 +35,22 @@ const PostFullWidth = styled.View<PropsView>`
   width: 100%;
 `;
 const PostWrapper = styled.View<PropsView>`
-  border: 1px solid white;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-bottom-color: ${props => props.theme.button.border};
 `;
+
 const PostHeader = styled.View<PropsView>`
   margin: 8px 16px 10px 16px;
 `;
 const PostBody = styled.View<PropsView>`
   max-width: 100%;
   height: auto;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-top-color: ${props => props.theme.button.border};
+  border-bottom-color: ${props => props.theme.button.border};
+  margin-bottom: 3px;
 `;
 const PostTitle = styled.Text<PropsText>`
   font-size: ${props => props.theme.fonts.fontSize.lg};

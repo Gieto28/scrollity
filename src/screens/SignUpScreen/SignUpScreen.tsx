@@ -33,16 +33,10 @@ const SignUpScreen = () => {
     console.log(data);
   };
 
-  const navigation = useNavigation();
-
-  const handleGoBack = () => {
-    navigation.dispatch(CommonActions.goBack());
-  };
-
   return (
     <AuthScrollView>
       <LightDarkButtonComponent />
-      <GoBackComponent onPress={handleGoBack} name="« go back" />
+      <GoBackComponent />
       <AuthView>
         <InputTextComponent
           placeholder="Your Username"

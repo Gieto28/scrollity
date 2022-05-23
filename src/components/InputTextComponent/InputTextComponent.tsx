@@ -51,7 +51,7 @@ const InputTextComponent: React.FC<Props> = ({
 
   return (
     <>
-      <Label>{label}:</Label>
+      <Label>{label && `${label}:`}</Label>
       <Controller
         control={control}
         rules={{

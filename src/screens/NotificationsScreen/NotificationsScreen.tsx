@@ -1,21 +1,32 @@
 import {ScrollView} from 'react-native';
 import React from 'react';
 import {NotificationCardComponent} from '../../components';
+import {ViewScroll} from './Styled.NotificationsScreen';
 
 const NotificationsScreen = () => {
   return (
-    <ScrollView>
-      <NotificationCardComponent name="John Doe" message="shared your post" />
-      <NotificationCardComponent name="Matateu" message="liked your message" />
+    <ViewScroll>
       <NotificationCardComponent
-        name="Mario Santos"
-        message="sent you a friends request"
+        username="John Doe"
+        likes="8"
+        postId="01010101"
       />
       <NotificationCardComponent
-        name="Ernesto"
-        message="reclined your friend request!"
+        username="Matateu"
+        likes="7"
+        postId="02020202"
       />
-    </ScrollView>
+      <NotificationCardComponent
+        username="Mario Santos"
+        likes="9"
+        postId="03030303"
+      />
+      <NotificationCardComponent
+        username="Ernesto"
+        likes="1"
+        postId="04040404"
+      />
+    </ViewScroll>
   );
 };
 

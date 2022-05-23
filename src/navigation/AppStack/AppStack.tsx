@@ -1,19 +1,18 @@
 import React, {useState} from 'react';
-import {NotificationsScreen} from '../../screens';
-import {HomeScreen} from '../../screens';
-import {ProfileScreen} from '../../screens';
+import {NotificationsScreen, ProfileScreen} from '../../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import useDeviceColor from '../../hooks/useDeviceColor';
 import {NavIconComponent} from '../../components';
+import HomeScreenStack, {HomeStackParams} from './HomeScreenStack';
 
-export type NavigatorProps = {
-  HomeScreen: () => JSX.Element;
+type NavigationParams = {
+  HomeScreenStack: HomeStackParams;
   LoginScreen: () => JSX.Element;
   NotificationsScreen: () => JSX.Element;
   ProfileScreen: () => JSX.Element;
 };
 
-const AppStackNavigation = createBottomTabNavigator<NavigatorProps>();
+const AppStackNavigation = createBottomTabNavigator<NavigationParams>();
 
 const AppStack: React.FC = () => {
   const theme = useDeviceColor();
@@ -34,7 +33,7 @@ const AppStack: React.FC = () => {
 
   return (
     <AppStackNavigation.Navigator
-      initialRouteName="HomeScreen"
+      initialRouteName="HomeScreenStack"
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
@@ -47,14 +46,18 @@ const AppStack: React.FC = () => {
         component={NotificationsScreen}
         listeners={{
           tabPress: () => {
-            setNotificationAmount(0);
+            if (notificationAmount > 0) setNotificationAmount(0);
           },
         }}
         options={{
           tabBarBadge: notificationAmount ? notificationAmount : undefined,
           tabBarBadgeStyle: {
-            backgroundColor: theme.fonts.colors.primary,
-            color: theme.nav.notificationNumberColor,
+            backgroundColor: notificationAmount
+              ? theme.fonts.colors.primary
+              : undefined,
+            color: notificationAmount
+              ? theme.nav.notificationNumberColor
+              : undefined,
             fontWeight: '800',
           },
           tabBarAccessibilityLabel: 'Button to Notifications Screen',
@@ -64,8 +67,8 @@ const AppStack: React.FC = () => {
         }}
       />
       <AppStackNavigation.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="HomeScreenStack"
+        component={HomeScreenStack}
         options={{
           tabBarAccessibilityLabel: 'Button to Home Screen',
           tabBarIcon: ({focused}) => (

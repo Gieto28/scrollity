@@ -46,6 +46,16 @@ const HomeScreen = () => {
     setCategoryId(index);
   };
 
+  const fakePost = {
+    postId: '0101-postId-0101',
+    title: 'example',
+    source: require('../../assets/Images/Logo-NBG.png'),
+    description: 'a description',
+    upVotes: 4,
+    downVotes: 2,
+    commentsAmount: 1,
+  };
+
   return (
     <AppScrollView>
       <AppView>
@@ -73,14 +83,17 @@ const HomeScreen = () => {
             })}
           </CategoryView>
         </CategoryScroll>
+        {/* here goes a map of all of the posts being retrieved from the axios get */}
         <PostComponent
-          name="example"
-          source={require('../../assets/Images/Logo-NBG.png')}
-          description={'a very long description'}
-          upVotes={4}
-          downVotes={7}
-          postId={'aRandomId'}
-          commentsNumber={2}
+          title={fakePost.title}
+          source={fakePost.source}
+          description={fakePost.description}
+          upVotes={fakePost.upVotes}
+          downVotes={fakePost.downVotes}
+          postId={fakePost.postId}
+          commentsAmount={fakePost.commentsAmount}
+          comments={true}
+          postObject={fakePost}
         />
       </AppView>
     </AppScrollView>

@@ -2,25 +2,36 @@ import React from 'react';
 
 // defining props type to be used in notification
 interface Props {
-  name: string;
-  message: string;
+  username: string;
+  likes: string;
+  postId: string;
 }
 
 import {
   CardView,
   CardMessage,
   CardTitle,
+  CardButton,
 } from './Styled.NotificationCardComponent';
 
 // Notification with : and the definition of the type and the types it has in it self
-// Also passing in the prop name to be used in the Text below
-const NotificationCardComponent: React.FC<Props> = ({name, message}) => {
+// Also passing in the prop username to be used in the Text below
+const NotificationCardComponent: React.FC<Props> = ({
+  username,
+  likes,
+  postId,
+}) => {
+  const handleNotificationRedirectToPost = (id: string) => {
+    console.log('redirect to post with id:', id);
+    // on click goes to post then we filter all notifications and remove that post from the notifications
+  };
+
   return (
     <CardView>
-      <CardTitle>Notification from {name} </CardTitle>
-      <CardMessage>
-        {name} has {message}!
-      </CardMessage>
+      <CardButton onPress={() => handleNotificationRedirectToPost(postId)}>
+        <CardTitle>Congrats {username}!</CardTitle>
+        <CardMessage>Your post has reached {likes} likes!</CardMessage>
+      </CardButton>
     </CardView>
   );
 };

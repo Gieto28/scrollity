@@ -13,7 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 import {AuthStackParams} from '../../navigation/AuthStack/AuthStack';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 
 type SignUpNavigationProp = StackNavigationProp<AuthStackParams, 'SignUp'>;
 
@@ -44,7 +44,7 @@ const SignInScreen: React.FC = () => {
 
   const navigation = useNavigation<SignUpNavigationProp>();
 
-  const handleRedirectToRegister = () => {
+  const handleRedirectToSignUp = () => {
     console.log('This button is working');
 
     navigation.navigate('SignUp');
@@ -89,7 +89,7 @@ const SignInScreen: React.FC = () => {
             name="Sign up"
             fontSize="16px"
             fontWeight="400"
-            onPress={handleRedirectToRegister}
+            onPress={handleRedirectToSignUp}
           />
         </View>
       </AuthView>

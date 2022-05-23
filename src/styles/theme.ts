@@ -55,8 +55,10 @@ const theme = {
       fontSize: '20px',
     },
   },
-  nav: {
-    inactiveNavOpacity: 0.8,
+
+  notificationCard: {
+    marginX: '15px',
+    marginY: '5px',
   },
 };
 
@@ -84,11 +86,12 @@ const lightTheme = {
     text: '#262626',
   },
   nav: {
+    inactiveNavOpacity: 0.8,
     inactiveNav: '#262626',
     activeNav: '#24e2e5',
     inactiveNavBackground: '#fcf7fc',
     activeNavBackground: '#e6e6e6',
-    notificationColor: '#fcf7fc',
+    notificationNumberColor: '#fcf7fc',
     notificationCircleColor: '38, 38, 38, 0.5',
   },
 };
@@ -117,6 +120,7 @@ const darkTheme = {
     text: '#fcf7fc',
   },
   nav: {
+    inactiveNavOpacity: 0.8,
     inactiveNav: '#fcf7fc',
     activeNav: '#24e2e5',
     inactiveNavBackground: '#262626',

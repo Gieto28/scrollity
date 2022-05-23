@@ -16,25 +16,32 @@ import {
   PostButtonIcon,
 } from './Styled.PostComponent';
 import useDeviceColor from '../../hooks/useDeviceColor';
+import {useNavigation} from '@react-navigation/native';
+import {HomeStackParams} from '../../navigation/AppStack/HomeScreenStack';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 interface Props {
-  name: string;
+  title: string;
   source: any;
   description: string;
   upVotes: number;
   downVotes: number;
   postId: string;
-  commentsNumber: number;
+  commentsAmount?: number;
+  postObject: {} | undefined;
+  comments?: boolean;
 }
 
 const PostComponent: React.FC<Props> = ({
-  name,
+  title,
   source,
   description,
   upVotes,
   downVotes,
   postId,
-  commentsNumber,
+  commentsAmount,
+  postObject,
+  comments,
 }) => {
   const theme = useDeviceColor();
 
@@ -56,28 +63,44 @@ const PostComponent: React.FC<Props> = ({
     }
   };
 
+  const checkIfMediaExists = () => {
+    if (source) {
+      return (
+        <PostMedia
+          source={source}
+          resizeMode="contain"
+          accessibilityLabel={title}
+        />
+      );
+    }
+  };
+
   const handleUpVote = (postId: string) => {
     console.log('Upvote Button widh id:', postId);
   };
   const handleDownVote = (postId: string) => {
     console.log('DownVote Button with id:', postId);
   };
-  const handleCommentsScreen = (postId: string) => {
-    console.log('Redirect post to comments with id:', postId);
+
+  const navigation = useNavigation<StackNavigationProp<HomeStackParams>>();
+
+  const handleCommentsScreen = (postObject: any) => {
+    console.log('Redirect post to comments with object:', postObject);
+    console.log({postObject});
+
+    navigation.navigate('CommentsScreen', {
+      postObject,
+    });
   };
 
   return (
     <PostFullWidth>
       <PostWrapper>
         <PostHeader>
-          <PostTitle>{name}</PostTitle>
+          <PostTitle>{title}</PostTitle>
         </PostHeader>
         <PostBody>
-          <PostMedia
-            source={require('../../assets/Images/Logo-NBG.png')}
-            resizeMode="contain"
-            accessibilityLabel={name}
-          />
+          {checkIfMediaExists()}
           {checkIfDescriptionExists()}
         </PostBody>
         <PostFooter>
@@ -98,13 +121,18 @@ const PostComponent: React.FC<Props> = ({
             </PostButtonIcon>
           </PostValuesWrapper>
           <PostValuesWrapper>
-            <PostButtonIcon onPress={() => handleCommentsScreen(postId)}>
-              <PostMessageIcon
-                source={commentsIcon}
-                accessibilityLabel="Comments Icon, redirects to comments screen"
-              />
-            </PostButtonIcon>
-            <PostValues>{commentsNumber}</PostValues>
+            {comments && (
+              <>
+                <PostButtonIcon
+                  onPress={() => handleCommentsScreen(postObject)}>
+                  <PostMessageIcon
+                    source={commentsIcon}
+                    accessibilityLabel="Comments Icon, redirects to comments screen"
+                  />
+                </PostButtonIcon>
+                <PostValues>{commentsAmount}</PostValues>
+              </>
+            )}
           </PostValuesWrapper>
         </PostFooter>
       </PostWrapper>
