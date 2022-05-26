@@ -8,7 +8,7 @@ interface ViewScrollProps extends ScrollViewProps {
 
 const ViewScroll = styled.ScrollView<ViewScrollProps>`
   background-color: ${props => props.theme.screen.background};
-  margin-top: 10px;
+  padding-top: 10px;
 `;
 
 export {ViewScroll};

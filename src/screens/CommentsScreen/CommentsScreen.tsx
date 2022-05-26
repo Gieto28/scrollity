@@ -46,6 +46,8 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
         downVotes={object.downVotes}
         postId={object.postId}
         commentsAmount={object.commentsAmount}
+        timeStamp={object.timeStamp}
+        category={object.category}
         comments={false}
         postObject={object}
       />

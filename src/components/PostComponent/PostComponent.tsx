@@ -14,14 +14,19 @@ import {
   PostDownVoteIcon,
   PostMessageIcon,
   PostButtonIcon,
+  PostHeaderTop,
+  PostHeaderTopText,
 } from './Styled.PostComponent';
 import useDeviceColor from '../../hooks/useDeviceColor';
 import {useNavigation} from '@react-navigation/native';
 import {HomeStackParams} from '../../navigation/AppStack/HomeScreenStack';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {Text} from 'react-native';
 
 interface Props {
   title: string;
+  timeStamp: string;
+  category: string;
   source: any;
   description: string;
   upVotes: number;
@@ -34,6 +39,8 @@ interface Props {
 
 const PostComponent: React.FC<Props> = ({
   title,
+  timeStamp,
+  category,
   source,
   description,
   upVotes,
@@ -57,24 +64,6 @@ const PostComponent: React.FC<Props> = ({
     ? require('../../assets/Images/comments-24-dark.png')
     : require('../../assets/Images/comments-24-light.png');
 
-  const checkIfDescriptionExists = () => {
-    if (description) {
-      return <PostDescription>{description}</PostDescription>;
-    }
-  };
-
-  const checkIfMediaExists = () => {
-    if (source) {
-      return (
-        <PostMedia
-          source={source}
-          resizeMode="contain"
-          accessibilityLabel={title}
-        />
-      );
-    }
-  };
-
   const handleUpVote = (postId: string) => {
     console.log('Upvote Button widh id:', postId);
   };
@@ -93,10 +82,33 @@ const PostComponent: React.FC<Props> = ({
     });
   };
 
+  const checkIfDescriptionExists = () => {
+    if (description) {
+      return <PostDescription>{description}</PostDescription>;
+    }
+  };
+
+  const checkIfMediaExists = () => {
+    if (source) {
+      return (
+        <PostMedia
+          source={source}
+          resizeMode="contain"
+          accessibilityLabel={title}
+        />
+      );
+    }
+  };
+
   return (
     <PostFullWidth>
       <PostWrapper>
         <PostHeader>
+          <PostHeaderTop>
+            <PostHeaderTopText>
+              {category} ● {timeStamp}
+            </PostHeaderTopText>
+          </PostHeaderTop>
           <PostTitle>{title}</PostTitle>
         </PostHeader>
         <PostBody>

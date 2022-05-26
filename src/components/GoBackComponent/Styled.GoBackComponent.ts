@@ -1,7 +1,12 @@
 import styled from 'styled-components/native';
 
 const GoBackButton = styled.Text`
-  margin: 0 0 0 32px;
+  max-width: 24px;
+  min-height: 28px;
+  margin-left: 10px;
+  margin-top: 3px;
 `;
 
-export {GoBackButton};
+const GoBackIcon = styled.Image``;
+
+export {GoBackButton, GoBackIcon};

@@ -34,6 +34,7 @@ const PostFullWidth = styled.View<PropsView>`
   justify-content: center;
   width: 100%;
 `;
+
 const PostWrapper = styled.View<PropsView>`
   border-bottom-width: 1px;
   border-style: solid;
@@ -41,8 +42,22 @@ const PostWrapper = styled.View<PropsView>`
 `;
 
 const PostHeader = styled.View<PropsView>`
+  border-top-width: 1px;
+  border-top-color: ${props => props.theme.input.border};
+  padding-top: 10px;
   margin: 8px 16px 10px 16px;
+  display: flex;
 `;
+
+const PostHeaderTop = styled.View<PropsView>``;
+
+const PostHeaderTopText = styled.Text<PropsText>``;
+
+const PostTitle = styled.Text<PropsText>`
+  font-size: ${props => props.theme.fonts.fontSize.lg};
+  color: ${props => props.theme.screen.text};
+`;
+
 const PostBody = styled.View<PropsView>`
   max-width: 100%;
   height: auto;
@@ -51,10 +66,6 @@ const PostBody = styled.View<PropsView>`
   border-top-color: ${props => props.theme.button.border};
   border-bottom-color: ${props => props.theme.button.border};
   margin-bottom: 3px;
-`;
-const PostTitle = styled.Text<PropsText>`
-  font-size: ${props => props.theme.fonts.fontSize.lg};
-  color: ${props => props.theme.screen.text};
 `;
 const PostMedia = styled.Image<PropsImage>`
   max-width: 100%;
@@ -102,6 +113,7 @@ const PostMessageIcon = styled.Image<PropsImage>`
 `;
 
 export {
+  PostHeaderTop,
   PostFullWidth,
   PostWrapper,
   PostMedia,
@@ -116,4 +128,5 @@ export {
   PostValues,
   PostButtonIcon,
   PostMessageIcon,
+  PostHeaderTopText,
 };

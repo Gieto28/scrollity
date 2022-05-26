@@ -2,16 +2,25 @@ import React, {useEffect} from 'react';
 
 import {Controller} from 'react-hook-form';
 
-import {TextInputStyled, Label} from './Styled.InputTextComponent';
+import {
+  Input,
+  Label,
+  SubmitButton,
+  IconImage,
+  InputWrapper,
+} from './Styled.InputTextComponent';
 import useDeviceColor from '../../hooks/useDeviceColor';
 
 interface Props {
   placeholder: string;
-  onChangeText?: () => void | undefined;
   value: string;
   controllerName: string;
   control: any;
   errors?: any;
+  image?: any;
+  onChangeText?: () => void | undefined;
+  onPress?: () => void;
+  onSubmitEditing?: () => void;
 
   // label
   label?: string;
@@ -20,9 +29,6 @@ interface Props {
   borderColor?: string;
   backgroundColor?: string;
   placeholderColor?: string;
-
-  // icon
-  icon?: any;
   securedBoolean?: boolean;
 }
 
@@ -32,6 +38,8 @@ const InputTextComponent: React.FC<Props> = ({
   errors,
   placeholder,
   securedBoolean,
+  onPress,
+  onSubmitEditing,
 
   // label
   label,
@@ -41,7 +49,7 @@ const InputTextComponent: React.FC<Props> = ({
   backgroundColor,
 
   // icon
-  icon,
+  image,
 }) => {
   useEffect(() => {
     console.log('Error', errors);
@@ -50,7 +58,7 @@ const InputTextComponent: React.FC<Props> = ({
   const theme = useDeviceColor();
 
   return (
-    <>
+    <InputWrapper>
       <Label>{label && `${label}:`}</Label>
       <Controller
         control={control}
@@ -58,7 +66,7 @@ const InputTextComponent: React.FC<Props> = ({
           required: true,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInputStyled
+          <Input
             placeholder={placeholder}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -67,13 +75,19 @@ const InputTextComponent: React.FC<Props> = ({
             backgroundColor={backgroundColor}
             secureTextEntry={securedBoolean && true}
             placeholderTextColor={theme.input.text}
+            onSubmitEditing={onSubmitEditing}
           />
         )}
         name={controllerName}
       />
-      {icon && icon}
+      {image && (
+        <SubmitButton onPress={onPress}>
+          <IconImage source={image} />
+        </SubmitButton>
+      )}
+
       {errors && <Label>This field is required!</Label>}
-    </>
+    </InputWrapper>
   );
 };
 

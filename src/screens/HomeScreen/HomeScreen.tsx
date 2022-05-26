@@ -1,6 +1,6 @@
 import {View} from 'react-native';
 import React, {useState} from 'react';
-import {PostComponent, SearchComponent} from '../../components';
+import {InputTextComponent, PostComponent} from '../../components';
 import {useForm} from 'react-hook-form';
 import {AppScrollView, AppView} from '../../styles/GlobalStyle';
 import {
@@ -10,7 +10,9 @@ import {
   CategoryView,
   HomeLabel,
   LabelWrapper,
+  SearchView,
 } from './Styled.HomeScreen';
+import useDeviceColor from '../../hooks/useDeviceColor';
 
 interface CategoryArrayProps {
   category: string;
@@ -25,12 +27,6 @@ const HomeScreen = () => {
     },
   });
 
-  const searchData = (data: {}) => {
-    console.log('search', data);
-  };
-
-  const [categoryId, setCategoryId] = useState<number>(0);
-
   const [categoryArray, setCategoryArray] = useState<CategoryArrayProps[]>([
     {category: 'Top', id: 0},
     {category: 'New', id: 1},
@@ -39,22 +35,37 @@ const HomeScreen = () => {
     {category: 'Help', id: 4},
   ]);
 
+  const [categoryId, setCategoryId] = useState<number>(0);
+
+  const searchData = (data: {}) => {
+    console.log('search', data);
+  };
+
   const currentFilter = categoryArray[categoryId].id;
 
   const handleFilter = (index: number) => {
-    console.log(index);
     setCategoryId(index);
   };
 
   const fakePost = {
     postId: '0101-postId-0101',
-    title: 'example',
+    title:
+      'what if instead of example as an example of a title this becomes a really long title',
     source: require('../../assets/Images/Logo-NBG.png'),
-    description: 'a description',
+    description:
+      'a very unnecessary long description with lots of details about the post, video, image etc',
     upVotes: 4,
     downVotes: 2,
     commentsAmount: 1,
+    timeStamp: '2d ago',
+    category: 'Top',
   };
+
+  const theme = useDeviceColor();
+
+  const image = theme.bool
+    ? require('../../assets/Images/search-24-dark.png')
+    : require('../../assets/Images/search-24-light.png');
 
   return (
     <AppScrollView>
@@ -62,25 +73,26 @@ const HomeScreen = () => {
         <LabelWrapper>
           <HomeLabel>{categoryArray[currentFilter].category}</HomeLabel>
         </LabelWrapper>
-        <SearchComponent
-          value=""
-          controllerName="search"
-          placeholder="Search.."
-          onPress={handleSubmit(searchData)}
-          control={control}
-          onSubmitEditing={handleSubmit(searchData)}
-        />
+        <SearchView>
+          <InputTextComponent
+            value=""
+            controllerName="search"
+            placeholder="Search.."
+            onPress={handleSubmit(searchData)}
+            control={control}
+            onSubmitEditing={handleSubmit(searchData)}
+            image={image}
+          />
+        </SearchView>
         <CategoryScroll horizontal={true}>
           <CategoryView>
-            {categoryArray.map((cat: any, index: number) => {
-              return (
-                <View key={cat.id}>
-                  <CategoryButton onPress={() => handleFilter(index)}>
-                    <CategoryText>{cat.category}</CategoryText>
-                  </CategoryButton>
-                </View>
-              );
-            })}
+            {categoryArray.map((cat: any, index: number) => (
+              <View key={cat.id}>
+                <CategoryButton onPress={() => handleFilter(index)}>
+                  <CategoryText>{cat.category}</CategoryText>
+                </CategoryButton>
+              </View>
+            ))}
           </CategoryView>
         </CategoryScroll>
         {/* here goes a map of all of the posts being retrieved from the axios get */}
@@ -92,6 +104,8 @@ const HomeScreen = () => {
           downVotes={fakePost.downVotes}
           postId={fakePost.postId}
           commentsAmount={fakePost.commentsAmount}
+          category={fakePost.category}
+          timeStamp={fakePost.timeStamp}
           comments={true}
           postObject={fakePost}
         />

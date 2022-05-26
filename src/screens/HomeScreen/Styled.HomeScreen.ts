@@ -25,6 +25,10 @@ const LabelWrapper = styled.View<PropsView>`
   justify-content: center;
 `;
 
+const SearchView = styled.View<PropsView>`
+  padding: 0 15px;
+`;
+
 const CategoryScroll = styled.ScrollView.attrs({
   contentContainerStyle: {
     flexGrow: 1,
@@ -61,4 +65,5 @@ export {
   CategoryText,
   HomeLabel,
   LabelWrapper,
+  SearchView,
 };
