@@ -41,12 +41,6 @@ const HomeScreen = () => {
     console.log('search', data);
   };
 
-  const currentFilter = categoryArray[categoryId].id;
-
-  const handleFilter = (index: number) => {
-    setCategoryId(index);
-  };
-
   const fakePost = {
     postId: '0101-postId-0101',
     title:
@@ -60,6 +54,12 @@ const HomeScreen = () => {
     timeStamp: '2d ago',
     category: 'Top',
   };
+
+  const handleFilter = (index: number) => {
+    setCategoryId(index);
+  };
+
+  const currentFilter = categoryArray[categoryId].id;
 
   return (
     <AppScrollView>
