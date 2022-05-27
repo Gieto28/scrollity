@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  GoBackComponent,
-  InputTextComponent,
-  PostComponent,
-} from '../../components';
+import {InputTextComponent, PostComponent} from '../../components';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HomeStackParams} from '../../navigation/AppStack/HomeScreenStack';
 import {
@@ -14,11 +10,14 @@ import {
 } from './Styled.CommentsScreen';
 import {Text} from 'react-native';
 import {useForm} from 'react-hook-form';
+import {leftArrowIcon, sendCommentIcon} from '../../assets/imagesIndex';
+import IconComponent from '../../components/IconComponent/IconComponent';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<HomeStackParams, 'CommentsScreen'>;
 
 const CommentsScreen: React.FC<Props> = ({route}) => {
-  const {control, handleSubmit} = useForm({
+  const {control, handleSubmit, reset} = useForm({
     defaultValues: {
       comment: '',
     },
@@ -26,18 +25,26 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
 
   // Functions
 
-  const onSubmit = (data: {}) => {
+  const sendComment = (data: {}) => {
     console.log('sending message...');
     console.log(data);
+    reset();
   };
 
   const object = route.params.postObject;
 
-  console.log(object);
+  const navigation = useNavigation();
+  const handleGoBack = () => {
+    navigation.dispatch(CommonActions.goBack());
+  };
 
   return (
     <CommentsView>
-      <GoBackComponent />
+      <IconComponent
+        image={leftArrowIcon}
+        altText={'Go back to previous screen'}
+        onPress={handleGoBack}
+      />
       <PostComponent
         title={object.title}
         source={object.source}
@@ -48,7 +55,6 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
         commentsAmount={object.commentsAmount}
         timeStamp={object.timeStamp}
         category={object.category}
-        comments={false}
         postObject={object}
       />
       <ScrollComments>
@@ -58,10 +64,13 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
       </ScrollComments>
       <SendMessageView>
         <InputTextComponent
+          onPress={handleSubmit(sendComment)}
+          onSubmitEditing={handleSubmit(sendComment)}
           placeholder={'Your comment..'}
           value={''}
           controllerName={'comment'}
           control={control}
+          icon={sendCommentIcon}
         />
       </SendMessageView>
     </CommentsView>

@@ -1,6 +1,6 @@
 import {View} from 'react-native';
 import React from 'react';
-import {ButtonLabel} from './Styled.OpacityButtonComponent';
+import {ButtonLabel} from './Styled.FormButtonComponent';
 import {TouchableOpacity} from 'react-native';
 
 interface Props {
@@ -13,11 +13,8 @@ interface Props {
 }
 
 /**
- * Description
  *
  * Scalable component to be used anywhere, simple to add functionality and customization
- *
- * Functionality
  *
  * @param { string } name
  * @param { function } onPress **used to handle the functions on click**
@@ -27,11 +24,9 @@ interface Props {
  * @param { string } fontWeight **change Font Weight [ default - 400]**
  * @returns **a reusable button component for forms**
  */
-
-const OpacityButtonComponent: React.FC<Props> = ({
+const FormButtonComponent: React.FC<Props> = ({
   name,
   onPress,
-
   //   styling
   fontSize,
   fontWeight,
@@ -47,4 +42,4 @@ const OpacityButtonComponent: React.FC<Props> = ({
   );
 };
 
-export default OpacityButtonComponent;
+export default FormButtonComponent;

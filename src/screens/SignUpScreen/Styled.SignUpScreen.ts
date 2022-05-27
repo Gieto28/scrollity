@@ -1,16 +1,16 @@
-import {TextProps} from 'react-native';
+import {ViewProps} from 'react-native';
 import styled from 'styled-components/native';
 import {ThemeProps} from '../../styles/theme';
 
-interface TitleProps extends TextProps {
+interface PropsView extends ViewProps {
   theme: ThemeProps;
 }
 
-const SignUpTitle = styled.Text<TitleProps>`
-  font-size: 56px;
-  color: ${props => props.theme.screen.text};
-  text-align: center;
-  margin-bottom: 30px;
+const IconWrapper = styled.View<PropsView>`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 4px 24px 0 24px;
 `;
 
-export {SignUpTitle};
+export {IconWrapper};

@@ -1,19 +1,18 @@
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {LoginTitle} from './Styled.SignInScreen';
-
+import {IconWrapper, LoginTitle} from './Styled.SignInScreen';
 import {
   InputTextComponent,
   OpacityButtonComponent,
   SeparatorLineComponent,
-  LightDarkButtonComponent,
+  IconComponent,
 } from '../../components';
-
 import {useNavigation} from '@react-navigation/native';
 import {AuthStackParams} from '../../navigation/AuthStack/AuthStack';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
 import {View} from 'react-native';
+import {lightDarkICon} from '../../assets/imagesIndex';
 
 type SignUpNavigationProp = StackNavigationProp<AuthStackParams, 'SignUp'>;
 
@@ -50,9 +49,19 @@ const SignInScreen: React.FC = () => {
     navigation.navigate('SignUp');
   };
 
+  const handleTheme = () => {
+    console.log('theme');
+  };
+
   return (
     <AuthScrollView>
-      <LightDarkButtonComponent />
+      <IconWrapper>
+        <IconComponent
+          image={lightDarkICon}
+          altText={'Light dark icon to change theme'}
+          onPress={handleTheme}
+        />
+      </IconWrapper>
       <AuthView>
         <LoginTitle>Scrollity</LoginTitle>
 

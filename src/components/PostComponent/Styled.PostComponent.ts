@@ -45,7 +45,7 @@ const PostHeader = styled.View<PropsView>`
   border-top-width: 1px;
   border-top-color: ${props => props.theme.input.border};
   padding-top: 10px;
-  margin: 8px 16px 10px 16px;
+  margin: 0 16px 10px 16px;
   display: flex;
 `;
 

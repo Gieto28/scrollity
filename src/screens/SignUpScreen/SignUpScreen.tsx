@@ -1,14 +1,14 @@
 import React from 'react';
-import {SignUpTitle} from './Styled.SignUpScreen';
 import {useForm} from 'react-hook-form';
-import {CommonActions, useNavigation} from '@react-navigation/native';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
 import {
-  LightDarkButtonComponent,
   InputTextComponent,
   OpacityButtonComponent,
-  GoBackComponent,
+  IconComponent,
 } from '../../components';
+import {leftArrowIcon, lightDarkICon} from '../../assets/imagesIndex';
+import {CommonActions, useNavigation} from '@react-navigation/native';
+import {IconWrapper} from './Styled.SignUpScreen';
 
 const SignUpScreen = () => {
   // Form handler
@@ -33,10 +33,29 @@ const SignUpScreen = () => {
     console.log(data);
   };
 
+  const navigation = useNavigation();
+  const handleGoBack = () => {
+    navigation.dispatch(CommonActions.goBack());
+  };
+
+  const handleTheme = () => {
+    console.log('theme');
+  };
+
   return (
     <AuthScrollView>
-      <LightDarkButtonComponent />
-      <GoBackComponent />
+      <IconWrapper>
+        <IconComponent
+          image={leftArrowIcon}
+          altText={'Go back to previous screen'}
+          onPress={handleGoBack}
+        />
+        <IconComponent
+          image={lightDarkICon}
+          altText={'Light dark icon to change theme'}
+          onPress={handleTheme}
+        />
+      </IconWrapper>
       <AuthView>
         <InputTextComponent
           placeholder="Your Username"

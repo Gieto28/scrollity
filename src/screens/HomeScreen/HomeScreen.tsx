@@ -12,7 +12,7 @@ import {
   LabelWrapper,
   SearchView,
 } from './Styled.HomeScreen';
-import useDeviceColor from '../../hooks/useDeviceColor';
+import {searchIcon} from '../../assets/imagesIndex';
 
 interface CategoryArrayProps {
   category: string;
@@ -61,12 +61,6 @@ const HomeScreen = () => {
     category: 'Top',
   };
 
-  const theme = useDeviceColor();
-
-  const image = theme.bool
-    ? require('../../assets/Images/search-24-dark.png')
-    : require('../../assets/Images/search-24-light.png');
-
   return (
     <AppScrollView>
       <AppView>
@@ -81,7 +75,7 @@ const HomeScreen = () => {
             onPress={handleSubmit(searchData)}
             control={control}
             onSubmitEditing={handleSubmit(searchData)}
-            image={image}
+            icon={searchIcon}
           />
         </SearchView>
         <CategoryScroll horizontal={true}>
@@ -106,7 +100,7 @@ const HomeScreen = () => {
           commentsAmount={fakePost.commentsAmount}
           category={fakePost.category}
           timeStamp={fakePost.timeStamp}
-          comments={true}
+          IconToCommentsScreen={true}
           postObject={fakePost}
         />
       </AppView>

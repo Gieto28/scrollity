@@ -1,4 +1,4 @@
-import {ScrollResponderMixin, ScrollViewProps, ViewProps} from 'react-native';
+import {ScrollViewProps, ViewProps} from 'react-native';
 import styled from 'styled-components/native';
 import {ThemeProps} from '../../styles/theme';
 

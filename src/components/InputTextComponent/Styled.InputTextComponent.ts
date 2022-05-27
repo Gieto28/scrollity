@@ -18,12 +18,10 @@ interface PropsView extends ViewProps {
   theme: ThemeProps;
 }
 
-const InputWrapper = styled.View<PropsView>`
-  position: relative;
-`;
+const InputWrapper = styled.View<PropsView>``;
 
 const Input = styled.TextInput<Props>`
-  margin: 10px;
+  margin: 12px;
   border: 1px solid ${props => props.theme.input.border};
   background-color: ${props => props.theme.input.background};
   border-radius: 10px;
@@ -40,7 +38,7 @@ const SubmitButton = styled.TouchableOpacity<IconButtonProps>`
   height: ${props => props.theme.SearchButton.height};
   position: absolute;
   right: 20px;
-  top: 48px;
+  top: 32px;
   z-index: 1;
 `;
 

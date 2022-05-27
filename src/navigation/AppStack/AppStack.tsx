@@ -4,6 +4,11 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import useDeviceColor from '../../hooks/useDeviceColor';
 import {NavIconComponent} from '../../components';
 import HomeScreenStack, {HomeStackParams} from './HomeScreenStack';
+import {
+  homeIcon,
+  notificationIcon,
+  profileIcon,
+} from '../../assets/imagesIndex';
 
 type NavigationParams = {
   HomeScreenStack: HomeStackParams;
@@ -18,18 +23,6 @@ const AppStack: React.FC = () => {
   const theme = useDeviceColor();
 
   const [notificationAmount, setNotificationAmount] = useState(5);
-
-  const notificationIcon = theme.bool
-    ? require('../../assets/Images/notifications-24-dark.png')
-    : require('../../assets/Images/notifications-24-light.png');
-
-  const homeIcon = theme.bool
-    ? require('../../assets/Images/infinity-30-dark.png')
-    : require('../../assets/Images/infinity-30-light.png');
-
-  const profileIcon = theme.bool
-    ? require('../../assets/Images/person-24-dark.png')
-    : require('../../assets/Images/person-24-light.png');
 
   return (
     <AppStackNavigation.Navigator
@@ -62,7 +55,7 @@ const AppStack: React.FC = () => {
           },
           tabBarAccessibilityLabel: 'Button to Notifications Screen',
           tabBarIcon: ({focused}) => (
-            <NavIconComponent focused={focused} source={notificationIcon} />
+            <NavIconComponent focused={focused} image={notificationIcon} />
           ),
         }}
       />
@@ -72,7 +65,7 @@ const AppStack: React.FC = () => {
         options={{
           tabBarAccessibilityLabel: 'Button to Home Screen',
           tabBarIcon: ({focused}) => (
-            <NavIconComponent focused={focused} source={homeIcon} />
+            <NavIconComponent focused={focused} image={homeIcon} />
           ),
         }}
       />
@@ -80,7 +73,7 @@ const AppStack: React.FC = () => {
         options={{
           tabBarAccessibilityLabel: 'button to Profile Screen',
           tabBarIcon: ({focused}) => (
-            <NavIconComponent focused={focused} source={profileIcon} />
+            <NavIconComponent focused={focused} image={profileIcon} />
           ),
         }}
         name="ProfileScreen"

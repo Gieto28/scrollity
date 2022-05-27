@@ -1,4 +1,4 @@
-import {TextProps, TouchableOpacityProps} from 'react-native';
+import {TextProps} from 'react-native';
 import styled from 'styled-components/native';
 import {ThemeProps} from '../../styles/theme';
 
@@ -7,10 +7,6 @@ interface PropsLabel extends TextProps {
   fontWeight?: string;
   theme: ThemeProps;
 }
-
-// const OpacityButton = styled.TouchableOpacity<PropsButton>`
-//   color: ${props => props.theme.button.text};
-// `;
 
 const ButtonLabel = styled.Text<PropsLabel>`
   color: ${props => props.theme.button.text};

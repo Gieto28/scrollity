@@ -15,19 +15,19 @@ const ParentView = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  padding: 0 12px;
 `;
 
 const Line = styled.View<LineProps>`
   flex: 1;
   background-color: ${props => props.theme.separator.line};
   height: 1px;
-  padding: 0 16px;
 `;
 
 const Label = styled.Text<LabelProps>`
   color: ${props => props.theme.separator.line};
   text-align: center;
-  padding: 0 10px;
+  padding: 0 12px;
   margin: 10px;
 `;
 

@@ -14,8 +14,12 @@ import {
   CardButton,
 } from './Styled.NotificationCardComponent';
 
-// Notification with : and the definition of the type and the types it has in it self
-// Also passing in the prop username to be used in the Text below
+/**
+ * @param postId - id of the post it relates to, we'll use the postId to redirect the user to that post on click
+ * @param likes - amount of likes passed into the component relative to the post
+ * @param username - username of the user that is correctly logged in
+ * @returns
+ */
 const NotificationCardComponent: React.FC<Props> = ({
   username,
   likes,
