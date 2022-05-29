@@ -27,6 +27,8 @@ const theme = {
     alignCenter: 'center',
     alignEnd: 'flex-end',
     alignStart: 'flex-start',
+    directionRow: 'row',
+    directionColumn: 'column',
   },
   screen: {
     padding: '16px',
@@ -99,6 +101,9 @@ const lightTheme = {
     notificationNumberColor: '#fcf7fc',
     notificationCircleColor: '38, 38, 38, 0.5',
   },
+  comment: {
+    text: '#262626',
+  },
 };
 
 const darkTheme = {
@@ -132,6 +137,9 @@ const darkTheme = {
     activeNavBackground: '#1c1c1c',
     notificationNumberColor: '#262626',
     notificationCircleColor: '#262626',
+  },
+  comment: {
+    text: '#fcf7fc',
   },
 };
 

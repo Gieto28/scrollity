@@ -51,7 +51,9 @@ const PostHeader = styled.View<PropsView>`
 
 const PostHeaderTop = styled.View<PropsView>``;
 
-const PostHeaderTopText = styled.Text<PropsText>``;
+const PostHeaderTopText = styled.Text<PropsText>`
+  color: ${props => props.theme.screen.text};
+`;
 
 const PostTitle = styled.Text<PropsText>`
   font-size: ${props => props.theme.fonts.fontSize.lg};
@@ -73,6 +75,7 @@ const PostMedia = styled.Image<PropsImage>`
   max-height: 100%;
 `;
 const PostDescription = styled.Text<PropsText>`
+  color: ${props => props.theme.screen.text};
   font-size: ${props => props.theme.fonts.fontSize.md};
   margin: 3px 16px;
 `;

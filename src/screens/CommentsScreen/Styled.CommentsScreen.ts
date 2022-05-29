@@ -27,6 +27,7 @@ const SendMessageView = styled.View<PropsView>`
   position: absolute;
   width: 100%;
   bottom: 0;
+  right: 0;
   z-index: 1;
 `;
 

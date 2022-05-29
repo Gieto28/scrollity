@@ -55,11 +55,11 @@ const HomeScreen = () => {
     category: 'Top',
   };
 
+  const currentFilter = categoryArray[categoryId].id;
+
   const handleFilter = (index: number) => {
     setCategoryId(index);
   };
-
-  const currentFilter = categoryArray[categoryId].id;
 
   return (
     <AppScrollView>
