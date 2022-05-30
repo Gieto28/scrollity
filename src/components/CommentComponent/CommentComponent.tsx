@@ -1,5 +1,5 @@
 import React from 'react';
-import {upVoteIcon} from '../../assets/imagesIndex';
+import useDeviceColor from '../../hooks/useDeviceColor';
 import IconComponent from '../IconComponent/IconComponent';
 import {
   BodyComment,
@@ -37,6 +37,12 @@ const CommentComponent: React.FC<Props> = ({
   upVotes,
   downVotes,
 }) => {
+  const theme = useDeviceColor();
+
+  const upVoteIcon = theme.bool
+    ? require('../../assets/Images/arrow-24-upvote-dark.png')
+    : require('../../assets/Images/arrow-24-upvote-light.png');
+
   let imageSource;
 
   const checkIfImageExists = () => {
@@ -78,14 +84,14 @@ const CommentComponent: React.FC<Props> = ({
             <CommentVote>{upVotes}</CommentVote>
             <IconComponent
               image={upVoteIcon}
-              altText="number of upvotes this comment has"
+              altText="number of up votes this comment has"
               onPress={handleUpVoteComment}
             />
             <CommentVote>{downVotes}</CommentVote>
             <IconComponent
               image={upVoteIcon}
-              altText="number of upvotes this comment has"
-              onPress={handleUpVoteComment}
+              altText="number of down votes this comment has"
+              onPress={handleDownVoteComment}
             />
           </VotesWrapper>
           <IconComponent

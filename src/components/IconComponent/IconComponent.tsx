@@ -16,7 +16,7 @@ interface Props {
 const IconComponent: React.FC<Props> = ({image, altText, onPress}) => {
   return (
     <IconButton onPress={onPress}>
-      <Icon source={image} accessibilityLabel={altText} />
+      <Icon source={image} accessibilityLabel={altText} resizeMode="contain" />
     </IconButton>
   );
 };

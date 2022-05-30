@@ -12,15 +12,24 @@ import {
   SendMessageView,
   ViewComments,
 } from './Styled.CommentsScreen';
-import {ScrollView, Text} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {useForm} from 'react-hook-form';
-import {leftArrowIcon, sendCommentIcon} from '../../assets/imagesIndex';
 import IconComponent from '../../components/IconComponent/IconComponent';
 import {CommonActions, useNavigation} from '@react-navigation/native';
+import useDeviceColor from '../../hooks/useDeviceColor';
 
 type Props = NativeStackScreenProps<HomeStackParams, 'CommentsScreen'>;
 
 const CommentsScreen: React.FC<Props> = ({route}) => {
+  const theme = useDeviceColor();
+
+  const sendCommentIcon = theme.bool
+    ? require('../../assets/Images/sent-24-dark.png')
+    : require('../../assets/Images/sent-24-light.png');
+  const leftArrowIcon = theme.bool
+    ? require('../../assets/Images/arrow-left-dark-24.png')
+    : require('../../assets/Images/arrow-left-light-24.png');
+
   const {control, handleSubmit, reset} = useForm({
     defaultValues: {
       comment: '',
@@ -56,41 +65,43 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
   };
 
   return (
-    <ScrollView>
-      <CommentsView>
-        <IconComponent
-          image={leftArrowIcon}
-          altText={'Go back to previous screen'}
-          onPress={handleGoBack}
-        />
-        <PostComponent
-          title={object.title}
-          source={object.source}
-          description={object.description}
-          upVotes={object.upVotes}
-          downVotes={object.downVotes}
-          postId={object.postId}
-          commentsAmount={object.commentsAmount}
-          timeStamp={object.timeStamp}
-          category={object.category}
-          postObject={object}
-        />
-        <ScrollComments>
-          <ViewComments>
-            {/* map goes here */}
-            <CommentComponent
-              name={fakeComment.name}
-              image={fakeComment.image}
-              commentId={fakeComment.commentId}
-              commenterId={fakeComment.commenterId}
-              comment={fakeComment.comment}
-              timeStamp={fakeComment.timeStamp}
-              upVotes={fakeComment.upVotes}
-              downVotes={fakeComment.downVotes}
-            />
-          </ViewComments>
-        </ScrollComments>
-      </CommentsView>
+    <View>
+      <ScrollView>
+        <CommentsView>
+          <IconComponent
+            image={leftArrowIcon}
+            altText={'Go back to previous screen'}
+            onPress={handleGoBack}
+          />
+          <PostComponent
+            title={object.title}
+            source={object.source}
+            description={object.description}
+            upVotes={object.upVotes}
+            downVotes={object.downVotes}
+            postId={object.postId}
+            commentsAmount={object.commentsAmount}
+            timeStamp={object.timeStamp}
+            category={object.category}
+            postObject={object}
+          />
+          <ScrollComments>
+            <ViewComments>
+              {/* map goes here */}
+              <CommentComponent
+                name={fakeComment.name}
+                image={fakeComment.image}
+                commentId={fakeComment.commentId}
+                commenterId={fakeComment.commenterId}
+                comment={fakeComment.comment}
+                timeStamp={fakeComment.timeStamp}
+                upVotes={fakeComment.upVotes}
+                downVotes={fakeComment.downVotes}
+              />
+            </ViewComments>
+          </ScrollComments>
+        </CommentsView>
+      </ScrollView>
       <SendMessageView>
         <InputTextComponent
           onPress={handleSubmit(sendComment)}
@@ -102,7 +113,7 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
           icon={sendCommentIcon}
         />
       </SendMessageView>
-    </ScrollView>
+    </View>
   );
 };
 

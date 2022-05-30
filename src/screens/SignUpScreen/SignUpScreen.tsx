@@ -3,14 +3,24 @@ import {useForm} from 'react-hook-form';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
 import {
   InputTextComponent,
-  OpacityButtonComponent,
+  FormButtonComponent,
   IconComponent,
 } from '../../components';
-import {leftArrowIcon, lightDarkICon} from '../../assets/imagesIndex';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {IconWrapper} from './Styled.SignUpScreen';
+import useDeviceColor from '../../hooks/useDeviceColor';
 
 const SignUpScreen = () => {
+  const theme = useDeviceColor();
+
+  const leftArrowIcon = theme.bool
+    ? require('../../assets/Images/arrow-left-dark-24.png')
+    : require('../../assets/Images/arrow-left-light-24.png');
+
+  const lightDarkICon = theme.bool
+    ? require('../../assets/Images/moon-30.png')
+    : require('../../assets/Images/sun-50.png');
+
   // Form handler
 
   const {
@@ -90,7 +100,7 @@ const SignUpScreen = () => {
           label="Confirm Password"
         />
 
-        <OpacityButtonComponent
+        <FormButtonComponent
           name="Sign up"
           onPress={handleSubmit(handleSignUp)}
         />

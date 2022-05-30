@@ -7,17 +7,17 @@ import {lightTheme, darkTheme} from '../styles/theme';
  */
 const useDeviceColor = () => {
   const deviceTheme = useColorScheme();
-  const [colorTheme, setColorTheme] = useState(darkTheme);
+  const [theme, setTheme] = useState(darkTheme);
 
   useEffect(() => {
     if (deviceTheme === 'light') {
-      setColorTheme(lightTheme);
+      setTheme(lightTheme);
     } else if (deviceTheme === 'dark') {
-      setColorTheme(darkTheme);
+      setTheme(darkTheme);
     }
   }, [deviceTheme]);
 
-  return colorTheme;
+  return theme;
 };
 
 export default useDeviceColor;

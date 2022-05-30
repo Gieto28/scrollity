@@ -1,18 +1,20 @@
-import {View} from 'react-native';
+import {Animated, View} from 'react-native';
 import React, {useState} from 'react';
 import {InputTextComponent, PostComponent} from '../../components';
 import {useForm} from 'react-hook-form';
 import {AppScrollView, AppView} from '../../styles/GlobalStyle';
 import {
   CategoryButton,
-  CategoryScroll,
   CategoryText,
   CategoryView,
   HomeLabel,
+  HomeScreenWrapper,
   LabelWrapper,
+  scrollY,
   SearchView,
+  styledAnimation,
 } from './Styled.HomeScreen';
-import {searchIcon} from '../../assets/imagesIndex';
+import useDeviceColor from '../../hooks/useDeviceColor';
 
 interface CategoryArrayProps {
   category: string;
@@ -20,6 +22,12 @@ interface CategoryArrayProps {
 }
 
 const HomeScreen = () => {
+  const theme = useDeviceColor();
+
+  const searchIcon = theme.bool
+    ? require('../../assets/Images/search-24-dark.png')
+    : require('../../assets/Images/search-24-light.png');
+
   // search handler
   const {control, handleSubmit} = useForm({
     defaultValues: {
@@ -61,50 +69,80 @@ const HomeScreen = () => {
     setCategoryId(index);
   };
 
+  const handleAnimateOnScroll = (e: any) => {
+    scrollY.setValue(e.nativeEvent.contentOffset.y);
+  };
+
   return (
-    <AppScrollView>
-      <AppView>
-        <LabelWrapper>
-          <HomeLabel>{categoryArray[currentFilter].category}</HomeLabel>
-        </LabelWrapper>
-        <SearchView>
-          <InputTextComponent
-            value=""
-            controllerName="search"
-            placeholder="Search.."
-            onPress={handleSubmit(searchData)}
-            control={control}
-            onSubmitEditing={handleSubmit(searchData)}
-            icon={searchIcon}
+    <HomeScreenWrapper>
+      <Animated.View style={styledAnimation}>
+        <CategoryView>
+          {categoryArray.map((cat: any, index: number) => (
+            <CategoryButton key={cat.id} onPress={() => handleFilter(index)}>
+              <CategoryText>{cat.category}</CategoryText>
+            </CategoryButton>
+          ))}
+        </CategoryView>
+      </Animated.View>
+      <AppScrollView onScroll={e => handleAnimateOnScroll(e)}>
+        <AppView>
+          <LabelWrapper>
+            <HomeLabel>{categoryArray[currentFilter].category}</HomeLabel>
+          </LabelWrapper>
+          <SearchView>
+            <InputTextComponent
+              value=""
+              controllerName="search"
+              placeholder="Search.."
+              onPress={handleSubmit(searchData)}
+              control={control}
+              onSubmitEditing={handleSubmit(searchData)}
+              icon={searchIcon}
+            />
+          </SearchView>
+          {/* here goes a map of all of the posts being retrieved from the axios get */}
+          <PostComponent
+            title={fakePost.title}
+            source={fakePost.source}
+            description={fakePost.description}
+            upVotes={fakePost.upVotes}
+            downVotes={fakePost.downVotes}
+            postId={fakePost.postId}
+            commentsAmount={fakePost.commentsAmount}
+            category={fakePost.category}
+            timeStamp={fakePost.timeStamp}
+            IconToCommentsScreen={true}
+            postObject={fakePost}
           />
-        </SearchView>
-        <CategoryScroll horizontal={true}>
-          <CategoryView>
-            {categoryArray.map((cat: any, index: number) => (
-              <View key={cat.id}>
-                <CategoryButton onPress={() => handleFilter(index)}>
-                  <CategoryText>{cat.category}</CategoryText>
-                </CategoryButton>
-              </View>
-            ))}
-          </CategoryView>
-        </CategoryScroll>
-        {/* here goes a map of all of the posts being retrieved from the axios get */}
-        <PostComponent
-          title={fakePost.title}
-          source={fakePost.source}
-          description={fakePost.description}
-          upVotes={fakePost.upVotes}
-          downVotes={fakePost.downVotes}
-          postId={fakePost.postId}
-          commentsAmount={fakePost.commentsAmount}
-          category={fakePost.category}
-          timeStamp={fakePost.timeStamp}
-          IconToCommentsScreen={true}
-          postObject={fakePost}
-        />
-      </AppView>
-    </AppScrollView>
+          <PostComponent
+            title={fakePost.title}
+            source={fakePost.source}
+            description={fakePost.description}
+            upVotes={fakePost.upVotes}
+            downVotes={fakePost.downVotes}
+            postId={fakePost.postId}
+            commentsAmount={fakePost.commentsAmount}
+            category={fakePost.category}
+            timeStamp={fakePost.timeStamp}
+            IconToCommentsScreen={true}
+            postObject={fakePost}
+          />
+          <PostComponent
+            title={fakePost.title}
+            source={fakePost.source}
+            description={fakePost.description}
+            upVotes={fakePost.upVotes}
+            downVotes={fakePost.downVotes}
+            postId={fakePost.postId}
+            commentsAmount={fakePost.commentsAmount}
+            category={fakePost.category}
+            timeStamp={fakePost.timeStamp}
+            IconToCommentsScreen={true}
+            postObject={fakePost}
+          />
+        </AppView>
+      </AppScrollView>
+    </HomeScreenWrapper>
   );
 };
 

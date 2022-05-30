@@ -62,10 +62,15 @@ const theme = {
       fontSize: '20px',
     },
   },
-
   notificationCard: {
     marginX: '15px',
     marginY: '5px',
+  },
+  comment: {
+    fontSize: {
+      name: '24px',
+      description: '20px',
+    },
   },
 };
 

@@ -4,12 +4,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import useDeviceColor from '../../hooks/useDeviceColor';
 import {NavIconComponent} from '../../components';
 import HomeScreenStack, {HomeStackParams} from './HomeScreenStack';
-import {
-  homeIcon,
-  notificationIcon,
-  profileIcon,
-} from '../../assets/imagesIndex';
-
 type NavigationParams = {
   HomeScreenStack: HomeStackParams;
   LoginScreen: () => JSX.Element;
@@ -21,6 +15,18 @@ const AppStackNavigation = createBottomTabNavigator<NavigationParams>();
 
 const AppStack: React.FC = () => {
   const theme = useDeviceColor();
+
+  const notificationIcon = theme.bool
+    ? require('../../assets/Images/notifications-24-dark.png')
+    : require('../../assets/Images/notifications-24-light.png');
+
+  const homeIcon = theme.bool
+    ? require('../../assets/Images/infinity-30-dark.png')
+    : require('../../assets/Images/infinity-30-light.png');
+
+  const profileIcon = theme.bool
+    ? require('../../assets/Images/person-24-dark.png')
+    : require('../../assets/Images/person-24-light.png');
 
   const [notificationAmount, setNotificationAmount] = useState(5);
 

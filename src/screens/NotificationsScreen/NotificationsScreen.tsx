@@ -1,4 +1,3 @@
-import {ScrollView} from 'react-native';
 import React from 'react';
 import {NotificationCardComponent} from '../../components';
 import {ViewScroll} from './Styled.NotificationsScreen';

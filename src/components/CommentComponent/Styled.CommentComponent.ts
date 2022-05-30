@@ -49,6 +49,7 @@ const BodyComment = styled.View``;
 
 const Comment = styled.Text<PropsText>`
   font-size: ${props => props.theme.fonts.fontSize.md};
+  color: ${props => props.theme.comment.text};
 `;
 
 const VotesWrapper = styled.View<PropsView>`
@@ -57,6 +58,7 @@ const VotesWrapper = styled.View<PropsView>`
 `;
 
 const CommentVote = styled.Text<PropsText>`
+  color: ${props => props.theme.screen.text};
   font-size: ${props => props.theme.fonts.fontSize.md};
   margin-left: 10px;
 `;

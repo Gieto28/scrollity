@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form';
 import {IconWrapper, LoginTitle} from './Styled.SignInScreen';
 import {
   InputTextComponent,
-  OpacityButtonComponent,
+  FormButtonComponent,
   SeparatorLineComponent,
   IconComponent,
 } from '../../components';
@@ -12,11 +12,17 @@ import {AuthStackParams} from '../../navigation/AuthStack/AuthStack';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
 import {View} from 'react-native';
-import {lightDarkICon} from '../../assets/imagesIndex';
+import useDeviceColor from '../../hooks/useDeviceColor';
 
 type SignUpNavigationProp = StackNavigationProp<AuthStackParams, 'SignUp'>;
 
 const SignInScreen: React.FC = () => {
+  const theme = useDeviceColor();
+
+  const lightDarkICon = theme.bool
+    ? require('../../assets/Images/moon-30.png')
+    : require('../../assets/Images/sun-50.png');
+
   // States
 
   const [passwordShown, setPasswordShown] = useState(true);
@@ -86,15 +92,12 @@ const SignInScreen: React.FC = () => {
           label="Password"
         />
 
-        <OpacityButtonComponent
-          name="Sign in"
-          onPress={handleSubmit(onSubmit)}
-        />
+        <FormButtonComponent name="Sign in" onPress={handleSubmit(onSubmit)} />
 
         <SeparatorLineComponent labelName="or" />
 
         <View>
-          <OpacityButtonComponent
+          <FormButtonComponent
             name="Sign up"
             fontSize="16px"
             fontWeight="400"

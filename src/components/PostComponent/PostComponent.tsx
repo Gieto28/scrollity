@@ -20,7 +20,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {HomeStackParams} from '../../navigation/AppStack/HomeScreenStack';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {commentsIcon, downVoteIcon, upVoteIcon} from '../../assets/imagesIndex';
+import useDeviceColor from '../../hooks/useDeviceColor';
 
 interface Props {
   title: string;
@@ -64,6 +64,20 @@ const PostComponent: React.FC<Props> = ({
   postObject,
   IconToCommentsScreen,
 }) => {
+  const theme = useDeviceColor();
+
+  const upVoteIcon = theme.bool
+    ? require('../../assets/Images/arrow-24-upvote-dark.png')
+    : require('../../assets/Images/arrow-24-upvote-light.png');
+
+  const downVoteIcon = theme.bool
+    ? require('../../assets/Images/arrow-24-downvote-dark.png')
+    : require('../../assets/Images/arrow-24-downvote-light.png');
+
+  const commentsIcon = theme.bool
+    ? require('../../assets/Images/comments-24-dark.png')
+    : require('../../assets/Images/comments-24-light.png');
+
   const handleUpVote = (postId: string) => {
     console.log('Upvote Button widh id:', postId);
   };
