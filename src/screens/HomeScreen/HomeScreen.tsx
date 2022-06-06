@@ -1,20 +1,34 @@
-import {Animated, View} from 'react-native';
-import React, {useState} from 'react';
-import {InputTextComponent, PostComponent} from '../../components';
+import {Animated, ScrollView, Text} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {
+  IconComponent,
+  InputTextComponent,
+  PostComponent,
+} from '../../components';
 import {useForm} from 'react-hook-form';
 import {AppScrollView, AppView} from '../../styles/GlobalStyle';
 import {
   CategoryButton,
+  CategoryScroll,
   CategoryText,
   CategoryView,
   HomeLabel,
   HomeScreenWrapper,
+  HorizontalScrollWrapper,
+  IconsWrapper,
+  CreatePostIcon,
   LabelWrapper,
   scrollY,
+  scrollYIconsWrapper,
   SearchView,
-  styledAnimation,
+  styledHeaderAnimation,
+  styledIConsWrapperAnimation,
+  ToTopIconView,
 } from './Styled.HomeScreen';
 import useDeviceColor from '../../hooks/useDeviceColor';
+import {useNavigation, useScrollToTop} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {HomeStackParams} from '../../navigation/AppStack/HomeScreenStack';
 
 interface CategoryArrayProps {
   category: string;
@@ -27,6 +41,14 @@ const HomeScreen = () => {
   const searchIcon = theme.bool
     ? require('../../assets/Images/search-24-dark.png')
     : require('../../assets/Images/search-24-light.png');
+
+  const createPostIcon = theme.bool
+    ? require('../../assets/Images/add-50-dark.png')
+    : require('../../assets/Images/add-50-light.png');
+
+  const ToTopIcon = theme.bool
+    ? require('../../assets/Images/to-top-46-dark.png')
+    : require('../../assets/Images/to-top-46-light.png');
 
   // search handler
   const {control, handleSubmit} = useForm({
@@ -41,6 +63,8 @@ const HomeScreen = () => {
     {category: 'Funny', id: 2},
     {category: 'Pet', id: 3},
     {category: 'Help', id: 4},
+    {category: 'Other', id: 5},
+    {category: 'Random', id: 6},
   ]);
 
   const [categoryId, setCategoryId] = useState<number>(0);
@@ -71,11 +95,27 @@ const HomeScreen = () => {
 
   const handleAnimateOnScroll = (e: any) => {
     scrollY.setValue(e.nativeEvent.contentOffset.y);
+    scrollYIconsWrapper.setValue(e.nativeEvent.contentOffset.y);
+  };
+
+  const navigation = useNavigation<StackNavigationProp<HomeStackParams>>();
+
+  const handleRedirectToCreatePostScreen = () => {
+    navigation.navigate('CreatePostScreen');
+  };
+
+  const refScroll = useRef<ScrollView | null>(null);
+
+  const handleBackToTop = () => {
+    console.log('to top icon');
+    refScroll?.current?.scrollTo({x: 0, y: 0, animated: true});
   };
 
   return (
     <HomeScreenWrapper>
-      <Animated.View style={styledAnimation}>
+      <Animated.View style={styledHeaderAnimation}>
+        {/* <HorizontalScrollWrapper>
+          <CategoryScroll horizontal> */}
         <CategoryView>
           {categoryArray.map((cat: any, index: number) => (
             <CategoryButton key={cat.id} onPress={() => handleFilter(index)}>
@@ -83,8 +123,10 @@ const HomeScreen = () => {
             </CategoryButton>
           ))}
         </CategoryView>
+        {/* </CategoryScroll>
+        </HorizontalScrollWrapper> */}
       </Animated.View>
-      <AppScrollView onScroll={e => handleAnimateOnScroll(e)}>
+      <AppScrollView ref={refScroll} onScroll={e => handleAnimateOnScroll(e)}>
         <AppView>
           <LabelWrapper>
             <HomeLabel>{categoryArray[currentFilter].category}</HomeLabel>
@@ -142,6 +184,24 @@ const HomeScreen = () => {
           />
         </AppView>
       </AppScrollView>
+      <Animated.View style={styledIConsWrapperAnimation}>
+        <IconsWrapper>
+          <ToTopIconView>
+            <IconComponent
+              altText="This icon moves you to the top of the screen"
+              image={ToTopIcon}
+              onPress={handleBackToTop}
+            />
+          </ToTopIconView>
+          <CreatePostIcon>
+            <IconComponent
+              altText="This icon redirects you to the create post screen"
+              image={createPostIcon}
+              onPress={handleRedirectToCreatePostScreen}
+            />
+          </CreatePostIcon>
+        </IconsWrapper>
+      </Animated.View>
     </HomeScreenWrapper>
   );
 };

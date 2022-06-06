@@ -16,6 +16,9 @@ interface Props {
   control: any;
   errors?: any;
   icon?: any;
+  multiline?: boolean;
+  numberOfLines?: number;
+  style?: any;
   onChangeText?: () => void | undefined;
   onPress?: () => void;
   onSubmitEditing?: () => void;
@@ -37,6 +40,8 @@ interface Props {
  * @param securedBoolean - **OPTIONAL** boolean value from react-hook-forms which if true makes the string little circles ● instead of the characters. Default is false
  * @param errors - **OPTIONAL** attribute in case your input can't retrieve errors itself and the errors would be checked somewhere else. i.e. search input would have errors checked when fetching and return error or message if no search is found but any search is valid in it self
  * @param icon - **OPTIONAL** icon that shows on the right side of the input text usually for search icons and send icon
+ * @param multiline - **optional** boolean value to determine if the text input can be multiline
+ * @param numberOfLines - number of multi lines when using multiline
  * @param onChangeText - **OPTIONAL** returns value on every change
  * @param onSubmitEditing - **OPTIONAL** needed if you want the user to be able to send with keyboard button
  * @param onPress - **OPTIONAL** complements the icon - it's **NEEDED** if you pass in an icon prop, usually the function is the same as the onChangeText and on SubmitEditing
@@ -47,6 +52,9 @@ const InputTextComponent: React.FC<Props> = ({
   control,
   errors,
   placeholder,
+  multiline,
+  style,
+  numberOfLines,
   securedBoolean,
   onPress,
   onSubmitEditing,
@@ -74,13 +82,16 @@ const InputTextComponent: React.FC<Props> = ({
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
+            style={style}
             placeholder={placeholder}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            secureTextEntry={securedBoolean && true}
+            secureTextEntry={securedBoolean}
             placeholderTextColor={theme.input.text}
             onSubmitEditing={onSubmitEditing}
+            multiline={multiline}
+            numberOfLines={numberOfLines}
           />
         )}
         name={controllerName}

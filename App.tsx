@@ -6,7 +6,7 @@ import {ThemeProvider} from 'styled-components';
 import useDeviceColor from './src/hooks/useDeviceColor';
 
 const App: React.FC = () => {
-  const isSignedIn = true;
+  const isSignedIn = false;
   const renderApp = () => {
     return isSignedIn ? <AppStack /> : <AuthStack />;
   };

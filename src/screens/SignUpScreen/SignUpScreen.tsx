@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
 import {
@@ -20,6 +20,10 @@ const SignUpScreen = () => {
   const lightDarkICon = theme.bool
     ? require('../../assets/Images/moon-30.png')
     : require('../../assets/Images/sun-50.png');
+
+  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
+  const [isPasswordConfirmationHidden, setIsPasswordConfirmationHidden] =
+    useState<boolean>(true);
 
   // Form handler
 
@@ -90,6 +94,7 @@ const SignUpScreen = () => {
           control={control}
           errors={errors.signUpPassword}
           label="Your Password"
+          securedBoolean={isPasswordHidden}
         />
         <InputTextComponent
           placeholder="Confirm Password"
@@ -98,6 +103,7 @@ const SignUpScreen = () => {
           control={control}
           errors={errors.signUpPasswordConfirmation?.type}
           label="Confirm Password"
+          securedBoolean={isPasswordConfirmationHidden}
         />
 
         <FormButtonComponent

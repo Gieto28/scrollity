@@ -13,6 +13,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
 import {View} from 'react-native';
 import useDeviceColor from '../../hooks/useDeviceColor';
+import axios from 'axios';
 
 type SignUpNavigationProp = StackNavigationProp<AuthStackParams, 'SignUp'>;
 
@@ -25,7 +26,7 @@ const SignInScreen: React.FC = () => {
 
   // States
 
-  const [passwordShown, setPasswordShown] = useState(true);
+  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
 
   // Form handler
 
@@ -42,9 +43,8 @@ const SignInScreen: React.FC = () => {
 
   // Functions
 
-  const onSubmit = (data: {}) => {
-    console.log('hello');
-    console.log(data);
+  const onSubmit = async (data: {}) => {
+    await axios.post('http://localhost:3003/auth/login', data);
   };
 
   const navigation = useNavigation<SignUpNavigationProp>();
@@ -87,7 +87,7 @@ const SignInScreen: React.FC = () => {
           controllerName="password"
           control={control}
           errors={errors.password}
-          securedBoolean={passwordShown}
+          securedBoolean={isPasswordHidden}
           // label
           label="Password"
         />
