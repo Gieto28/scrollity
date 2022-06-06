@@ -1,18 +1,22 @@
-import axios, {AxiosRequestConfig} from 'axios';
-import {AsyncStorage} from 'react-native';
-
-const apiKey = 'b459e351-e1e6-412d-b59b-653cc5eec642';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+import {X_API_KEY, URL} from '../utils/env';
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3003',
+  baseURL: URL,
+  headers: {
+    'api-key': X_API_KEY,
+  },
 });
 
-api.interceptors.request.use((config: AxiosRequestConfig<any>) => {
-  const token = AsyncStorage.getItem('token');
-
-  if (token) {
-    config.headers = {Authorization: `Bearer ${token}`};
-  }
-
-  return config;
-});
+api.interceptors.request.use(
+  (response: any) => {
+    console.log(URL);
+    return response;
+  },
+  (error: any) => {
+    if (error.response.status === 401) {
+      console.log('error 401');
+    }
+  },
+);

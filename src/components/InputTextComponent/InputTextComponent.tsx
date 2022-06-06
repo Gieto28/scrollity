@@ -102,7 +102,7 @@ const InputTextComponent: React.FC<Props> = ({
         </SubmitButton>
       )}
 
-      {errors && <Label>This field is required!</Label>}
+      {errors && <Label>{errors.message}</Label>}
     </InputWrapper>
   );
 };

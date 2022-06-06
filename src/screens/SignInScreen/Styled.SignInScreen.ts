@@ -14,6 +14,12 @@ interface PropsView extends ViewProps {
   theme: ThemeProps;
 }
 
+const BadCredentialsText = styled.Text<PropsView>`
+  color: ${props => props.theme.screen.text};
+  margin: 0 0 5px 16px;
+  font-weight: 800;
+`;
+
 const IconWrapper = styled.View<PropsView>`
   display: flex;
   flex-direction: row;
@@ -28,4 +34,4 @@ const LoginTitle = styled.Text<TitleProps>`
   margin-bottom: 50px;
 `;
 
-export {LoginTitle, IconWrapper};
+export {LoginTitle, IconWrapper, BadCredentialsText};

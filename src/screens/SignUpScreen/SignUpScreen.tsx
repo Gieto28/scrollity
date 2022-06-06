@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useForm} from 'react-hook-form';
+import {SubmitHandler, useForm} from 'react-hook-form';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
 import {
   InputTextComponent,
@@ -9,6 +9,9 @@ import {
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {IconWrapper} from './Styled.SignUpScreen';
 import useDeviceColor from '../../hooks/useDeviceColor';
+import register from '../../services/auth/register';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {FormSignUpModel, schemaSignUp} from '../../models';
 
 const SignUpScreen = () => {
   const theme = useDeviceColor();
@@ -31,20 +34,23 @@ const SignUpScreen = () => {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm({
-    defaultValues: {
-      signUpUsername: '',
-      signUpEmail: '',
-      signUpPassword: '',
-      signUpPasswordConfirmation: '',
-    },
+    reset,
+  } = useForm<FormSignUpModel>({
+    resolver: yupResolver(schemaSignUp),
   });
 
-  const handleSignUp = (data: {}) => {
-    console.log('Sign Up is working');
-    console.log('errors---------------------------', errors);
+  const handleSignUp: SubmitHandler<FormSignUpModel> = async (
+    data: FormSignUpModel,
+  ) => {
+    const {name, email, password, passwordConfirmation} = data;
 
-    console.log(data);
+    if (password !== passwordConfirmation) {
+      console.log(`passwords don't match`);
+    }
+    console.log();
+
+    await register(name, email, password, passwordConfirmation);
+    return reset();
   };
 
   const navigation = useNavigation();
@@ -74,34 +80,34 @@ const SignUpScreen = () => {
         <InputTextComponent
           placeholder="Your Username"
           value={''}
-          controllerName="signUpUsername"
+          controllerName="name"
           control={control}
-          errors={errors.signUpUsername?.ref}
+          errors={errors.name}
           label="Your Username"
         />
         <InputTextComponent
           placeholder="Your Email"
           value={''}
-          controllerName="signUpEmail"
+          controllerName="email"
           control={control}
-          errors={errors.signUpEmail}
+          errors={errors.email}
           label="Your Email"
         />
         <InputTextComponent
           placeholder="Your Password"
           value={''}
-          controllerName="signUpPassword"
+          controllerName="password"
           control={control}
-          errors={errors.signUpPassword}
+          errors={errors.password}
           label="Your Password"
           securedBoolean={isPasswordHidden}
         />
         <InputTextComponent
           placeholder="Confirm Password"
           value={''}
-          controllerName="signUpPasswordConfirmation"
+          controllerName="passwordConfirmation"
           control={control}
-          errors={errors.signUpPasswordConfirmation?.type}
+          errors={errors.passwordConfirmation}
           label="Confirm Password"
           securedBoolean={isPasswordConfirmationHidden}
         />
