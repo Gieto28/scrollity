@@ -7,7 +7,7 @@ import {
   IconComponent,
 } from '../../components';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {IconWrapper} from './Styled.SignUpScreen';
+import {ErrorWhileSignUpText, IconWrapper} from './Styled.SignUpScreen';
 import useDeviceColor from '../../hooks/useDeviceColor';
 import register from '../../services/auth/register';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -27,6 +27,7 @@ const SignUpScreen = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
   const [isPasswordConfirmationHidden, setIsPasswordConfirmationHidden] =
     useState<boolean>(true);
+  const [errorWhileSignUp, setErrorWhileSignUp] = useState<boolean>(false);
 
   // Form handler
 
@@ -43,14 +44,21 @@ const SignUpScreen = () => {
     data: FormSignUpModel,
   ) => {
     const {name, email, password, passwordConfirmation} = data;
+    try {
+      const data = await register(name, email, password, passwordConfirmation);
 
-    if (password !== passwordConfirmation) {
-      console.log(`passwords don't match`);
-    }
-    console.log();
+      if (!data?.token) {
+        setErrorWhileSignUp(true);
+        setTimeout(() => {
+          setErrorWhileSignUp(false);
+        }, 8000);
+        return console.log('Email already exists or missing/wrong data ');
+      }
 
-    await register(name, email, password, passwordConfirmation);
-    return reset();
+      console.log(data);
+    } catch (error) {}
+
+    // return reset();
   };
 
   const navigation = useNavigation();
@@ -77,6 +85,11 @@ const SignUpScreen = () => {
         />
       </IconWrapper>
       <AuthView>
+        {errorWhileSignUp && (
+          <ErrorWhileSignUpText>
+            Email or name already exists or missing/wrong data..
+          </ErrorWhileSignUpText>
+        )}
         <InputTextComponent
           placeholder="Your Username"
           value={''}

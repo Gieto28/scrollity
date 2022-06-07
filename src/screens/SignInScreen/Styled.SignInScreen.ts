@@ -15,7 +15,7 @@ interface PropsView extends ViewProps {
 }
 
 const BadCredentialsText = styled.Text<PropsView>`
-  color: ${props => props.theme.screen.text};
+  color: ${props => props.theme.fonts.colors.primary};
   margin: 0 0 5px 16px;
   font-weight: 800;
 `;

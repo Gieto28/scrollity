@@ -1,8 +1,8 @@
 /**
- * Token being retrieved from the back-end - string
+ * Token being retrieved from the back-end - token: string
  */
 interface tokenModel {
-  response: any;
+  // response: any;
   token: string;
 }
 
