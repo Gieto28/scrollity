@@ -1,8 +1,9 @@
 import React from 'react';
+import {ImageSourcePropType} from 'react-native';
 import {NavIcon} from './Styled.NavIconComponent';
 
 interface Props {
-  image: any;
+  image: ImageSourcePropType;
   focused: boolean;
 }
 /**

@@ -6,8 +6,10 @@ import {
   SubmitButton,
   IconImage,
   InputWrapper,
+  ErrorLabel,
 } from './Styled.InputTextComponent';
 import useDeviceColor from '../../hooks/useDeviceColor';
+import {ImageSourcePropType, StyleProp, ViewStyle} from 'react-native';
 
 interface Props {
   placeholder: string;
@@ -15,11 +17,11 @@ interface Props {
   controllerName: string;
   control: any;
   errors?: any;
-  icon?: any;
+  icon?: ImageSourcePropType;
   multiline?: boolean;
   numberOfLines?: number;
-  style?: any;
-  onChangeText?: () => void | undefined;
+  style?: StyleProp<ViewStyle>;
+  customIconStyles?: StyleProp<ViewStyle>;
   onPress?: () => void;
   onSubmitEditing?: () => void;
 
@@ -39,10 +41,11 @@ interface Props {
  * @param label - **OPTIONAL** adds a string to the top of the input, good for forms to specify what the input correlates to. i.e. password input has a "Your password" label
  * @param securedBoolean - **OPTIONAL** boolean value from react-hook-forms which if true makes the string little circles ● instead of the characters. Default is false
  * @param errors - **OPTIONAL** attribute in case your input can't retrieve errors itself and the errors would be checked somewhere else. i.e. search input would have errors checked when fetching and return error or message if no search is found but any search is valid in it self
+ * @param style if additional styles are needed for the input text then use this parameter to change whatever is necessary using inline styling
+ * @param customIconStyles if additional styles are needed for the icon then use this parameter to change whatever is necessary using inline styling
  * @param icon - **OPTIONAL** icon that shows on the right side of the input text usually for search icons and send icon
  * @param multiline - **optional** boolean value to determine if the text input can be multiline
  * @param numberOfLines - number of multi lines when using multiline
- * @param onChangeText - **OPTIONAL** returns value on every change
  * @param onSubmitEditing - **OPTIONAL** needed if you want the user to be able to send with keyboard button
  * @param onPress - **OPTIONAL** complements the icon - it's **NEEDED** if you pass in an icon prop, usually the function is the same as the onChangeText and on SubmitEditing
  * @returns a fully customizable and scalable text input for forms, search bars, sending messages and anywhere else
@@ -58,7 +61,7 @@ const InputTextComponent: React.FC<Props> = ({
   securedBoolean,
   onPress,
   onSubmitEditing,
-  onChangeText,
+  customIconStyles,
 
   // label
   label,
@@ -97,12 +100,12 @@ const InputTextComponent: React.FC<Props> = ({
         name={controllerName}
       />
       {icon && (
-        <SubmitButton onPress={onPress}>
+        <SubmitButton style={customIconStyles} onPress={onPress}>
           <IconImage source={icon} />
         </SubmitButton>
       )}
 
-      {errors && <Label>{errors.message}</Label>}
+      {errors && <ErrorLabel>{errors.message}</ErrorLabel>}
     </InputWrapper>
   );
 };

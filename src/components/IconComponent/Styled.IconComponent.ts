@@ -12,6 +12,8 @@ const IconButton = styled.TouchableOpacity<BtnProps>`
   margin: ${props => props.theme.icon.margin};
 `;
 
-const Icon = styled.Image``;
+const Icon = styled.Image`
+  height: 100%;
+`;
 
 export {IconButton, Icon};

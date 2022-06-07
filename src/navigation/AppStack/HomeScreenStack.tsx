@@ -2,11 +2,12 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {CommentsScreen, HomeScreen} from '../../screens';
 import CreatePostScreen from '../../screens/CreatePostScreen/CreatePostScreen';
+import {PostModel} from '../../models';
 
 export type HomeStackParams = {
-  HomeScreen: undefined;
+  HomeScreen: () => JSX.Element;
   CommentsScreen: {
-    postObject: any;
+    postObject: PostModel;
   };
   CreatePostScreen: undefined;
 };

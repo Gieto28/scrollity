@@ -94,11 +94,11 @@ const CommentComponent: React.FC<Props> = ({
               onPress={handleDownVoteComment}
             />
           </VotesWrapper>
-          <IconComponent
+          {/* <IconComponent
             image={undefined}
             altText={'This button is used to delete the comment'}
             onPress={handleDeleteComment}
-          />
+          /> */}
         </BodyFooter>
       </BodyWrapper>
     </CommentWrapper>

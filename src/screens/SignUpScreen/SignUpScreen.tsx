@@ -15,6 +15,7 @@ import {FormSignUpModel, schemaSignUp} from '../../models';
 
 const SignUpScreen = () => {
   const theme = useDeviceColor();
+  const navigation = useNavigation();
 
   const leftArrowIcon = theme.bool
     ? require('../../assets/Images/arrow-left-dark-24.png')
@@ -24,10 +25,28 @@ const SignUpScreen = () => {
     ? require('../../assets/Images/moon-30.png')
     : require('../../assets/Images/sun-50.png');
 
+  const hiddenPasswordIcon = theme.bool
+    ? require('../../assets/Images/hide-password-24-dark.png')
+    : require('../../assets/Images/hide-password-24-light.png');
+
+  const showingPasswordIcon = theme.bool
+    ? require('../../assets/Images/show-password-24-dark.png')
+    : require('../../assets/Images/show-password-24-light.png');
+
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
   const [isPasswordConfirmationHidden, setIsPasswordConfirmationHidden] =
     useState<boolean>(true);
   const [errorWhileSignUp, setErrorWhileSignUp] = useState<boolean>(false);
+
+  //Icon depending on wether the password is hidden or not
+
+  const isPasswordHiddenIcon = isPasswordHidden
+    ? hiddenPasswordIcon
+    : showingPasswordIcon;
+
+  const isPasswordConfirmationHiddenIcon = isPasswordHidden
+    ? hiddenPasswordIcon
+    : showingPasswordIcon;
 
   // Form handler
 
@@ -54,14 +73,23 @@ const SignUpScreen = () => {
         }, 8000);
         return console.log('Email already exists or missing/wrong data ');
       }
+      reset();
+      navigation.dispatch(CommonActions.goBack());
 
-      console.log(data);
+      return;
     } catch (error) {}
 
     // return reset();
   };
 
-  const navigation = useNavigation();
+  const handleShowPassword = () => {
+    setIsPasswordHidden(!isPasswordHidden);
+  };
+
+  const handleShowPasswordConfirmation = () => {
+    setIsPasswordConfirmationHidden(!isPasswordConfirmationHidden);
+  };
+
   const handleGoBack = () => {
     navigation.dispatch(CommonActions.goBack());
   };
@@ -114,6 +142,9 @@ const SignUpScreen = () => {
           errors={errors.password}
           label="Your Password"
           securedBoolean={isPasswordHidden}
+          icon={isPasswordHiddenIcon}
+          onPress={handleShowPassword}
+          customIconStyles={{marginTop: 16, marginRight: 5}}
         />
         <InputTextComponent
           placeholder="Confirm Password"
@@ -123,6 +154,9 @@ const SignUpScreen = () => {
           errors={errors.passwordConfirmation}
           label="Confirm Password"
           securedBoolean={isPasswordConfirmationHidden}
+          icon={isPasswordConfirmationHiddenIcon}
+          onPress={handleShowPasswordConfirmation}
+          customIconStyles={{marginTop: 16, marginRight: 5}}
         />
 
         <FormButtonComponent

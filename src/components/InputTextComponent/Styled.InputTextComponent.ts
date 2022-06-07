@@ -1,11 +1,13 @@
-import {TextInputProps, TouchableOpacityProps, ViewProps} from 'react-native';
+import {
+  TextInputProps,
+  TextProps,
+  TouchableOpacityProps,
+  ViewProps,
+} from 'react-native';
 import styled from 'styled-components/native';
 import {ThemeProps} from '../../styles/theme';
 
-interface Props extends TextInputProps {
-  borderColor?: string;
-  backgroundColor?: string;
-
+interface PropsInput extends TextInputProps {
   // theme
   theme: ThemeProps;
 }
@@ -18,9 +20,14 @@ interface PropsView extends ViewProps {
   theme: ThemeProps;
 }
 
+interface PropsText extends TextProps {
+  theme: ThemeProps;
+}
+
 const InputWrapper = styled.View<PropsView>``;
 
-const Input = styled.TextInput<Props>`
+const Input = styled.TextInput<PropsInput>`
+  color: ${props => props.theme.screen.text};
   margin: 12px;
   border: 1px solid ${props => props.theme.input.border};
   background-color: ${props => props.theme.input.background};
@@ -44,4 +51,10 @@ const SubmitButton = styled.TouchableOpacity<IconButtonProps>`
 
 const IconImage = styled.Image``;
 
-export {Input, Label, SubmitButton, IconImage, InputWrapper};
+const ErrorLabel = styled.Text<PropsText>`
+  color: ${props => props.theme.fonts.colors.primary};
+  margin-left: 16px;
+  font-weight: ${props => props.theme.fonts.fontWeight.l};
+`;
+
+export {Input, Label, SubmitButton, IconImage, InputWrapper, ErrorLabel};

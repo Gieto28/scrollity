@@ -1,8 +1,9 @@
 import React from 'react';
+import {ImageSourcePropType} from 'react-native';
 import {Icon, IconButton} from './Styled.IconComponent';
 
 interface Props {
-  image: any;
+  image: ImageSourcePropType;
   altText: string;
   onPress: () => void;
 }

@@ -19,6 +19,8 @@ target 'scrollity' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
   target 'scrollityTests' do
     inherit! :complete
     # Pods for testing

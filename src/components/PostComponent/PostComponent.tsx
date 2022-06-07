@@ -21,12 +21,13 @@ import {useNavigation} from '@react-navigation/native';
 import {HomeStackParams} from '../../navigation/AppStack/HomeScreenStack';
 import {StackNavigationProp} from '@react-navigation/stack';
 import useDeviceColor from '../../hooks/useDeviceColor';
+import {ImageSourcePropType} from 'react-native';
 
 interface Props {
   title: string;
   timeStamp: string;
   category: string;
-  source: any;
+  source: ImageSourcePropType;
   description: string;
   upVotes: number;
   downVotes: number;

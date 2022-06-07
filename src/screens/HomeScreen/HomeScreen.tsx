@@ -1,5 +1,5 @@
 import {Animated, ScrollView, Text} from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {RefObject, useRef, useState} from 'react';
 import {
   IconComponent,
   InputTextComponent,
@@ -9,12 +9,10 @@ import {useForm} from 'react-hook-form';
 import {AppScrollView, AppView} from '../../styles/GlobalStyle';
 import {
   CategoryButton,
-  CategoryScroll,
   CategoryText,
   CategoryView,
   HomeLabel,
   HomeScreenWrapper,
-  HorizontalScrollWrapper,
   IconsWrapper,
   CreatePostIcon,
   LabelWrapper,
@@ -26,7 +24,7 @@ import {
   ToTopIconView,
 } from './Styled.HomeScreen';
 import useDeviceColor from '../../hooks/useDeviceColor';
-import {useNavigation, useScrollToTop} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {HomeStackParams} from '../../navigation/AppStack/HomeScreenStack';
 
@@ -104,7 +102,10 @@ const HomeScreen = () => {
     navigation.navigate('CreatePostScreen');
   };
 
-  const refScroll = useRef<ScrollView | null>(null);
+  // const refScroll: React.MutableRefObject<ScrollView | null> =
+  //   useRef<null>(null);
+  // Can't find the type - losing too much time on this
+  const refScroll: any = useRef<null>(null);
 
   const handleBackToTop = () => {
     console.log('to top icon');
