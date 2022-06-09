@@ -9,7 +9,12 @@ import {
   ErrorLabel,
 } from './Styled.InputTextComponent';
 import useDeviceColor from '../../hooks/useDeviceColor';
-import {ImageSourcePropType, StyleProp, ViewStyle} from 'react-native';
+import {
+  ImageSourcePropType,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 
 interface Props {
   placeholder: string;
@@ -20,7 +25,7 @@ interface Props {
   icon?: ImageSourcePropType;
   multiline?: boolean;
   numberOfLines?: number;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle | TextStyle>;
   customIconStyles?: StyleProp<ViewStyle>;
   onPress?: () => void;
   onSubmitEditing?: () => void;

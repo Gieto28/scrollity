@@ -9,13 +9,14 @@ import {
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {ErrorWhileSignUpText, IconWrapper} from './Styled.SignUpScreen';
 import useDeviceColor from '../../hooks/useDeviceColor';
-import register from '../../services/auth/register';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {FormSignUpModel, schemaSignUp} from '../../models';
+import {useAuth} from '../../context/Auth';
 
 const SignUpScreen = () => {
   const theme = useDeviceColor();
   const navigation = useNavigation();
+  const {signUp} = useAuth();
 
   const leftArrowIcon = theme.bool
     ? require('../../assets/Images/arrow-left-dark-24.png')
@@ -62,22 +63,19 @@ const SignUpScreen = () => {
   const handleSignUp: SubmitHandler<FormSignUpModel> = async (
     data: FormSignUpModel,
   ) => {
-    const {name, email, password, passwordConfirmation} = data;
     try {
-      const data = await register(name, email, password, passwordConfirmation);
+      await signUp(data);
 
-      if (!data?.token) {
-        setErrorWhileSignUp(true);
-        setTimeout(() => {
-          setErrorWhileSignUp(false);
-        }, 8000);
-        return console.log('Email already exists or missing/wrong data ');
-      }
+      console.log('register successful');
       reset();
-      navigation.dispatch(CommonActions.goBack());
-
-      return;
-    } catch (error) {}
+    } catch (error) {
+      setErrorWhileSignUp(true);
+      setTimeout(() => {
+        setErrorWhileSignUp(false);
+      }, 8000);
+      console.log('Email already exists or missing/wrong data ');
+      throw new Error('error while submitting form in file signUpScreen');
+    }
 
     // return reset();
   };

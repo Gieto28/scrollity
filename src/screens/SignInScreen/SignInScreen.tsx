@@ -17,17 +17,18 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
 import {View} from 'react-native';
 import useDeviceColor from '../../hooks/useDeviceColor';
-import signIn from '../../services/auth/signIn';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {FormSignInModel, schemaSignIn} from '../../models';
-import {api} from '../../services/api';
-import AsyncStorage from '@react-native-community/async-storage';
-import parseJwt from '../../utils/decodeJsonToken';
+import {useAuth} from '../../context/Auth';
 
-type SignUpNavigationProp = StackNavigationProp<AuthStackParams, 'SignUp'>;
+type SignUpNavigationProp = StackNavigationProp<
+  AuthStackParams,
+  'SignUpScreen'
+>;
 
 const SignInScreen: React.FC = () => {
   const theme = useDeviceColor();
+  const {signIn} = useAuth();
 
   const lightDarkIcon = theme.bool
     ? require('../../assets/Images/moon-30.png')
@@ -65,35 +66,25 @@ const SignInScreen: React.FC = () => {
    * @param data consists of the model FormSignInModel which has email: string and password: string
    * @returns
    */
-  const onSubmit: SubmitHandler<FormSignInModel> = async (
+  const handleSignIn: SubmitHandler<FormSignInModel> = async (
     data: FormSignInModel,
   ) => {
-    const {email, password} = data;
     try {
-      const data = await signIn(email, password);
+      await signIn(data);
 
-      if (!data?.token) {
-        setBadCredentials(true);
-        setTimeout(() => {
-          setBadCredentials(false);
-        }, 8000);
-        return console.log('bad credentials');
-      }
-      //
-      api.defaults.headers.common.Authorization = `Bearer ${data.token}`;
-      // const parsedToken = await parseJwt(data.token);
-      // console.log(parsedToken);
-
-      // await AsyncStorage.setItem('token', data.token);
-      // await AsyncStorage.setItem('userID', 'hello');
-
-      console.log('token', data.token);
-    } catch (error) {
+      console.log('sign in successful - file sign in screen.tsx');
+      reset();
+    } catch (e) {
+      setBadCredentials(true);
+      setTimeout(() => {
+        setBadCredentials(false);
+      }, 8000);
       throw new Error('error while submitting form in file signInScreen');
     }
   };
 
-  const navigation = useNavigation<SignUpNavigationProp>();
+  const navigation: SignUpNavigationProp =
+    useNavigation<SignUpNavigationProp>();
 
   const handleShowPassword = () => {
     setIsPasswordHidden(!isPasswordHidden);
@@ -101,7 +92,7 @@ const SignInScreen: React.FC = () => {
   };
 
   const handleRedirectToSignUp = () => {
-    navigation.navigate('SignUp');
+    navigation.navigate('SignUpScreen');
   };
 
   const handleTheme = () => {
@@ -147,7 +138,10 @@ const SignInScreen: React.FC = () => {
           customIconStyles={{marginTop: 16, marginRight: 5}}
         />
 
-        <FormButtonComponent name="Sign in" onPress={handleSubmit(onSubmit)} />
+        <FormButtonComponent
+          name="Sign in"
+          onPress={handleSubmit(handleSignIn)}
+        />
 
         <SeparatorLineComponent labelName="or" />
 
@@ -165,6 +159,3 @@ const SignInScreen: React.FC = () => {
 };
 
 export default SignInScreen;
-function password(name: any, password: any) {
-  throw new Error('Function not implemented.');
-}

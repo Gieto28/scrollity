@@ -1,5 +1,5 @@
-import {Animated, ScrollView, Text} from 'react-native';
-import React, {RefObject, useRef, useState} from 'react';
+import {Animated} from 'react-native';
+import React, {useRef, useState} from 'react';
 import {
   IconComponent,
   InputTextComponent,
@@ -27,6 +27,7 @@ import useDeviceColor from '../../hooks/useDeviceColor';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {HomeStackParams} from '../../navigation/AppStack/HomeScreenStack';
+import {CreatePostScreen} from '..';
 
 interface CategoryArrayProps {
   category: string;
@@ -96,10 +97,14 @@ const HomeScreen = () => {
     scrollYIconsWrapper.setValue(e.nativeEvent.contentOffset.y);
   };
 
-  const navigation = useNavigation<StackNavigationProp<HomeStackParams>>();
+  const navigation: StackNavigationProp<HomeStackParams> =
+    useNavigation<StackNavigationProp<HomeStackParams>>();
 
   const handleRedirectToCreatePostScreen = () => {
-    navigation.navigate('CreatePostScreen');
+    navigation.navigate<'CreatePostScreen'>(
+      'CreatePostScreen',
+      CreatePostScreen,
+    );
   };
 
   // const refScroll: React.MutableRefObject<ScrollView | null> =

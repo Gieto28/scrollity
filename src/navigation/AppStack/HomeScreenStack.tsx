@@ -9,7 +9,7 @@ export type HomeStackParams = {
   CommentsScreen: {
     postObject: PostModel;
   };
-  CreatePostScreen: undefined;
+  CreatePostScreen: () => JSX.Element;
 };
 
 const HomeStack = createNativeStackNavigator<HomeStackParams>();

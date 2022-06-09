@@ -1,7 +1,7 @@
 import {AxiosResponse} from 'axios';
-import {tokenModel} from '../../models';
+import {api} from '..';
+import {TokenModel} from '../../models';
 import {PATH_REGISTER} from '../../utils/env';
-import {api} from '../api';
 
 /**
  *
@@ -11,21 +11,21 @@ import {api} from '../api';
  * @param passwordConfirmation password confirmation being retrieved from the form
  * @returns res.data which should be a very long token with the user information or if error should catch and show it on the screen
  */
-const register = async (
+const signUpAxios = async (
   name: string,
   email: string,
   password: string,
   passwordConfirmation: string,
-): Promise<tokenModel> => {
+): Promise<TokenModel> => {
   return await api
-    .post<tokenModel>(PATH_REGISTER, {
+    .post<TokenModel>(PATH_REGISTER, {
       name,
       email,
       password,
       passwordConfirmation,
     })
-    .then((res: AxiosResponse<tokenModel | any>) => res.data)
+    .then((res: AxiosResponse<TokenModel | any>) => res.data)
     .catch(() => 'Email already exists or missing/wrong data');
 };
 
-export default register;
+export default signUpAxios;

@@ -1,8 +1,7 @@
 import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
-import {X_API_KEY, URL} from '../utils/env';
+import {X_API_KEY, URL} from '../../utils/env';
 
-export const api = axios.create({
+const api = axios.create({
   baseURL: URL,
   headers: {
     'api-key': X_API_KEY,
@@ -20,3 +19,5 @@ api.interceptors.request.use(
     }
   },
 );
+
+export default api;
