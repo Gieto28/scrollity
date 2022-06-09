@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {NotificationsScreen, ProfileScreen} from '../../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import useDeviceColor from '../../hooks/useDeviceColor';
 import {NavIconComponent} from '../../components';
 import HomeScreenStack, {HomeStackParams} from './HomeScreenStack';
+import {useApp} from '../../context/App';
 type NavigationParams = {
   HomeScreenStack: HomeStackParams;
   LoginScreen: () => JSX.Element;
@@ -13,8 +13,12 @@ type NavigationParams = {
 
 const AppStackNavigation = createBottomTabNavigator<NavigationParams>();
 
+/**
+ *
+ * @returns navigator with 3 main screens, HomeScreenStack, ProfileScreenStack and NotificationsScreen
+ */
 const AppStack: React.FC = () => {
-  const theme = useDeviceColor();
+  const {theme} = useApp();
 
   const notificationIcon = theme.bool
     ? require('../../assets/Images/notifications-24-dark.png')

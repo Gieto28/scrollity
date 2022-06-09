@@ -1,22 +1,23 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {ThemeProvider} from 'styled-components';
-import useDeviceColor from './src/hooks/useDeviceColor';
 import {AuthProvider} from './src/context/Auth';
 import Route from './src/navigation/Route';
+import {ThemeProps} from './src/styles/theme';
+import {AppProvider, useApp} from './src/context/App';
+import useDeviceColor from './src/hooks/useDeviceColor';
 
 const App: React.FC = () => {
   // custom hook that returns the object theme
-  const theme = useDeviceColor();
 
   return (
-    <AuthProvider>
-      <ThemeProvider theme={theme}>
+    <AppProvider>
+      <AuthProvider>
         <NavigationContainer>
           <Route />
         </NavigationContainer>
-      </ThemeProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </AppProvider>
   );
 };
 

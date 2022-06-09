@@ -12,35 +12,39 @@ import {
   SendMessageView,
   ViewComments,
 } from './Styled.CommentsScreen';
-import {ScrollView, View} from 'react-native';
-import {useForm} from 'react-hook-form';
+import {ImageSourcePropType, ScrollView, View} from 'react-native';
+import {SubmitHandler, useForm} from 'react-hook-form';
 import IconComponent from '../../components/IconComponent/IconComponent';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import useDeviceColor from '../../hooks/useDeviceColor';
+import {useApp} from '../../context/App';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {CommentModel, SchemaComment} from '../../models';
 
 type Props = NativeStackScreenProps<HomeStackParams, 'CommentsScreen'>;
 
+/**
+ * @param route this "route" is responsible for giving me the optional parameter when navigating to another screen. if I decide in the navigation that I need to navigate to another  screen and pass in an object, I use route.params."name of object" to access it and use it in that screen
+ * @returns A screen with the post and it's comments
+ */
 const CommentsScreen: React.FC<Props> = ({route}) => {
-  const theme = useDeviceColor();
+  const {theme} = useApp();
 
-  const sendCommentIcon = theme.bool
+  const sendCommentIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/sent-24-dark.png')
     : require('../../assets/Images/sent-24-light.png');
-  const leftArrowIcon = theme.bool
+  const leftArrowIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-left-dark-24.png')
     : require('../../assets/Images/arrow-left-light-24.png');
 
-  const {control, handleSubmit, reset} = useForm({
-    defaultValues: {
-      comment: '',
-    },
+  const {control, handleSubmit, reset} = useForm<CommentModel>({
+    resolver: yupResolver(SchemaComment),
   });
 
   // Functions
 
-  const sendComment = (data: {}) => {
-    console.log('sending message...');
-    console.log(data);
+  const sendComment: SubmitHandler<CommentModel> = (data: CommentModel) => {
+    console.log('sending comment...');
+    console.log('comment', data.comment);
     reset();
   };
 

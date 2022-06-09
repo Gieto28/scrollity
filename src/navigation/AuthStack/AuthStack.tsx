@@ -12,7 +12,10 @@ export type AuthStackParams = {
 
 const AuthStackNavigator = createNativeStackNavigator<AuthStackParams>();
 
-const AuthStack = () => {
+/**
+ * @returns Navigator with 3 main components, Auth loading screen which loads at the start of the application
+ */
+const AuthStack: React.FC = () => {
   return (
     <AuthStackNavigator.Navigator
       initialRouteName="SignInScreen"

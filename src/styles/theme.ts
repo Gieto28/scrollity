@@ -47,8 +47,8 @@ const theme = {
     marginLeft: '10px',
   },
   icon: {
-    maxWidth: '25px',
-    maxHeight: '30px',
+    width: '40px',
+    height: '40px',
     margin: '5px',
   },
   SearchButton: {

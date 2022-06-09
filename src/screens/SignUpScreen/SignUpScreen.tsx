@@ -8,29 +8,30 @@ import {
 } from '../../components';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {ErrorWhileSignUpText, IconWrapper} from './Styled.SignUpScreen';
-import useDeviceColor from '../../hooks/useDeviceColor';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {FormSignUpModel, schemaSignUp} from '../../models';
+import {FormSignUpModel, SchemaSignUp} from '../../models';
 import {useAuth} from '../../context/Auth';
+import {ImageSourcePropType} from 'react-native';
+import {useApp} from '../../context/App';
 
 const SignUpScreen = () => {
-  const theme = useDeviceColor();
+  const {theme, changeTheme} = useApp();
   const navigation = useNavigation();
   const {signUp} = useAuth();
 
-  const leftArrowIcon = theme.bool
+  const leftArrowIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-left-dark-24.png')
     : require('../../assets/Images/arrow-left-light-24.png');
 
-  const lightDarkICon = theme.bool
+  const lightDarkICon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/moon-30.png')
     : require('../../assets/Images/sun-50.png');
 
-  const hiddenPasswordIcon = theme.bool
+  const hiddenPasswordIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/hide-password-24-dark.png')
     : require('../../assets/Images/hide-password-24-light.png');
 
-  const showingPasswordIcon = theme.bool
+  const showingPasswordIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/show-password-24-dark.png')
     : require('../../assets/Images/show-password-24-light.png');
 
@@ -41,13 +42,12 @@ const SignUpScreen = () => {
 
   //Icon depending on wether the password is hidden or not
 
-  const isPasswordHiddenIcon = isPasswordHidden
+  const isPasswordHiddenIcon: ImageSourcePropType = isPasswordHidden
     ? hiddenPasswordIcon
     : showingPasswordIcon;
 
-  const isPasswordConfirmationHiddenIcon = isPasswordHidden
-    ? hiddenPasswordIcon
-    : showingPasswordIcon;
+  const isPasswordConfirmationHiddenIcon: ImageSourcePropType =
+    isPasswordConfirmationHidden ? hiddenPasswordIcon : showingPasswordIcon;
 
   // Form handler
 
@@ -57,7 +57,7 @@ const SignUpScreen = () => {
     formState: {errors},
     reset,
   } = useForm<FormSignUpModel>({
-    resolver: yupResolver(schemaSignUp),
+    resolver: yupResolver(SchemaSignUp),
   });
 
   const handleSignUp: SubmitHandler<FormSignUpModel> = async (
@@ -92,8 +92,8 @@ const SignUpScreen = () => {
     navigation.dispatch(CommonActions.goBack());
   };
 
-  const handleTheme = () => {
-    console.log('theme');
+  const handleTheme = async () => {
+    await changeTheme();
   };
 
   return (

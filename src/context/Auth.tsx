@@ -1,28 +1,18 @@
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import {
   AuthContextModel,
   FormSignInModel,
   FormSignUpModel,
   JwtDecodedModel,
+  ReactChildrenProps,
   TokenModel,
 } from '../models';
 import AsyncStorage from '@react-native-community/async-storage';
 import {api, signInAxios, signUpAxios} from '../services';
 import jwt_decode from 'jwt-decode';
 
-interface ReactChildrenProps {
-  children: ReactNode;
-}
-
-export const AuthContext = createContext<AuthContextModel>(
-  {} as AuthContextModel,
-);
+export const AuthContext: React.Context<AuthContextModel> =
+  createContext<AuthContextModel>({} as AuthContextModel);
 
 const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   //

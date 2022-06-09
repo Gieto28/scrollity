@@ -1,10 +1,19 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import React, {useEffect, useState} from 'react';
 import {AppState} from 'react-native';
+import {useApp} from '../context/App';
 import {useAuth} from '../context/Auth';
 import {AuthLoadingScreen} from '../screens';
 import AppStack from './AppStack/AppStack';
 import AuthStack from './AuthStack/AuthStack';
 
+/**
+ * This file route.tsx in the folder navigation is responsible to read the asyncStorage on app startup and decide whether the **AppStack** should be loaded or should the **AuthStack** be loaded.
+ *
+ * This file is reading the "isSignedIn" from useAuth and loading. if isSignedIn is true then the **AppStack** will be loaded and if "isSignedIn" is false then the **AuthStack** will be loaded.
+ *
+ * @returns either **AuthStack** or **AuthStack** or **AuthLoadingScreen**
+ */
 const Route: React.FC = () => {
   const {isSignedIn, loading} = useAuth();
   const [appState, setAppState] = useState<string>(AppState.currentState);

@@ -9,11 +9,15 @@ export type HomeStackParams = {
   CommentsScreen: {
     postObject: PostModel;
   };
-  CreatePostScreen: () => JSX.Element;
+  CreatePostScreen: undefined;
 };
 
 const HomeStack = createNativeStackNavigator<HomeStackParams>();
 
+/**
+ *
+ * @returns navigator with 3 screens, HomeScreen, CommentsScreen and CreatePostScreen
+ */
 const HomeScreenStack = () => {
   return (
     <HomeStack.Navigator

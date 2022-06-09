@@ -1,7 +1,10 @@
-import FormSignInModel from '../form/FormSignInModel';
-import FormSignUpModel from '../form/FormSignUpModel';
+import FormSignInModel from '../../form/FormSignInModel';
+import FormSignUpModel from '../../form/FormSignUpModel';
 import JwtDecodedModel from './JwtDecodedModel';
 
+/**
+ * Auth Context Model - pretty straight forward interface
+ */
 interface AuthContextModel {
   isSignedIn: boolean;
   user: JwtDecodedModel | null;
@@ -10,7 +13,7 @@ interface AuthContextModel {
   userId: string | null;
   signIn(data: FormSignInModel): Promise<void>;
   signUp(data: FormSignUpModel): Promise<void>;
-  signOut(): Promise<any>;
+  signOut(): Promise<void>;
 }
 
 export default AuthContextModel;

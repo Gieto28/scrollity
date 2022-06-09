@@ -5,10 +5,15 @@ import {
   CreatePostWrapper,
 } from './Styled.CreatePostScreen';
 import {IconComponent, InputTextComponent} from '../../components';
-import useDeviceColor from '../../hooks/useDeviceColor';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
+import {ImageSourcePropType} from 'react-native';
+import {useApp} from '../../context/App';
 
+/**
+ *
+ * @returns a screen which it's only purpose is to show the user a form to create a new post
+ */
 const CreatePostScreen = () => {
   const {
     control,
@@ -23,9 +28,9 @@ const CreatePostScreen = () => {
     },
   });
 
-  const theme = useDeviceColor();
+  const {theme} = useApp();
 
-  const leftArrowIcon = theme.bool
+  const leftArrowIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-left-dark-24.png')
     : require('../../assets/Images/arrow-left-light-24.png');
 

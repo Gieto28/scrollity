@@ -1,6 +1,6 @@
-import useDeviceColor from '../hooks/useDeviceColor';
+import {useApp} from '../context/App';
 
-const theme = useDeviceColor();
+const {theme} = useApp();
 
 const sendCommentIcon = theme.bool
   ? require('./Images/sent-24-dark.png')
@@ -10,7 +10,7 @@ const leftArrowIcon = theme.bool
   ? require('./Images/arrow-left-dark-24.png')
   : require('./Images/arrow-left-light-24.png');
 
-const lightDarkICon = theme.bool
+const lightDarkIcon = theme.bool
   ? require('./Images/moon-30.png')
   : require('./Images/sun-50.png');
 
@@ -45,7 +45,7 @@ const commentsIcon = theme.bool
 export {
   sendCommentIcon,
   leftArrowIcon,
-  lightDarkICon,
+  lightDarkIcon,
   notificationIcon,
   homeIcon,
   profileIcon,

@@ -121,11 +121,13 @@ const IconsWrapper = styled.View<PropsView>`
 const ToTopIconView = styled.View<PropsView>`
   width: 50px;
   position: relative;
-  right: -1.5px;
+  left: 1.5px;
 `;
 
 const CreatePostIcon = styled.View<PropsView>`
   width: 50px;
+  position: relative;
+  left: 2.5px;
 `;
 
 const minIconsWrapper = 0;

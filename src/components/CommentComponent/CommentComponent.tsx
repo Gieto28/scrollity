@@ -1,5 +1,5 @@
 import React from 'react';
-import useDeviceColor from '../../hooks/useDeviceColor';
+import {useApp} from '../../context/App';
 import IconComponent from '../IconComponent/IconComponent';
 import {
   BodyComment,
@@ -37,7 +37,7 @@ const CommentComponent: React.FC<Props> = ({
   upVotes,
   downVotes,
 }) => {
-  const theme = useDeviceColor();
+  const {theme} = useApp();
 
   const upVoteIcon = theme.bool
     ? require('../../assets/Images/arrow-24-upvote-dark.png')
@@ -54,7 +54,7 @@ const CommentComponent: React.FC<Props> = ({
   };
 
   const handleDeleteComment = () => {
-    console.log('deleting Comment');
+    console.log('deleting Comment - I may or may not implements deletions');
   };
 
   console.log(comment);

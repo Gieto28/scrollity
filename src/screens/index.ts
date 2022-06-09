@@ -11,14 +11,9 @@ export {
   AuthLoadingScreen,
   CommentsScreen,
   CreatePostScreen,
-  // EditImageScreen
-  // EditNameScreen
-  // EditPassWordScreen
   HomeScreen,
-  // NewPostScreen
   NotificationsScreen,
   ProfileScreen,
-  // SettingsScreen
   SignInScreen,
   SignUpScreen,
 };

@@ -8,13 +8,13 @@ import {
   InputWrapper,
   ErrorLabel,
 } from './Styled.InputTextComponent';
-import useDeviceColor from '../../hooks/useDeviceColor';
 import {
   ImageSourcePropType,
   StyleProp,
   TextStyle,
   ViewStyle,
 } from 'react-native';
+import {useApp} from '../../context/App';
 
 interface Props {
   placeholder: string;
@@ -78,7 +78,7 @@ const InputTextComponent: React.FC<Props> = ({
     console.log('Error', errors);
   }, [errors]);
 
-  const theme = useDeviceColor();
+  const {theme} = useApp();
 
   return (
     <InputWrapper>

@@ -1,4 +1,4 @@
-import {Animated} from 'react-native';
+import {Animated, ImageSourcePropType} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {
   IconComponent,
@@ -23,29 +23,37 @@ import {
   styledIConsWrapperAnimation,
   ToTopIconView,
 } from './Styled.HomeScreen';
-import useDeviceColor from '../../hooks/useDeviceColor';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {HomeStackParams} from '../../navigation/AppStack/HomeScreenStack';
-import {CreatePostScreen} from '..';
+import {useApp} from '../../context/App';
 
 interface CategoryArrayProps {
   category: string;
   id: number;
 }
 
-const HomeScreen = () => {
-  const theme = useDeviceColor();
+type CreatePostNavigationProp = StackNavigationProp<
+  HomeStackParams,
+  'CreatePostScreen'
+>;
 
-  const searchIcon = theme.bool
+/**
+ *
+ * @returns The home screen, middle screen on the AppStack
+ */
+const HomeScreen: React.FC = () => {
+  const {theme} = useApp();
+
+  const searchIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/search-24-dark.png')
     : require('../../assets/Images/search-24-light.png');
 
-  const createPostIcon = theme.bool
+  const createPostIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/add-50-dark.png')
     : require('../../assets/Images/add-50-light.png');
 
-  const ToTopIcon = theme.bool
+  const ToTopIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/to-top-46-dark.png')
     : require('../../assets/Images/to-top-46-light.png');
 
@@ -86,7 +94,7 @@ const HomeScreen = () => {
     category: 'Top',
   };
 
-  const currentFilter = categoryArray[categoryId].id;
+  const currentFilter: number = categoryArray[categoryId].id;
 
   const handleFilter = (index: number) => {
     setCategoryId(index);
@@ -97,14 +105,11 @@ const HomeScreen = () => {
     scrollYIconsWrapper.setValue(e.nativeEvent.contentOffset.y);
   };
 
-  const navigation: StackNavigationProp<HomeStackParams> =
-    useNavigation<StackNavigationProp<HomeStackParams>>();
+  const navigation: CreatePostNavigationProp =
+    useNavigation<CreatePostNavigationProp>();
 
   const handleRedirectToCreatePostScreen = () => {
-    navigation.navigate<'CreatePostScreen'>(
-      'CreatePostScreen',
-      CreatePostScreen,
-    );
+    navigation.navigate('CreatePostScreen');
   };
 
   // const refScroll: React.MutableRefObject<ScrollView | null> =
@@ -201,7 +206,7 @@ const HomeScreen = () => {
           </ToTopIconView>
           <CreatePostIcon>
             <IconComponent
-              altText="This icon redirects you to the create post screen"
+              altText="This icon navigates you to the create post screen"
               image={createPostIcon}
               onPress={handleRedirectToCreatePostScreen}
             />

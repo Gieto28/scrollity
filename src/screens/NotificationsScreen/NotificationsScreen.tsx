@@ -2,6 +2,10 @@ import React from 'react';
 import {NotificationCardComponent} from '../../components';
 import {ViewScroll} from './Styled.NotificationsScreen';
 
+/**
+ *
+ * @returns the notifications screen
+ */
 const NotificationsScreen = () => {
   return (
     <ViewScroll>

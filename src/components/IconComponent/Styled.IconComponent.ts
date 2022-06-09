@@ -7,9 +7,14 @@ interface BtnProps extends TouchableOpacityProps {
 }
 
 const IconButton = styled.TouchableOpacity<BtnProps>`
-  max-width: ${props => props.theme.icon.maxWidth};
-  max-height: ${props => props.theme.icon.maxHeight};
-  margin: ${props => props.theme.icon.margin};
+  min-width: ${props => props.theme.icon.width};
+  min-height: ${props => props.theme.icon.height};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: ${props => props.theme.icon.margin};
+  max-width: ${props => props.theme.icon.width};
+  max-height: ${props => props.theme.icon.height};
 `;
 
 const Icon = styled.Image`

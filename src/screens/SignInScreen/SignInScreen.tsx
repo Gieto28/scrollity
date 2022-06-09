@@ -15,30 +15,34 @@ import {useNavigation} from '@react-navigation/native';
 import {AuthStackParams} from '../../navigation/AuthStack/AuthStack';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
-import {View} from 'react-native';
-import useDeviceColor from '../../hooks/useDeviceColor';
+import {ImageSourcePropType, View} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {FormSignInModel, schemaSignIn} from '../../models';
+import {FormSignInModel, SchemaSignIn} from '../../models';
 import {useAuth} from '../../context/Auth';
+import {useApp} from '../../context/App';
 
 type SignUpNavigationProp = StackNavigationProp<
   AuthStackParams,
   'SignUpScreen'
 >;
 
+/**
+ *
+ * @returns Sign in screen, using a form to login and calling the signIn method from the useAuth to check if user can be signed in. Authentication using yup, jwt and sending data to node typeorm and checking an mySQL database to match data and returning either an error or the token if successful.
+ */
 const SignInScreen: React.FC = () => {
-  const theme = useDeviceColor();
+  const {theme, changeTheme} = useApp();
   const {signIn} = useAuth();
 
-  const lightDarkIcon = theme.bool
+  const lightDarkIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/moon-30.png')
     : require('../../assets/Images/sun-50.png');
 
-  const hiddenPasswordIcon = theme.bool
+  const hiddenPasswordIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/hide-password-24-dark.png')
     : require('../../assets/Images/hide-password-24-light.png');
 
-  const showingPasswordIcon = theme.bool
+  const showingPasswordIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/show-password-24-dark.png')
     : require('../../assets/Images/show-password-24-light.png');
 
@@ -47,7 +51,6 @@ const SignInScreen: React.FC = () => {
   const [badCredentials, setBadCredentials] = useState<boolean>(false);
 
   //Icon depending on wether the password is hidden or not
-
   const isPasswordHiddenIcon = isPasswordHidden
     ? hiddenPasswordIcon
     : showingPasswordIcon;
@@ -58,12 +61,16 @@ const SignInScreen: React.FC = () => {
     formState: {errors},
     reset,
   } = useForm<FormSignInModel>({
-    resolver: yupResolver(schemaSignIn),
+    resolver: yupResolver(SchemaSignIn),
   });
 
   /**
    *
-   * @param data consists of the model FormSignInModel which has email: string and password: string
+   * @param data consists of the model FormSignInModel which has:
+   *
+   * **email**: string
+   *
+   * **password**: string
    * @returns
    */
   const handleSignIn: SubmitHandler<FormSignInModel> = async (
@@ -95,8 +102,8 @@ const SignInScreen: React.FC = () => {
     navigation.navigate('SignUpScreen');
   };
 
-  const handleTheme = () => {
-    console.log('theme');
+  const handleTheme = async () => {
+    await changeTheme();
   };
 
   return (

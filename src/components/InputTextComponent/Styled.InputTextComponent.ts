@@ -35,7 +35,8 @@ const Input = styled.TextInput<PropsInput>`
   padding: 16px 50px 16px 16px;
 `;
 
-const Label = styled.Text`
+const Label = styled.Text<PropsText>`
+  color: ${props => props.theme.screen.text};
   margin-left: 16px;
   font-weight: 700;
 `;
