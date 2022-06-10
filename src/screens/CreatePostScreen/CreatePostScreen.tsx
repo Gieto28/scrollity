@@ -8,7 +8,7 @@ import {IconComponent, InputTextComponent} from '../../components';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
 import {ImageSourcePropType} from 'react-native';
-import {useApp} from '../../context/App';
+import {useApp} from '../../context';
 
 /**
  *

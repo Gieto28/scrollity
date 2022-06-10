@@ -1,14 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {AuthLoadingScreen, SignInScreen} from '../../screens';
-import {SignUpScreen} from '../../screens';
-
-export type AuthStackParams = {
-  SignInScreen: () => JSX.Element;
-  SignUpScreen: undefined;
-  VerifyAuthRouteScreen: () => JSX.Element;
-  AuthLoadingScreen: () => JSX.Element;
-};
+import {AuthLoadingScreen, SignInScreen, SignUpScreen} from '../../screens';
+import {AuthStackParams} from '../../models';
 
 const AuthStackNavigator = createNativeStackNavigator<AuthStackParams>();
 

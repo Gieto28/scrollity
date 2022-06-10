@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {ImageSourcePropType} from 'react-native';
-import {useApp} from '../../context/App';
 import {Icon, IconButton} from './Styled.IconComponent';
 
 interface Props {

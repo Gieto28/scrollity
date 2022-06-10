@@ -10,9 +10,8 @@ import {CommonActions, useNavigation} from '@react-navigation/native';
 import {ErrorWhileSignUpText, IconWrapper} from './Styled.SignUpScreen';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {FormSignUpModel, SchemaSignUp} from '../../models';
-import {useAuth} from '../../context/Auth';
+import {useAuth, useApp} from '../../context';
 import {ImageSourcePropType} from 'react-native';
-import {useApp} from '../../context/App';
 
 const SignUpScreen = () => {
   const {theme, changeTheme} = useApp();

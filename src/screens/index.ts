@@ -6,6 +6,7 @@ import SignUpScreen from './SignUpScreen/SignUpScreen';
 import CommentsScreen from './CommentsScreen/CommentsScreen';
 import CreatePostScreen from './CreatePostScreen/CreatePostScreen';
 import AuthLoadingScreen from './AuthLoadingScreen/AuthLoadingScreen';
+import SettingsScreen from './SettingsScreen/SettingsScreen';
 
 export {
   AuthLoadingScreen,
@@ -14,6 +15,7 @@ export {
   HomeScreen,
   NotificationsScreen,
   ProfileScreen,
+  SettingsScreen,
   SignInScreen,
   SignUpScreen,
 };

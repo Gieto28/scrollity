@@ -1,8 +1,6 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React, {useEffect, useState} from 'react';
 import {AppState} from 'react-native';
-import {useApp} from '../context/App';
-import {useAuth} from '../context/Auth';
+import {useAuth} from '../context';
 import {AuthLoadingScreen} from '../screens';
 import AppStack from './AppStack/AppStack';
 import AuthStack from './AuthStack/AuthStack';

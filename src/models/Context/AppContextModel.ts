@@ -1,4 +1,4 @@
-import {ThemeProps} from '../../../styles/theme';
+import {ThemeProps} from '../../styles/theme';
 
 interface AppContextModel {
   language: string;

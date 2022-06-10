@@ -1,8 +1,10 @@
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {ImageSourcePropType} from 'react-native';
 import {IconComponent} from '../../components';
-import {useApp} from '../../context/App';
-import {useAuth} from '../../context/Auth';
+import {useApp, useAuth} from '../../context';
+import {ProfileStackParams} from '../../models';
 import {AppScrollView} from '../../styles/GlobalStyle';
 import {
   ProfileHeader,
@@ -17,6 +19,11 @@ import {
   ProfilePictureWrapper,
 } from './Styled.ProfileScreen';
 
+type SettingsNavigationProp = StackNavigationProp<
+  ProfileStackParams,
+  'SettingsScreen'
+>;
+
 /**
  *
  * @returns the profile screen
@@ -26,14 +33,17 @@ const ProfileScreen = () => {
   const {theme} = useApp();
 
   const lightDarkIcon: ImageSourcePropType = theme.bool
-    ? require('../../assets/Images/moon-30.png')
-    : require('../../assets/Images/sun-50.png');
+    ? require('../../assets/Images/settings-32-dark.png')
+    : require('../../assets/Images/settings-32-light.png');
 
   const handleSignOut = () => {
     signOut();
   };
 
+  const navigation = useNavigation<SettingsNavigationProp>();
+
   const handleSettings = () => {
+    navigation.navigate('SettingsScreen');
     console.log('settings button is working');
   };
 

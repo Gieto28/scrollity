@@ -62,8 +62,4 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
   );
 };
 
-const useApp = () => {
-  return useContext(AppContext);
-};
-
-export {useApp, AppProvider};
+export {AppProvider};

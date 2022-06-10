@@ -1,17 +1,13 @@
 import React, {useState} from 'react';
-import {NotificationsScreen, ProfileScreen} from '../../screens';
+import {NotificationsScreen} from '../../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavIconComponent} from '../../components';
-import HomeScreenStack, {HomeStackParams} from './HomeScreenStack';
-import {useApp} from '../../context/App';
-type NavigationParams = {
-  HomeScreenStack: HomeStackParams;
-  LoginScreen: () => JSX.Element;
-  NotificationsScreen: () => JSX.Element;
-  ProfileScreen: () => JSX.Element;
-};
+import HomeScreenStack from './HomeScreenStack';
+import ProfileScreenStack from './ProfileScreenStack';
+import {useApp} from '../../context';
+import {AppStackParams} from '../../models';
 
-const AppStackNavigation = createBottomTabNavigator<NavigationParams>();
+const AppStackNavigation = createBottomTabNavigator<AppStackParams>();
 
 /**
  *
@@ -86,8 +82,8 @@ const AppStack: React.FC = () => {
             <NavIconComponent focused={focused} image={profileIcon} />
           ),
         }}
-        name="ProfileScreen"
-        component={ProfileScreen}
+        name="ProfileScreenStack"
+        component={ProfileScreenStack}
       />
     </AppStackNavigation.Navigator>
   );

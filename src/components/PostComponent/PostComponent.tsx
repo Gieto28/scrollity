@@ -18,10 +18,10 @@ import {
   PostHeaderTopText,
 } from './Styled.PostComponent';
 import {useNavigation} from '@react-navigation/native';
-import {HomeStackParams} from '../../navigation/AppStack/HomeScreenStack';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ImageSourcePropType} from 'react-native';
-import {useApp} from '../../context/App';
+import {useApp} from '../../context';
+import {HomeStackParams} from '../../models';
 
 interface Props {
   title: string;

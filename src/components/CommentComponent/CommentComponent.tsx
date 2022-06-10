@@ -1,5 +1,5 @@
 import React from 'react';
-import {useApp} from '../../context/App';
+import {useApp} from '../../context';
 import IconComponent from '../IconComponent/IconComponent';
 import {
   BodyComment,

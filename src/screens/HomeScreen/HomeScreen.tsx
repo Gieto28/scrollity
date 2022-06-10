@@ -25,8 +25,9 @@ import {
 } from './Styled.HomeScreen';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {HomeStackParams} from '../../navigation/AppStack/HomeScreenStack';
-import {useApp} from '../../context/App';
+import {useApp} from '../../context';
+import {HomeStackParams, SchemaSearch, SearchModel} from '../../models';
+import {yupResolver} from '@hookform/resolvers/yup';
 
 interface CategoryArrayProps {
   category: string;
@@ -58,10 +59,8 @@ const HomeScreen: React.FC = () => {
     : require('../../assets/Images/to-top-46-light.png');
 
   // search handler
-  const {control, handleSubmit} = useForm({
-    defaultValues: {
-      search: '',
-    },
+  const {control, handleSubmit} = useForm<SearchModel>({
+    resolver: yupResolver(SchemaSearch),
   });
 
   const [categoryArray, setCategoryArray] = useState<CategoryArrayProps[]>([

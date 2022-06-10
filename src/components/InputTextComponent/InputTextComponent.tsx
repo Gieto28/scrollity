@@ -14,7 +14,7 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-import {useApp} from '../../context/App';
+import {useApp} from '../../context';
 
 interface Props {
   placeholder: string;

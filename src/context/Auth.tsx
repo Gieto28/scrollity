@@ -117,8 +117,4 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   );
 };
 
-const useAuth = () => {
-  return useContext(AuthContext);
-};
-
-export {useAuth, AuthProvider};
+export {AuthProvider};

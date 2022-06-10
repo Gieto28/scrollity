@@ -12,14 +12,12 @@ import {
   IconComponent,
 } from '../../components';
 import {useNavigation} from '@react-navigation/native';
-import {AuthStackParams} from '../../navigation/AuthStack/AuthStack';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
 import {ImageSourcePropType, View} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {FormSignInModel, SchemaSignIn} from '../../models';
-import {useAuth} from '../../context/Auth';
-import {useApp} from '../../context/App';
+import {AuthStackParams, FormSignInModel, SchemaSignIn} from '../../models';
+import {useApp, useAuth} from '../../context';
 
 type SignUpNavigationProp = StackNavigationProp<
   AuthStackParams,

@@ -5,7 +5,6 @@ import {
   PostComponent,
 } from '../../components';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {HomeStackParams} from '../../navigation/AppStack/HomeScreenStack';
 import {
   CommentsView,
   ScrollComments,
@@ -16,9 +15,9 @@ import {ImageSourcePropType, ScrollView, View} from 'react-native';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import IconComponent from '../../components/IconComponent/IconComponent';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {useApp} from '../../context/App';
+import {useApp} from '../../context';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {CommentModel, SchemaComment} from '../../models';
+import {CommentModel, HomeStackParams, SchemaComment} from '../../models';
 
 type Props = NativeStackScreenProps<HomeStackParams, 'CommentsScreen'>;
 
