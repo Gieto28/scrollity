@@ -1,5 +1,5 @@
-import FormSignInModel from '../form/FormSignInModel';
-import FormSignUpModel from '../form/FormSignUpModel';
+import FormSignInModel from '../Form/FormSignInModel';
+import FormSignUpModel from '../Form/FormSignUpModel';
 import JwtDecodedModel from './JwtDecodedModel';
 
 /**

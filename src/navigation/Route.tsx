@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {AppState} from 'react-native';
-import {useAuth} from '../context';
+import {ThemeProvider} from 'styled-components';
+import {useApp, useAuth} from '../context';
 import {AuthLoadingScreen} from '../screens';
 import AppStack from './AppStack/AppStack';
 import AuthStack from './AuthStack/AuthStack';
@@ -13,6 +14,7 @@ import AuthStack from './AuthStack/AuthStack';
  * @returns either **AuthStack** or **AuthStack** or **AuthLoadingScreen**
  */
 const Route: React.FC = () => {
+  const {theme} = useApp();
   const {isSignedIn, loading} = useAuth();
   const [appState, setAppState] = useState<string>(AppState.currentState);
 
@@ -27,7 +29,11 @@ const Route: React.FC = () => {
 
   if (loading) return <AuthLoadingScreen />;
 
-  return isSignedIn ? <AppStack /> : <AuthStack />;
+  return (
+    <ThemeProvider theme={theme}>
+      {isSignedIn ? <AppStack /> : <AuthStack />}
+    </ThemeProvider>
+  );
 };
 
 export default Route;

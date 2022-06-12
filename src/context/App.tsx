@@ -1,9 +1,8 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import {AppContextModel, ReactChildrenProps} from '../models';
 import AsyncStorage from '@react-native-community/async-storage';
 import {darkTheme, lightTheme, ThemeProps} from '../styles/theme';
 import {ColorSchemeName, useColorScheme} from 'react-native';
-import {ThemeProvider} from 'styled-components';
 
 export const AppContext: React.Context<AppContextModel> =
   createContext<AppContextModel>({} as AppContextModel);
@@ -49,16 +48,14 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <AppContext.Provider
-        value={{
-          theme,
-          language,
-          changeTheme,
-        }}>
-        {children}
-      </AppContext.Provider>
-    </ThemeProvider>
+    <AppContext.Provider
+      value={{
+        theme,
+        language,
+        changeTheme,
+      }}>
+      {children}
+    </AppContext.Provider>
   );
 };
 

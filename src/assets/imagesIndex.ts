@@ -1,4 +1,4 @@
-import {useApp} from '../context/App';
+import {useApp} from '../context';
 
 const {theme} = useApp();
 
