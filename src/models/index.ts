@@ -17,7 +17,7 @@ import FormSignUpModel from './Form/FormSignUpModel';
 import PostModel from './Form/PostModel';
 import CommentModel from './Form/CommentModel';
 import SearchModel from './Form/SearchModel';
-import EditProfileModel from './Form/EditProfileModel';
+import FormEditProfileModel from './Form/FormEditProfileModel';
 //params
 import AuthStackParams from './ScreenStackModels/AuthStackParams';
 import AppStackParams from './ScreenStackModels/AppStackParams';
@@ -42,7 +42,7 @@ export type {
   FormSignUpModel,
   PostModel,
   SearchModel,
-  EditProfileModel,
+  FormEditProfileModel,
   // - Context
   AppSettingsContextModel,
   AppContextModel,

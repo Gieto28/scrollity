@@ -4,7 +4,7 @@ interface AppSettingsContextModel {
   language: string;
   theme: ThemeProps;
   //functions
-  changeTheme: () => Promise<void>;
+  changeTheme(): Promise<void>;
 }
 
 export default AppSettingsContextModel;

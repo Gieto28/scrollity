@@ -15,13 +15,13 @@ import {
   SettingsLabel,
   SignOutView,
 } from './Styled.SettingsScreen';
-import {useForm} from 'react-hook-form';
+import {SubmitHandler, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {EditProfileModel, SchemaEditProfile} from '../../models';
+import {FormEditProfileModel, SchemaEditProfile} from '../../models';
 
 const SettingsScreen = () => {
   const {theme, changeTheme} = useAppSettings();
-  const {signOut} = useAuth();
+  const {signOut, updateProfile} = useAuth();
   const navigation = useNavigation();
 
   // States
@@ -59,14 +59,21 @@ const SettingsScreen = () => {
     handleSubmit,
     formState: {errors},
     reset,
-  } = useForm<EditProfileModel>({
+  } = useForm<FormEditProfileModel>({
     resolver: yupResolver(SchemaEditProfile),
   });
 
-  const handleEditProfile = (data: EditProfileModel) => {
+  const handleEditProfile: SubmitHandler<FormEditProfileModel> = async (
+    data: FormEditProfileModel,
+  ) => {
     try {
       console.log(data);
-    } catch (e) {
+
+      await updateProfile(data);
+
+      console.log('update successful');
+      reset();
+    } catch (error) {
       throw new Error('error while updating profile in file settings screen');
     }
   };

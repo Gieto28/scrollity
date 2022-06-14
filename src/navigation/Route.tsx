@@ -42,10 +42,10 @@ const Route: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       {isSignedIn ? (
-        <AppProvider>
-          <AppStack />
-        </AppProvider>
+        // <AppProvider>
+        <AppStack />
       ) : (
+        // </AppProvider>
         <AuthStack />
       )}
     </ThemeProvider>

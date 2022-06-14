@@ -1,3 +1,4 @@
+import FormEditProfileModel from '../Form/FormEditProfileModel';
 import FormSignInModel from '../Form/FormSignInModel';
 import FormSignUpModel from '../Form/FormSignUpModel';
 import JwtDecodedModel from './JwtDecodedModel';
@@ -8,12 +9,14 @@ import JwtDecodedModel from './JwtDecodedModel';
 interface AuthContextModel {
   isSignedIn: boolean;
   user: JwtDecodedModel | null;
+  setUser: any;
   loading: boolean;
   token: string | null;
   userId: string | null;
   signIn(data: FormSignInModel): Promise<void>;
   signUp(data: FormSignUpModel): Promise<void>;
   signOut(): Promise<void>;
+  updateProfile: (data: FormEditProfileModel) => Promise<void>;
 }
 
 export default AuthContextModel;

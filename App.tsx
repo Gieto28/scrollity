@@ -5,8 +5,6 @@ import Route from './src/navigation/Route';
 import {AppSettingsProvider} from './src/context';
 
 const App: React.FC = () => {
-  // custom hook that returns the object theme
-
   return (
     <AuthProvider>
       <AppSettingsProvider>

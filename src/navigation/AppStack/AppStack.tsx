@@ -4,8 +4,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavIconComponent} from '../../components';
 import HomeScreenStack from './HomeScreenStack';
 import ProfileScreenStack from './ProfileScreenStack';
-import {useAppSettings} from '../../context';
+import {AppSettingsProvider, useApp, useAppSettings} from '../../context';
 import {AppStackParams} from '../../models';
+import AppLoadingScreen from '../../screens/AppLoadingScreen/AppLoadingScreen';
 
 const AppStackNavigation = createBottomTabNavigator<AppStackParams>();
 
@@ -15,6 +16,7 @@ const AppStackNavigation = createBottomTabNavigator<AppStackParams>();
  */
 const AppStack: React.FC = () => {
   const {theme} = useAppSettings();
+  const {loading} = useApp();
 
   const notificationIcon = theme.bool
     ? require('../../assets/Images/notifications-24-dark.png')
@@ -29,6 +31,13 @@ const AppStack: React.FC = () => {
     : require('../../assets/Images/person-24-light.png');
 
   const [notificationAmount, setNotificationAmount] = useState(5);
+
+  if (loading)
+    return (
+      <AppSettingsProvider>
+        <AppLoadingScreen />
+      </AppSettingsProvider>
+    );
 
   return (
     <AppStackNavigation.Navigator
