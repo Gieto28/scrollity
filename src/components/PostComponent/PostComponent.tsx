@@ -20,7 +20,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ImageSourcePropType} from 'react-native';
-import {useApp} from '../../context';
+import {useAppSettings} from '../../context';
 import {HomeStackParams} from '../../models';
 
 interface Props {
@@ -65,7 +65,7 @@ const PostComponent: React.FC<Props> = ({
   postObject,
   IconToCommentsScreen,
 }) => {
-  const {theme} = useApp();
+  const {theme} = useAppSettings();
 
   const upVoteIcon = theme.bool
     ? require('../../assets/Images/arrow-24-upvote-dark.png')

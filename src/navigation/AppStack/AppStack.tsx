@@ -4,7 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavIconComponent} from '../../components';
 import HomeScreenStack from './HomeScreenStack';
 import ProfileScreenStack from './ProfileScreenStack';
-import {useApp} from '../../context';
+import {useAppSettings} from '../../context';
 import {AppStackParams} from '../../models';
 
 const AppStackNavigation = createBottomTabNavigator<AppStackParams>();
@@ -14,7 +14,7 @@ const AppStackNavigation = createBottomTabNavigator<AppStackParams>();
  * @returns navigator with 3 main screens, HomeScreenStack, ProfileScreenStack and NotificationsScreen
  */
 const AppStack: React.FC = () => {
-  const {theme} = useApp();
+  const {theme} = useAppSettings();
 
   const notificationIcon = theme.bool
     ? require('../../assets/Images/notifications-24-dark.png')

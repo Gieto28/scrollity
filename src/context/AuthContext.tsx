@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import {
   AuthContextModel,
   FormSignInModel,
@@ -96,18 +96,21 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   };
 
   const signOut = async () => {
-    await AsyncStorage.clear();
+    await AsyncStorage.multiRemove(['token', 'userId', 'user']);
     setUser(null);
   };
 
   return (
     <AuthContext.Provider
       value={{
+        // states
         isSignedIn: !!user,
         user,
         userId,
         loading,
         token,
+
+        // functions
         signIn,
         signUp,
         signOut,

@@ -14,7 +14,7 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-import {useApp} from '../../context';
+import {useAppSettings} from '../../context';
 
 interface Props {
   placeholder: string;
@@ -78,7 +78,7 @@ const InputTextComponent: React.FC<Props> = ({
     console.log('Error', errors);
   }, [errors]);
 
-  const {theme} = useApp();
+  const {theme} = useAppSettings();
 
   return (
     <InputWrapper>

@@ -3,7 +3,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {ImageSourcePropType} from 'react-native';
 import {IconComponent} from '../../components';
-import {useApp, useAuth} from '../../context';
+import {useAuth, useAppSettings, useApp} from '../../context';
 import {ProfileStackParams} from '../../models';
 import {AppScrollView} from '../../styles/GlobalStyle';
 import {
@@ -30,7 +30,9 @@ type SettingsNavigationProp = StackNavigationProp<
  */
 const ProfileScreen = () => {
   const {signOut} = useAuth();
-  const {theme} = useApp();
+  const {theme} = useAppSettings();
+  const {user} = useApp();
+  console.log('user', user);
 
   const lightDarkIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/settings-32-dark.png')
@@ -65,7 +67,7 @@ const ProfileScreen = () => {
           />
         </ProfilePictureWrapper>
         <ProfileNameWrapper>
-          <ProfileName>Meu Nome</ProfileName>
+          <ProfileName>{user.profile.name}</ProfileName>
         </ProfileNameWrapper>
       </ProfileHeader>
       <ProfileInfoWrapper>

@@ -17,7 +17,7 @@ import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
 import {ImageSourcePropType, View} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {AuthStackParams, FormSignInModel, SchemaSignIn} from '../../models';
-import {useApp, useAuth} from '../../context';
+import {useAuth, useAppSettings} from '../../context';
 
 type SignUpNavigationProp = StackNavigationProp<
   AuthStackParams,
@@ -29,8 +29,12 @@ type SignUpNavigationProp = StackNavigationProp<
  * @returns Sign in screen, using a form to login and calling the signIn method from the useAuth to check if user can be signed in. Authentication using yup, jwt and sending data to node typeorm and checking an mySQL database to match data and returning either an error or the token if successful.
  */
 const SignInScreen: React.FC = () => {
-  const {theme, changeTheme} = useApp();
+  const {theme, changeTheme} = useAppSettings();
   const {signIn} = useAuth();
+
+  // States
+  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
+  const [badCredentials, setBadCredentials] = useState<boolean>(false);
 
   const lightDarkIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/moon-30.png')
@@ -43,10 +47,6 @@ const SignInScreen: React.FC = () => {
   const showingPasswordIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/show-password-24-dark.png')
     : require('../../assets/Images/show-password-24-light.png');
-
-  // States
-  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
-  const [badCredentials, setBadCredentials] = useState<boolean>(false);
 
   //Icon depending on wether the password is hidden or not
   const isPasswordHiddenIcon = isPasswordHidden

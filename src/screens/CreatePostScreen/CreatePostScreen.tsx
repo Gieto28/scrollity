@@ -8,7 +8,7 @@ import {IconComponent, InputTextComponent} from '../../components';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
 import {ImageSourcePropType} from 'react-native';
-import {useApp} from '../../context';
+import {useAppSettings} from '../../context';
 
 /**
  *
@@ -28,7 +28,7 @@ const CreatePostScreen = () => {
     },
   });
 
-  const {theme} = useApp();
+  const {theme} = useAppSettings();
 
   const leftArrowIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-left-dark-24.png')

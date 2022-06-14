@@ -1,6 +1,6 @@
-import {useApp} from '../context';
+import {useAppSettings} from '../context';
 
-const {theme} = useApp();
+const {theme} = useAppSettings();
 
 const sendCommentIcon = theme.bool
   ? require('./Images/sent-24-dark.png')

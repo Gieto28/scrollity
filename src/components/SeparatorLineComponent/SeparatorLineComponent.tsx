@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {ParentView, Line, Label} from './Styled.SeparatorLineComponent';
 
 interface Props {
-  labelName: string;
+  labelName?: string;
 }
 
 /**
@@ -15,9 +15,11 @@ const SeparatorLineComponent: React.FC<Props> = ({labelName}) => {
   return (
     <ParentView>
       <Line />
-      <View>
-        <Label>{labelName}</Label>
-      </View>
+      {labelName && (
+        <View>
+          <Label>{labelName}</Label>
+        </View>
+      )}
       <Line />
     </ParentView>
   );

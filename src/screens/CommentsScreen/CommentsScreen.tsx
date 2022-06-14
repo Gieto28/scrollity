@@ -15,7 +15,7 @@ import {ImageSourcePropType, ScrollView, View} from 'react-native';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import IconComponent from '../../components/IconComponent/IconComponent';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {useApp} from '../../context';
+import {useAppSettings} from '../../context';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {CommentModel, HomeStackParams, SchemaComment} from '../../models';
 
@@ -26,7 +26,7 @@ type Props = NativeStackScreenProps<HomeStackParams, 'CommentsScreen'>;
  * @returns A screen with the post and it's comments
  */
 const CommentsScreen: React.FC<Props> = ({route}) => {
-  const {theme} = useApp();
+  const {theme} = useAppSettings();
 
   const sendCommentIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/sent-24-dark.png')

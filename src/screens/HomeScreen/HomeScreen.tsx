@@ -25,7 +25,7 @@ import {
 } from './Styled.HomeScreen';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useApp} from '../../context';
+import {useAppSettings} from '../../context';
 import {HomeStackParams, SchemaSearch, SearchModel} from '../../models';
 import {yupResolver} from '@hookform/resolvers/yup';
 
@@ -44,7 +44,7 @@ type CreatePostNavigationProp = StackNavigationProp<
  * @returns The home screen, middle screen on the AppStack
  */
 const HomeScreen: React.FC = () => {
-  const {theme} = useApp();
+  const {theme} = useAppSettings();
 
   const searchIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/search-24-dark.png')

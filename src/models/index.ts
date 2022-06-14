@@ -7,6 +7,7 @@ import SchemaSignUp from './YupSchema/SignUpYupModel';
 //Models
 // - context
 import TokenModel from './Context/TokenModel';
+import AppSettingsContextModel from './Context/AppSettingsContextModel';
 import AppContextModel from './Context/AppContextModel';
 import AuthContextModel from './Context/AuthContextModel';
 import JwtDecodedModel from './Context/JwtDecodedModel';
@@ -43,6 +44,7 @@ export type {
   SearchModel,
   EditProfileModel,
   // - Context
+  AppSettingsContextModel,
   AppContextModel,
   AuthContextModel,
   JwtDecodedModel,
