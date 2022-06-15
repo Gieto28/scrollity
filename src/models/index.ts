@@ -4,6 +4,7 @@ import SchemaComment from './YupSchema/CommentYupModel';
 import SchemaSearch from './YupSchema/SearchYupModel';
 import SchemaSignIn from './YupSchema/SignInYupModel';
 import SchemaSignUp from './YupSchema/SignUpYupModel';
+import SchemaCreatePost from './YupSchema/CreatePostYupModel';
 //Models
 // - context
 import TokenModel from './Context/TokenModel';
@@ -18,6 +19,7 @@ import PostModel from './Form/PostModel';
 import CommentModel from './Form/CommentModel';
 import SearchModel from './Form/SearchModel';
 import FormEditProfileModel from './Form/FormEditProfileModel';
+import CreatePostModel from './Form/CreatePostModel';
 //params
 import AuthStackParams from './ScreenStackModels/AuthStackParams';
 import AppStackParams from './ScreenStackModels/AppStackParams';
@@ -30,6 +32,7 @@ export {
   SchemaSignIn,
   SchemaSignUp,
   SchemaComment,
+  SchemaCreatePost,
   SchemaSearch,
   SchemaEditProfile,
 };
@@ -43,6 +46,7 @@ export type {
   PostModel,
   SearchModel,
   FormEditProfileModel,
+  CreatePostModel,
   // - Context
   AppSettingsContextModel,
   AppContextModel,

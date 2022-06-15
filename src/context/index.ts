@@ -11,14 +11,11 @@ const useAuth = () => {
   return useContext(AuthContext);
 };
 
-const useApp = () => {
-  return useContext(AppContext);
-};
+// const useApp = () => {
+//   return useContext(AppContext);
+// };
 
 export {
-  //app context
-  useApp,
-  AppProvider,
   // app settings context
   useAppSettings,
   AppSettingsProvider,

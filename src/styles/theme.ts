@@ -2,9 +2,8 @@ const theme = {
   fonts: {
     fontFamily: ['sans-serif', 'Roboto'],
     fontSize: {
-      xxl: '56px',
-      xl: '40px',
-      lg: '32px',
+      xxl: '40px',
+      xl: '32px',
       l: '24px',
       md: '16px',
       sm: '8px',

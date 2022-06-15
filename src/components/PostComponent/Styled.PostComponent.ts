@@ -57,7 +57,7 @@ const PostHeaderTopText = styled.Text<PropsText>`
 `;
 
 const PostTitle = styled.Text<PropsText>`
-  font-size: ${props => props.theme.fonts.fontSize.lg};
+  font-size: ${props => props.theme.fonts.fontSize.l};
   color: ${props => props.theme.screen.text};
 `;
 

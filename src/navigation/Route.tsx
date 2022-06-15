@@ -1,12 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {AppState} from 'react-native';
 import {ThemeProvider} from 'styled-components';
-import {
-  AppProvider,
-  AppSettingsProvider,
-  useAppSettings,
-  useAuth,
-} from '../context';
+import {useAppSettings, useAuth} from '../context';
 import {AuthLoadingScreen} from '../screens';
 import AppStack from './AppStack/AppStack';
 import AuthStack from './AuthStack/AuthStack';
@@ -36,13 +31,7 @@ const Route: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {isSignedIn ? (
-        <AppProvider>
-          <AppStack />
-        </AppProvider>
-      ) : (
-        <AuthStack />
-      )}
+      {isSignedIn ? <AppStack /> : <AuthStack />}
     </ThemeProvider>
   );
 };
