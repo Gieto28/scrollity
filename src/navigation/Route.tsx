@@ -32,20 +32,15 @@ const Route: React.FC = () => {
     return () => handleAppState.remove();
   }, [appState]);
 
-  if (loading)
-    return (
-      <AppSettingsProvider>
-        <AuthLoadingScreen />
-      </AppSettingsProvider>
-    );
+  if (loading) return <AuthLoadingScreen />;
 
   return (
     <ThemeProvider theme={theme}>
       {isSignedIn ? (
-        // <AppProvider>
-        <AppStack />
+        <AppProvider>
+          <AppStack />
+        </AppProvider>
       ) : (
-        // </AppProvider>
         <AuthStack />
       )}
     </ThemeProvider>

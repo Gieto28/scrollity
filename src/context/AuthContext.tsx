@@ -16,6 +16,12 @@ import updateProfileAxios from '../services/auth/updateProfile';
 export const AuthContext: React.Context<AuthContextModel> =
   createContext<AuthContextModel>({} as AuthContextModel);
 
+/**
+ *
+ * First Provider of the app context it's responsible for the authentication of the application
+ *
+ * @returns AuthProvider being used in the file app.tsx
+ */
 const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   //
   const [user, setUser] = useState<JwtDecodedModel | any>(null);

@@ -7,6 +7,11 @@ import {ColorSchemeName, useColorScheme} from 'react-native';
 export const AppSettingsContext: React.Context<AppSettingsContextModel> =
   createContext<AppSettingsContextModel>({} as AppSettingsContextModel);
 
+/**
+ * This provider is global, it's responsible for storing the application settings such as the theme and the language
+ *
+ * @returns AppSettings Provider being used in the app.tsx file
+ */
 const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
   const [language, setLanguage] = useState<string>('pt');
   const [theme, setTheme] = useState<ThemeProps>(lightTheme);
@@ -28,6 +33,7 @@ const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
         await AsyncStorage.setItem('theme', theme!.key);
         return theme;
       }
+      return;
     };
     checkThemeOnAppStartUp();
   }, []);

@@ -4,7 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavIconComponent} from '../../components';
 import HomeScreenStack from './HomeScreenStack';
 import ProfileScreenStack from './ProfileScreenStack';
-import {AppSettingsProvider, useApp, useAppSettings} from '../../context';
+import {useApp, useAppSettings} from '../../context';
 import {AppStackParams} from '../../models';
 import AppLoadingScreen from '../../screens/AppLoadingScreen/AppLoadingScreen';
 
@@ -32,12 +32,7 @@ const AppStack: React.FC = () => {
 
   const [notificationAmount, setNotificationAmount] = useState(5);
 
-  if (loading)
-    return (
-      <AppSettingsProvider>
-        <AppLoadingScreen />
-      </AppSettingsProvider>
-    );
+  if (loading) return <AppLoadingScreen />;
 
   return (
     <AppStackNavigation.Navigator

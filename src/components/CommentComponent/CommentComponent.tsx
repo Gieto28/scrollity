@@ -20,18 +20,22 @@ interface Props {
   name: string;
   image: string | undefined;
   commentId: string;
-  commenterId: string;
+  userId: string;
   comment: string;
   timeStamp: string;
   upVotes: number;
   downVotes: number;
 }
 
+/**
+ *
+ * @returns comment component being used in the comments screen, it's used in a map to iterate through all the comments of a specific post
+ */
 const CommentComponent: React.FC<Props> = ({
   name,
   image,
   commentId,
-  commenterId,
+  userId,
   comment,
   timeStamp,
   upVotes,
