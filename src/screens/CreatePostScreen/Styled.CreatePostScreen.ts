@@ -1,4 +1,9 @@
-import {TextProps, TouchableOpacityProps, ViewProps} from 'react-native';
+import {
+  Dimensions,
+  TextProps,
+  TouchableOpacityProps,
+  ViewProps,
+} from 'react-native';
 import styled from 'styled-components/native';
 import {ThemeProps} from '../../styles/theme';
 
@@ -16,7 +21,6 @@ interface PropsView extends ViewProps {
 
 const CreatePostWrapper = styled.View<PropsView>`
   background-color: ${props => props.theme.screen.background};
-  min-height: 100%;
   color: ${props => props.theme.screen.text};
 `;
 
@@ -50,6 +54,23 @@ const SelectWrapper = styled.View<PropsView>`
   min-width: 100%;
 `;
 
+const ErrorLabel = styled.Text<PropsText>`
+  color: ${props => props.theme.fonts.colors.primary};
+`;
+
+const ImageWrapper = styled.View<PropsView>`
+  margin-bottom: 16px;
+  display: ${props => props.theme.display.display};
+  align-items: ${props => props.theme.display.alignCenter};
+  width: 100%;
+  height: auto;
+`;
+const ImagePreview = styled.Image.attrs({overflow: 'visible'})`
+  /* width: ${Dimensions.get('window').width * 0.9}px;
+  min-height: ${Dimensions.get('window').width * 0.9}px;
+  background-color: grey; */
+`;
+
 const SelectMediaWrapper = styled.TouchableOpacity<PropsTouchable>`
   background-color: grey;
   border: 1px solid ${props => props.theme.button.border};
@@ -63,13 +84,22 @@ const SelectMediaText = styled.Text<PropsText>`
   color: ${props => props.theme.screen.text};
 `;
 
+const ButtonWrapper = styled.View<PropsView>`
+  padding: 16px;
+  z-index: 1000;
+`;
+
 export {
   CreatePostWrapper,
   CreateHeader,
   LabelWrapper,
   Label,
+  ErrorLabel,
   CreateBody,
+  ImageWrapper,
+  ImagePreview,
   SelectWrapper,
   SelectMediaWrapper,
   SelectMediaText,
+  ButtonWrapper,
 };
