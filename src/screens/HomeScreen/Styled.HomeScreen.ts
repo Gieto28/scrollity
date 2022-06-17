@@ -134,25 +134,17 @@ const minIconsWrapper = 0;
 const maxIconsWrapper = 80;
 
 const scrollYIconsWrapper = new Animated.Value(min);
+
 const diffClampIconsWrapper = Animated.diffClamp(
   scrollYIconsWrapper,
   minIconsWrapper,
   maxIconsWrapper,
 );
+
 const translateXIconsWrapper = diffClampIconsWrapper.interpolate({
   inputRange: [minIconsWrapper, maxIconsWrapper],
   outputRange: [minIconsWrapper, maxIconsWrapper],
 });
-
-const styledIConsWrapperAnimation = {
-  transform: [
-    {
-      translateX: translateXIconsWrapper,
-    },
-  ],
-  elevation: 100,
-  zIndex: 100,
-};
 
 export {
   CreatePostIcon,
@@ -164,7 +156,6 @@ export {
   scrollY,
   scrollYIconsWrapper,
   styledHeaderAnimation,
-  styledIConsWrapperAnimation,
   CategoryButton,
   CategoryText,
   HomeLabel,

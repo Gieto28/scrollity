@@ -11,6 +11,7 @@ import {CommonActions, useNavigation} from '@react-navigation/native';
 import {useAppSettings, useAuth} from '../../context';
 import {
   EditProfileBody,
+  FormErrorText,
   SettingsHeader,
   SettingsLabel,
   SignOutView,
@@ -28,6 +29,7 @@ const SettingsScreen = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
   const [isPasswordConfirmationHidden, setIsPasswordConfirmationHidden] =
     useState<boolean>(true);
+  const [formError, setFormError] = useState<boolean>(false);
 
   const leftArrowIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-left-dark-24.png')
@@ -59,6 +61,7 @@ const SettingsScreen = () => {
     handleSubmit,
     formState: {errors},
     reset,
+    resetField,
   } = useForm<FormEditProfileModel>({
     resolver: yupResolver(SchemaEditProfile),
   });
@@ -74,6 +77,11 @@ const SettingsScreen = () => {
       console.log('update successful');
       reset();
     } catch (error) {
+      setFormError(true);
+      resetField('name');
+      setTimeout(() => {
+        setFormError(false);
+      }, 8000);
       throw new Error('error while updating profile in file settings screen');
     }
   };
@@ -115,6 +123,7 @@ const SettingsScreen = () => {
       <SeparatorLineComponent />
       <EditProfileBody>
         <SettingsLabel>Edit Profile</SettingsLabel>
+        {formError && <FormErrorText>Name already exists!</FormErrorText>}
         <InputTextComponent
           placeholder={'Your new username...'}
           value={''}

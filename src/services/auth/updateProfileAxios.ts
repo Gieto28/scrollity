@@ -1,7 +1,7 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {TokenModel} from '../../models';
-import {PATH_UPDATE_PROFILE} from '../../utils/env';
+import {AUTH_UPDATE_PROFILE} from '../../utils/env';
 
 /**
  *
@@ -15,14 +15,17 @@ const updateProfileAxios = async (
   password: string | null,
   passwordConfirmation: string | null,
 ): Promise<TokenModel> => {
-  return await api
-    .post<TokenModel>(PATH_UPDATE_PROFILE, {
-      name,
-      password,
-      passwordConfirmation,
-    })
-    .then((res: AxiosResponse<TokenModel | any>) => res.data)
-    .catch(() => 'Error while updating profile');
+  try {
+    const res: AxiosResponse<TokenModel, ErrorConstructor> =
+      await api.post<TokenModel>(AUTH_UPDATE_PROFILE, {
+        name,
+        password,
+        passwordConfirmation,
+      });
+    return res.data;
+  } catch (e) {
+    throw new Error('Error while updating profile');
+  }
 };
 
 export default updateProfileAxios;

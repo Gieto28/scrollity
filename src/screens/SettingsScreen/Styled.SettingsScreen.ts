@@ -18,6 +18,11 @@ const SettingsHeader = styled.View<PropsView>`
   margin: 8px 16px;
 `;
 
+const FormErrorText = styled.Text<PropsText>`
+  color: ${props => props.theme.fonts.colors.primary};
+  margin: 0 0 0 16px;
+`;
+
 const SettingsLabel = styled.Text<PropsText>`
   display: ${props => props.theme.display.display};
   align-self: ${props => props.theme.display.alignCenter};
@@ -34,4 +39,10 @@ const SignOutView = styled.View<PropsView>`
   margin: 24px 16px;
 `;
 
-export {SettingsHeader, SignOutView, EditProfileBody, SettingsLabel};
+export {
+  SettingsHeader,
+  SignOutView,
+  EditProfileBody,
+  SettingsLabel,
+  FormErrorText,
+};

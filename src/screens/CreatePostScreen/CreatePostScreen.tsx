@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   ButtonWrapper,
   CreateBody,
@@ -9,6 +9,8 @@ import {
   ImageWrapper,
   Label,
   LabelWrapper,
+  RemoveMediaText,
+  RemoveMediaButton,
   SelectMediaText,
   SelectMediaWrapper,
   SelectWrapper,
@@ -19,27 +21,37 @@ import {
   InputTextComponent,
 } from '../../components';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {useForm} from 'react-hook-form';
+import {SubmitHandler, useForm} from 'react-hook-form';
 import {Dimensions, ImageSourcePropType} from 'react-native';
 import {useAppSettings} from '../../context';
 import SelectDropdown from 'react-native-select-dropdown';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {CreatePostModel, SchemaCreatePost} from '../../models';
-import ImagePicker, {
+import {
   ImagePickerResponse,
-  launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {AppScrollView} from '../../styles/GlobalStyle';
+import {createPostAxios} from '../../services';
+import AsyncStorage from '@react-native-community/async-storage';
 
 /**
  *
  * @returns a screen which it's only purpose is to show the user a form to create a new post
  */
-const CreatePostScreen = () => {
+const CreatePostScreen: React.FC = () => {
   const {theme} = useAppSettings();
-  const [pickedCategory, setPickedCategory] = useState<string>('Other');
-  const [pickedMedia, setPickedMedia] = useState<string | null>(null);
+  const [category, setCategory] = useState<string>('Other');
+  const [placeholder, setPlaceholder] = useState<string>(
+    'https://via.placeholder.com/400',
+  );
+  const [mediaUri, setMediaUri] = useState<string | null>(null);
+  const [mediaType, setMediaType] = useState<string | null>(null);
+  const [mediaHeight, setMediaHeight] = useState<number>(400);
+  const [mediaMaxWidth, setMediaMaxWidth] = useState<number>(
+    Dimensions.get('window').width * 0.9,
+  );
+  const [imageError, setImageError] = useState(false);
 
   const navigation = useNavigation();
 
@@ -66,28 +78,13 @@ const CreatePostScreen = () => {
     ? require('../../assets/Images/arrow-left-dark-24.png')
     : require('../../assets/Images/arrow-left-light-24.png');
 
-  //
-  //
-  const [filePath, setFilePath] = useState({});
-  const [image, setImage] = useState<string | undefined>(
-    'https://via.placeholder.com/400',
-  );
-  const [imageHeight, setImageHeight] = useState<number | undefined>(400);
-  const [imageError, setImageError] = useState(false);
-
-  // : require('../../assets/Images/image_preview.png')
-  //
-  //
-  const handleSubmitMedia = async () => {
-    console.log('submitting media button is working');
-
+  const handleMediaState = async () => {
     imageError === true && setImageError(false);
 
     const res: ImagePickerResponse = await launchImageLibrary({
       mediaType: 'mixed',
       maxWidth: 400,
       videoQuality: 'low',
-      presentationStyle: 'popover',
     });
 
     if (res.errorCode) console.log(res.errorMessage);
@@ -98,35 +95,58 @@ const CreatePostScreen = () => {
       throw new Error('Image is too tall!');
     }
 
-    const mediaValue = res!.assets!;
+    if (res!.assets![0]) {
+      const mediaValue = res!.assets![0];
 
-    const uriPath = mediaValue![0].uri!;
-    setImage(uriPath!);
-    setImageHeight(mediaValue![0].height! ?? 400);
+      setMediaUri(mediaValue!.uri!);
+      setMediaType(mediaValue!.type!);
+
+      if (mediaValue.width && mediaValue.height) {
+        setMediaMaxWidth(mediaValue.width);
+        setMediaHeight(
+          (mediaValue.height / mediaValue.width) * mediaValue.width,
+        );
+      }
+    }
   };
 
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
+  const handleResetMedia = () => {
+    setMediaUri(null);
+    setMediaType(null);
+    setMediaHeight(400);
+    setMediaMaxWidth(Dimensions.get('window').width * 0.9);
+  };
+
   const handleGoBack = () => {
     navigation.dispatch(CommonActions.goBack());
   };
 
   const handleSelectOptions = (option: any, index: number) => {
-    console.log(option);
-    setPickedCategory(categoryArray[index].category);
-    console.log(pickedCategory);
+    setCategory(categoryArray[index].category);
   };
 
-  const handleSubmitPost = async (data: CreatePostModel) => {
-    console.log('data when submitting post', data);
-    console.log(pickedCategory);
-    console.log(pickedMedia);
+  const handleSubmitPost: SubmitHandler<CreatePostModel> = async (
+    data: CreatePostModel,
+  ) => {
+    const {title, description} = data;
+    try {
+      const user_id: string | null = await AsyncStorage.getItem('userId');
+
+      const data = await createPostAxios(
+        user_id,
+        title,
+        description,
+        mediaUri,
+        mediaType,
+        category,
+      );
+
+      console.log(data);
+    } catch (e) {
+      throw new Error(
+        'error while sending data to createPostAxios in file createPostScreen',
+      );
+    }
   };
 
   return (
@@ -163,7 +183,7 @@ const CreatePostScreen = () => {
             errors={errors.description}
           />
           <SelectWrapper>
-            <SelectMediaWrapper onPress={handleSubmitMedia}>
+            <SelectMediaWrapper onPress={handleMediaState}>
               <SelectMediaText>Media</SelectMediaText>
             </SelectMediaWrapper>
             <SelectDropdown
@@ -183,28 +203,35 @@ const CreatePostScreen = () => {
               buttonTextStyle={{}}
               buttonTextAfterSelection={(selectedItem, index) => {
                 // text represented after item is selected
-                // if data array is an array of objects then return selectedItem.property to render after item is selected
                 return selectedItem.category;
               }}
               rowTextForSelection={(item, index) => {
                 // text represented for each item in dropdown
-                // if data array is an array of objects then return item.property to represent item in dropdown
                 return item.category;
               }}
             />
           </SelectWrapper>
         </CreateBody>
         {imageError && <ErrorLabel>Image is too tall!</ErrorLabel>}
-        <ImageWrapper>
+        <ImageWrapper
+          style={{
+            height: mediaHeight,
+            maxWidth: mediaMaxWidth,
+          }}>
           <ImagePreview
-            source={{uri: image}}
+            source={{uri: mediaUri ? mediaUri : placeholder}}
+            resizeMode="contain"
             style={{
-              resizeMode: 'cover',
-              width: Dimensions.get('window').width * 0.9,
-              height: imageHeight ? imageHeight : '100%',
+              width: '100%',
+              height: '100%',
             }}
           />
         </ImageWrapper>
+        {mediaUri && (
+          <RemoveMediaButton onPress={handleResetMedia}>
+            <RemoveMediaText>Remove media</RemoveMediaText>
+          </RemoveMediaButton>
+        )}
         <ButtonWrapper>
           <FormButtonComponent
             name="Share Post"

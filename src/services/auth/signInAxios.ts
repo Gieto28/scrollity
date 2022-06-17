@@ -1,6 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {TokenModel} from '../../models';
-import {PATH_LOGIN} from '../../utils/env';
+import {AUTH_LOGIN} from '../../utils/env';
 import {api} from '..';
 
 /**
@@ -14,10 +14,13 @@ const signInAxios = async (
   email: string,
   password: string,
 ): Promise<TokenModel> => {
-  return await api
-    .post<TokenModel>(PATH_LOGIN, {email, password})
-    .then((res: AxiosResponse<TokenModel | any>) => res.data)
-    .catch(() => 'Bad Credentials');
+  try {
+    const res: AxiosResponse<TokenModel, ErrorConstructor> =
+      await api.post<TokenModel>(AUTH_LOGIN, {email, password});
+    return res.data;
+  } catch (e) {
+    throw new Error('Bad Credentials');
+  }
 };
 
 export default signInAxios;

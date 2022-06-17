@@ -1,5 +1,20 @@
+import api from './auth/api';
+//AUTH
 import signUpAxios from './auth/signUpAxios';
 import signInAxios from './auth/signInAxios';
-import api from './auth/api';
+import getProfileAxios from './auth/getProfileAxios';
+import updateProfileAxios from './auth/updateProfileAxios';
+//POSTS
+import createPostAxios from './post/createPostAxios';
+//COMMENTS
 
-export {signUpAxios, signInAxios, api};
+export {
+  api,
+  //AUTH
+  signUpAxios,
+  signInAxios,
+  getProfileAxios,
+  updateProfileAxios,
+  //POSTS
+  createPostAxios,
+};

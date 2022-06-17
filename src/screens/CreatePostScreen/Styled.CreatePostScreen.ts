@@ -55,20 +55,46 @@ const SelectWrapper = styled.View<PropsView>`
 `;
 
 const ErrorLabel = styled.Text<PropsText>`
+  margin-left: 16px;
+  font-weight: ${props => props.theme.fonts.fontWeight.l};
   color: ${props => props.theme.fonts.colors.primary};
 `;
 
 const ImageWrapper = styled.View<PropsView>`
-  margin-bottom: 16px;
   display: ${props => props.theme.display.display};
   align-items: ${props => props.theme.display.alignCenter};
+  align-self: ${props => props.theme.display.alignCenter};
   width: 100%;
   height: auto;
+  overflow: hidden;
+  z-index: 1000;
 `;
 const ImagePreview = styled.Image.attrs({overflow: 'visible'})`
   /* width: ${Dimensions.get('window').width * 0.9}px;
   min-height: ${Dimensions.get('window').width * 0.9}px;
   background-color: grey; */
+  overflow: hidden;
+  z-index: 1000;
+`;
+
+const RemoveMediaButton = styled.TouchableOpacity<PropsTouchable>`
+  border: 1px solid ${props => props.theme.fonts.colors.primary};
+  background-color: ${props => props.theme.button.background};
+  border-radius: 24px;
+  z-index: 9999;
+  width: 150px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  align-self: ${props => props.theme.display.alignCenter};
+  display: ${props => props.theme.display.display};
+  flex-direction: ${props => props.theme.display.directionRow};
+  justify-content: ${props => props.theme.display.alignCenter};
+`;
+
+const RemoveMediaText = styled.Text<PropsText>`
+  font-size: ${props => props.theme.fonts.fontSize.md};
+  font-weight: ${props => props.theme.fonts.fontWeight.l};
+  color: ${props => props.theme.button.text};
 `;
 
 const SelectMediaWrapper = styled.TouchableOpacity<PropsTouchable>`
@@ -93,6 +119,8 @@ export {
   CreatePostWrapper,
   CreateHeader,
   LabelWrapper,
+  RemoveMediaButton,
+  RemoveMediaText,
   Label,
   ErrorLabel,
   CreateBody,

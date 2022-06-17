@@ -1,7 +1,7 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {TokenModel} from '../../models';
-import {PATH_REGISTER} from '../../utils/env';
+import {AUTH_REGISTER} from '../../utils/env';
 
 /**
  *
@@ -17,15 +17,18 @@ const signUpAxios = async (
   password: string,
   passwordConfirmation: string,
 ): Promise<TokenModel> => {
-  return await api
-    .post<TokenModel>(PATH_REGISTER, {
-      name,
-      email,
-      password,
-      passwordConfirmation,
-    })
-    .then((res: AxiosResponse<TokenModel | any>) => res.data)
-    .catch(() => 'Email already exists or missing/wrong data');
+  try {
+    const res: AxiosResponse<TokenModel, ErrorConstructor> =
+      await api.post<TokenModel>(AUTH_REGISTER, {
+        name,
+        email,
+        password,
+        passwordConfirmation,
+      });
+    return res.data;
+  } catch (e) {
+    throw new Error('Email already exists or missing/wrong data');
+  }
 };
 
 export default signUpAxios;

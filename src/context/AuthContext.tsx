@@ -11,7 +11,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import {api, signInAxios, signUpAxios} from '../services';
 import jwt_decode from 'jwt-decode';
-import updateProfileAxios from '../services/auth/updateProfile';
+import {updateProfileAxios} from '../services';
 
 export const AuthContext: React.Context<AuthContextModel> =
   createContext<AuthContextModel>({} as AuthContextModel);

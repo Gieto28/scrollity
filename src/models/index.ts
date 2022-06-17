@@ -20,6 +20,7 @@ import CommentModel from './Form/CommentModel';
 import SearchModel from './Form/SearchModel';
 import FormEditProfileModel from './Form/FormEditProfileModel';
 import CreatePostModel from './Form/CreatePostModel';
+import MediaPostModel from './Form/MediaPostModel';
 //params
 import AuthStackParams from './ScreenStackModels/AuthStackParams';
 import AppStackParams from './ScreenStackModels/AppStackParams';
@@ -39,7 +40,7 @@ export {
 
 export type {
   //Models
-  // - form ( matches yup ammount)
+  // - form ( matches yup amount)
   CommentModel,
   FormSignInModel,
   FormSignUpModel,
@@ -47,6 +48,7 @@ export type {
   SearchModel,
   FormEditProfileModel,
   CreatePostModel,
+  MediaPostModel,
   // - Context
   AppSettingsContextModel,
   AppContextModel,
