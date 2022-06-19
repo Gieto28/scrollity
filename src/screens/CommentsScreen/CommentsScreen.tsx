@@ -59,7 +59,7 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
     name: 'Matateu ',
     image: undefined,
     commentId: '0101010-comment-id-0101010',
-    commenterId: '123456-123456',
+    userId: '123456-123456',
     comment:
       'This was such a cool post, thanks for contributing to the community with your funny images and content. I hope to see more of this type of posts on my feed again!',
     timeStamp: '1d ago',
@@ -95,7 +95,7 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
                 name={fakeComment.name}
                 image={fakeComment.image}
                 commentId={fakeComment.commentId}
-                commenterId={fakeComment.commenterId}
+                userId={fakeComment.userId}
                 comment={fakeComment.comment}
                 timeStamp={fakeComment.timeStamp}
                 upVotes={fakeComment.upVotes}

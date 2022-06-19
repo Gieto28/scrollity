@@ -6,7 +6,6 @@ import HomeScreenStack from './HomeScreenStack';
 import ProfileScreenStack from './ProfileScreenStack';
 import {useAppSettings} from '../../context';
 import {AppStackParams} from '../../models';
-import AppLoadingScreen from '../../screens/AppLoadingScreen/AppLoadingScreen';
 
 const AppStackNavigation = createBottomTabNavigator<AppStackParams>();
 

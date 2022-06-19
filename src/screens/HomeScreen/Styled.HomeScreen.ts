@@ -146,6 +146,16 @@ const translateXIconsWrapper = diffClampIconsWrapper.interpolate({
   outputRange: [minIconsWrapper, maxIconsWrapper],
 });
 
+const styledIConsWrapperAnimation = {
+  transform: [
+    {
+      translateX: translateXIconsWrapper,
+    },
+  ],
+  elevation: 100,
+  zIndex: 100,
+};
+
 export {
   CreatePostIcon,
   ToTopIconView,
@@ -162,4 +172,5 @@ export {
   LabelWrapper,
   SearchView,
   IconsWrapper,
+  styledIConsWrapperAnimation,
 };

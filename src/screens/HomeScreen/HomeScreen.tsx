@@ -20,8 +20,8 @@ import {
   scrollYIconsWrapper,
   SearchView,
   styledHeaderAnimation,
-  styledIConsWrapperAnimation,
   ToTopIconView,
+  styledIConsWrapperAnimation,
 } from './Styled.HomeScreen';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
