@@ -29,7 +29,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {
   CategoryArrayProps,
   CreatePostModel,
-  CreatePostResponse,
+  PostResponse,
   SchemaCreatePost,
 } from '../../models';
 import {
@@ -137,7 +137,7 @@ const CreatePostScreen: React.FC = () => {
     try {
       const user_id: string | null = await AsyncStorage.getItem('userId');
 
-      const data: CreatePostResponse = await createPostAxios(
+      const data: PostResponse = await createPostAxios(
         user_id,
         title,
         description,

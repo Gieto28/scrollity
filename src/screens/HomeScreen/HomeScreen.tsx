@@ -1,5 +1,5 @@
 import {Animated, ImageSourcePropType} from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   IconComponent,
   InputTextComponent,
@@ -33,6 +33,7 @@ import {
   SearchModel,
 } from '../../models';
 import {yupResolver} from '@hookform/resolvers/yup';
+import {getAllPosts} from '../../services';
 
 type CreatePostNavigationProp = StackNavigationProp<
   HomeStackParams,
@@ -45,6 +46,8 @@ type CreatePostNavigationProp = StackNavigationProp<
  */
 const HomeScreen: React.FC = () => {
   const {theme} = useAppSettings();
+  const [categoryId, setCategoryId] = useState<number>(0);
+  const [category, setCategory] = useState<string>('Top');
 
   const searchIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/search-24-dark.png')
@@ -57,6 +60,17 @@ const HomeScreen: React.FC = () => {
   const ToTopIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/to-top-46-dark.png')
     : require('../../assets/Images/to-top-46-light.png');
+
+  // posts when app loads
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      const res = await getAllPosts(category);
+      console.log('category', category);
+      console.log('response', res.data);
+    };
+    loadPosts();
+  }, [category]);
 
   // search handler
   const {control, handleSubmit} = useForm<SearchModel>({
@@ -73,7 +87,7 @@ const HomeScreen: React.FC = () => {
     {category: 'Random', id: 6},
   ];
 
-  const [categoryId, setCategoryId] = useState<number>(0);
+  const currentFilter: number = categoryArray[categoryId].id;
 
   const searchData = (data: {}) => {
     console.log('search', data);
@@ -93,12 +107,6 @@ const HomeScreen: React.FC = () => {
     category: 'Top',
   };
 
-  const currentFilter: number = categoryArray[categoryId].id;
-
-  const handleFilter = (index: number) => {
-    setCategoryId(index);
-  };
-
   const handleAnimateOnScroll = (e: any) => {
     scrollY.setValue(e.nativeEvent.contentOffset.y);
     scrollYIconsWrapper.setValue(e.nativeEvent.contentOffset.y);
@@ -115,6 +123,12 @@ const HomeScreen: React.FC = () => {
   //   useRef<null>(null);
   // Can't find the type - losing too much time on this
   const refScroll: any = useRef<null>(null);
+
+  const handleFilter = (index: number) => {
+    refScroll?.current?.scrollTo({x: 0, y: 0, animated: true});
+    setCategoryId(index);
+    setCategory(categoryArray[index].category);
+  };
 
   const handleBackToTop = () => {
     console.log('to top icon');

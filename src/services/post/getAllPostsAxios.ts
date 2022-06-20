@@ -1,16 +1,19 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
-import {AUTH_PROFILE} from '../../utils/env';
+import {PostResponse} from '../../models';
+import {PATH_GET_ALL_POSTS} from '../../utils/env';
 
-const getProfileAxios = async () => {
+const getAllPosts = async (category: string): Promise<any> => {
   try {
-    const res = await api.get(AUTH_PROFILE);
+    const path: string = `${PATH_GET_ALL_POSTS}${category}`;
+    const res: AxiosResponse = await api.get(path);
     return res.data;
-  } catch (e) {
-    throw new Error(
+  } catch (e: any) {
+    console.log(
       'error while getting profile from server - get profile.ts failed',
     );
+    throw new Error(e.message);
   }
 };
 
-export default getProfileAxios;
+export default getAllPosts;

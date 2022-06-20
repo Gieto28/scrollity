@@ -10,7 +10,7 @@ import SchemaCreatePost from './YupSchema/CreatePostYupModel';
 import MediaPostModel from './Axios/MediaPostModel';
 // Axios Response
 import TokenResponse from './AxiosResponse/TokenResponse';
-import CreatePostResponse from './AxiosResponse/CreatePostResponse';
+import PostResponse from './AxiosResponse/PostResponse';
 // - context
 import AppSettingsContextModel from './Context/AppSettingsContextModel';
 import AppContextModel from './Context/AppContextModel';
@@ -48,7 +48,7 @@ export type {
   //Axios
   MediaPostModel,
   //Axios Response
-  CreatePostResponse,
+  PostResponse,
   TokenResponse,
   // - form ( matches yup amount)
   CommentModel,
