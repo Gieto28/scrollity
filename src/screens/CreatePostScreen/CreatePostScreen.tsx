@@ -26,7 +26,12 @@ import {Dimensions, ImageSourcePropType} from 'react-native';
 import {useAppSettings} from '../../context';
 import SelectDropdown from 'react-native-select-dropdown';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {CreatePostModel, SchemaCreatePost} from '../../models';
+import {
+  CategoryArrayProps,
+  CreatePostModel,
+  CreatePostResponse,
+  SchemaCreatePost,
+} from '../../models';
 import {
   ImagePickerResponse,
   launchImageLibrary,
@@ -56,7 +61,7 @@ const CreatePostScreen: React.FC = () => {
   const navigation = useNavigation();
 
   //array of category
-  const categoryArray = [
+  const categoryArray: CategoryArrayProps[] = [
     {category: 'Funny', id: 0},
     {category: 'Pet', id: 1},
     {category: 'Help', id: 2},
@@ -132,7 +137,7 @@ const CreatePostScreen: React.FC = () => {
     try {
       const user_id: string | null = await AsyncStorage.getItem('userId');
 
-      const data = await createPostAxios(
+      const data: CreatePostResponse = await createPostAxios(
         user_id,
         title,
         description,
@@ -142,10 +147,17 @@ const CreatePostScreen: React.FC = () => {
       );
 
       console.log(data);
-    } catch (e) {
-      throw new Error(
+      reset();
+      setMediaUri(null);
+      setMediaType(null);
+      setMediaHeight(400);
+      setMediaMaxWidth(Dimensions.get('window').width * 0.9);
+      setCategory('Other');
+    } catch (e: any) {
+      console.log(
         'error while sending data to createPostAxios in file createPostScreen',
       );
+      throw new Error(e.message);
     }
   };
 

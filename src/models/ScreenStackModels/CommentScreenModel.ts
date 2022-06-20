@@ -24,7 +24,7 @@ import {ImageSourcePropType} from 'react-native';
  * **category** - string
  *
  */
-interface PostModel {
+interface CommentScreenModel {
   title: string;
   source: ImageSourcePropType;
   description: string;
@@ -36,4 +36,4 @@ interface PostModel {
   category: string;
 }
 
-export default PostModel;
+export default CommentScreenModel;

@@ -26,13 +26,13 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useAppSettings} from '../../context';
-import {HomeStackParams, SchemaSearch, SearchModel} from '../../models';
+import {
+  CategoryArrayProps,
+  HomeStackParams,
+  SchemaSearch,
+  SearchModel,
+} from '../../models';
 import {yupResolver} from '@hookform/resolvers/yup';
-
-interface CategoryArrayProps {
-  category: string;
-  id: number;
-}
 
 type CreatePostNavigationProp = StackNavigationProp<
   HomeStackParams,
@@ -63,7 +63,7 @@ const HomeScreen: React.FC = () => {
     resolver: yupResolver(SchemaSearch),
   });
 
-  const [categoryArray, setCategoryArray] = useState<CategoryArrayProps[]>([
+  const categoryArray: CategoryArrayProps[] = [
     {category: 'Top', id: 0},
     {category: 'New', id: 1},
     {category: 'Funny', id: 2},
@@ -71,7 +71,7 @@ const HomeScreen: React.FC = () => {
     {category: 'Help', id: 4},
     {category: 'Other', id: 5},
     {category: 'Random', id: 6},
-  ]);
+  ];
 
   const [categoryId, setCategoryId] = useState<number>(0);
 

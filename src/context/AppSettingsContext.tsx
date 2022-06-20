@@ -22,7 +22,8 @@ const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
     const checkThemeOnAppStartUp = async (): Promise<
       ThemeProps | undefined
     > => {
-      const checkIfAsyncStorageHasTheme = await AsyncStorage.getItem('theme');
+      const checkIfAsyncStorageHasTheme: string | null =
+        await AsyncStorage.getItem('theme');
 
       if (!checkIfAsyncStorageHasTheme) {
         // if error here then {} are needed
@@ -39,7 +40,7 @@ const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
   }, []);
 
   const changeTheme = async (): Promise<void> => {
-    const currentTheme = await AsyncStorage.getItem('theme');
+    const currentTheme: string | null = await AsyncStorage.getItem('theme');
 
     if (currentTheme === 'light') {
       setTheme(darkTheme);

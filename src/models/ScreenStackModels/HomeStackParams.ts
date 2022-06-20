@@ -1,9 +1,9 @@
-import {PostModel} from '..';
+import {CommentScreenModel} from '..';
 
 type HomeStackParams = {
   HomeScreen: () => JSX.Element;
   CommentsScreen: {
-    postObject: PostModel;
+    postObject: CommentScreenModel;
   };
   CreatePostScreen: undefined;
 };

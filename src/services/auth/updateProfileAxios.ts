@@ -1,6 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
-import {TokenModel} from '../../models';
+import {TokenResponse} from '../../models';
 import {AUTH_UPDATE_PROFILE} from '../../utils/env';
 
 /**
@@ -14,10 +14,10 @@ const updateProfileAxios = async (
   name: string | null,
   password: string | null,
   passwordConfirmation: string | null,
-): Promise<TokenModel> => {
+): Promise<TokenResponse> => {
   try {
-    const res: AxiosResponse<TokenModel, ErrorConstructor> =
-      await api.post<TokenModel>(AUTH_UPDATE_PROFILE, {
+    const res: AxiosResponse<TokenResponse, ErrorConstructor> =
+      await api.post<TokenResponse>(AUTH_UPDATE_PROFILE, {
         name,
         password,
         passwordConfirmation,

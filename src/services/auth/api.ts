@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
 import {X_API_KEY, URL} from '../../utils/env';
 
 // creating axios url and headers
-const api = axios.create({
+const api: AxiosInstance = axios.create({
   baseURL: URL,
   headers: {
     'api-key': X_API_KEY,
@@ -10,11 +10,11 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(
-  (response: any) => {
+  (res: AxiosRequestConfig) => {
     console.log(URL);
-    return response;
+    return res;
   },
-  (error: any) => {
+  error => {
     if (error.response.status === 401) {
       console.log('error 401');
     }

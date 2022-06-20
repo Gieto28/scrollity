@@ -1,6 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
-import {TokenModel} from '../../models';
+import {TokenResponse} from '../../models';
 import {AUTH_REGISTER} from '../../utils/env';
 
 /**
@@ -16,10 +16,10 @@ const signUpAxios = async (
   email: string,
   password: string,
   passwordConfirmation: string,
-): Promise<TokenModel> => {
+): Promise<TokenResponse> => {
   try {
-    const res: AxiosResponse<TokenModel, ErrorConstructor> =
-      await api.post<TokenModel>(AUTH_REGISTER, {
+    const res: AxiosResponse<TokenResponse, ErrorConstructor> =
+      await api.post<TokenResponse>(AUTH_REGISTER, {
         name,
         email,
         password,

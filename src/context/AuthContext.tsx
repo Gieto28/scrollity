@@ -6,7 +6,7 @@ import {
   FormSignUpModel,
   JwtDecodedModel,
   ReactChildrenProps,
-  TokenModel,
+  TokenResponse,
 } from '../models';
 import AsyncStorage from '@react-native-community/async-storage';
 import {api, signInAxios, signUpAxios} from '../services';
@@ -32,9 +32,11 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   useEffect(() => {
     const loadStorageData = async () => {
       try {
-        const storedToken = await AsyncStorage.getItem('token');
-        const storedUser = await AsyncStorage.getItem('user');
-        const storedUserId = await AsyncStorage.getItem('userId');
+        const storedToken: string | null = await AsyncStorage.getItem('token');
+        const storedUser: string | null = await AsyncStorage.getItem('user');
+        const storedUserId: string | null = await AsyncStorage.getItem(
+          'userId',
+        );
 
         if (storedUser && storedToken) {
           api.defaults.headers.common.Authorization = `Bearer ${storedToken}`;
@@ -54,7 +56,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   const signIn = async (data: FormSignInModel): Promise<void> => {
     const {email, password} = data;
     try {
-      const data: TokenModel = await signInAxios(email, password);
+      const data: TokenResponse = await signInAxios(email, password);
       if (!data.token) {
         throw new Error('Error while signing in, missing token');
       }
@@ -80,7 +82,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
     const {name, email, password, passwordConfirmation} = data;
 
     try {
-      const data: TokenModel = await signUpAxios(
+      const data: TokenResponse = await signUpAxios(
         name,
         email,
         password,
@@ -115,7 +117,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
     if (passwordConfirmation === undefined) passwordConfirmation = null;
 
     try {
-      const data: TokenModel = await updateProfileAxios(
+      const data: TokenResponse = await updateProfileAxios(
         name,
         password,
         passwordConfirmation,

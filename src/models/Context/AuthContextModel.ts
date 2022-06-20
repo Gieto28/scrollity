@@ -4,7 +4,7 @@ import FormSignUpModel from '../Form/FormSignUpModel';
 import JwtDecodedModel from './JwtDecodedModel';
 
 /**
- * Auth Context Model - pretty straight forward interface
+ * Auth Context Model - pretty straight forward interface, it includes states and functions
  */
 interface AuthContextModel {
   isSignedIn: boolean;

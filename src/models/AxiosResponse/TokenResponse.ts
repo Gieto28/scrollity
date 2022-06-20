@@ -1,8 +1,8 @@
 /**
  * Token being retrieved from the back-end - token: string
  */
-interface TokenModel {
+interface TokenResponse {
   token: string;
 }
 
-export default TokenModel;
+export default TokenResponse;
