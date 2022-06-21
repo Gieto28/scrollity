@@ -1,5 +1,5 @@
-import {Animated, ImageSourcePropType} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import {Animated, ImageSourcePropType, Text} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   IconComponent,
   InputTextComponent,
@@ -23,12 +23,13 @@ import {
   ToTopIconView,
   styledIConsWrapperAnimation,
 } from './Styled.HomeScreen';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useAppSettings} from '../../context';
 import {
-  CategoryArrayProps,
+  CategoryArrayModel,
   HomeStackParams,
+  PostModel,
   SchemaSearch,
   SearchModel,
 } from '../../models';
@@ -48,6 +49,7 @@ const HomeScreen: React.FC = () => {
   const {theme} = useAppSettings();
   const [categoryId, setCategoryId] = useState<number>(0);
   const [category, setCategory] = useState<string>('Top');
+  const [posts, setPosts] = useState<PostModel[]>();
 
   const searchIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/search-24-dark.png')
@@ -63,21 +65,32 @@ const HomeScreen: React.FC = () => {
 
   // posts when app loads
 
+  useFocusEffect(
+    useCallback(() => {
+      const loadPosts = async (): Promise<void> => {
+        const res: {data: PostModel[]} = await getAllPosts(category);
+        setPosts(res.data);
+      };
+      loadPosts();
+    }, [category]),
+  );
+
   useEffect(() => {
-    const loadPosts = async () => {
-      const res = await getAllPosts(category);
-      console.log('category', category);
-      console.log('response', res.data);
+    const loadPosts = async (): Promise<void> => {
+      const res: {data: PostModel[]} = await getAllPosts(category);
+      setPosts(res.data);
     };
     loadPosts();
   }, [category]);
+
+  console.log(Array.isArray(posts));
 
   // search handler
   const {control, handleSubmit} = useForm<SearchModel>({
     resolver: yupResolver(SchemaSearch),
   });
 
-  const categoryArray: CategoryArrayProps[] = [
+  const categoryArray: CategoryArrayModel[] = [
     {category: 'Top', id: 0},
     {category: 'New', id: 1},
     {category: 'Funny', id: 2},
@@ -91,20 +104,6 @@ const HomeScreen: React.FC = () => {
 
   const searchData = (data: {}) => {
     console.log('search', data);
-  };
-
-  const fakePost = {
-    postId: '0101-postId-0101',
-    title:
-      'what if instead of example as an example of a title this becomes a really long title',
-    source: require('../../assets/Images/Logo-NBG.png'),
-    description:
-      'a very unnecessary long description with lots of details about the post, video, image etc',
-    upVotes: 4,
-    downVotes: 2,
-    commentsAmount: 1,
-    timeStamp: '2d ago',
-    category: 'Top',
   };
 
   const handleAnimateOnScroll = (e: any) => {
@@ -167,45 +166,26 @@ const HomeScreen: React.FC = () => {
             />
           </SearchView>
           {/* here goes a map of all of the posts being retrieved from the axios get */}
-          <PostComponent
-            title={fakePost.title}
-            source={fakePost.source}
-            description={fakePost.description}
-            upVotes={fakePost.upVotes}
-            downVotes={fakePost.downVotes}
-            postId={fakePost.postId}
-            commentsAmount={fakePost.commentsAmount}
-            category={fakePost.category}
-            timeStamp={fakePost.timeStamp}
-            IconToCommentsScreen={true}
-            postObject={fakePost}
-          />
-          <PostComponent
-            title={fakePost.title}
-            source={fakePost.source}
-            description={fakePost.description}
-            upVotes={fakePost.upVotes}
-            downVotes={fakePost.downVotes}
-            postId={fakePost.postId}
-            commentsAmount={fakePost.commentsAmount}
-            category={fakePost.category}
-            timeStamp={fakePost.timeStamp}
-            IconToCommentsScreen={true}
-            postObject={fakePost}
-          />
-          <PostComponent
-            title={fakePost.title}
-            source={fakePost.source}
-            description={fakePost.description}
-            upVotes={fakePost.upVotes}
-            downVotes={fakePost.downVotes}
-            postId={fakePost.postId}
-            commentsAmount={fakePost.commentsAmount}
-            category={fakePost.category}
-            timeStamp={fakePost.timeStamp}
-            IconToCommentsScreen={true}
-            postObject={fakePost}
-          />
+          {posts ? (
+            posts.map((post: PostModel) => (
+              <PostComponent
+                key={post._id}
+                title={post.title}
+                source={post.media}
+                description={post.description}
+                upVotes={post.up_votes}
+                downVotes={post.down_votes}
+                postId={post._id}
+                commentsAmount={post.comments}
+                category={post.category}
+                timeStamp={post.dateCreated}
+                IconToCommentsScreen={true}
+                postObject={post}
+              />
+            ))
+          ) : (
+            <Text>Oops</Text>
+          )}
         </AppView>
       </AppScrollView>
       <Animated.View style={styledIConsWrapperAnimation}>

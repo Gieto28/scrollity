@@ -16,19 +16,19 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const data = await getProfileAxios();
-        setUser(data.profile);
-      } catch (error) {
-        throw new Error('error while getting profile on file app context');
-      }
-      setLoading(false);
-    };
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       const data = await getProfileAxios();
+  //       setUser(data.profile);
+  //     } catch (error) {
+  //       throw new Error('error while getting profile on file app context');
+  //     }
+  //     setLoading(false);
+  //   };
 
-    getUser();
-  }, []);
+  //   getUser();
+  // }, []);
 
   return (
     <AppContext.Provider

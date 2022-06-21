@@ -1,10 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ImageSourcePropType} from 'react-native';
 import {IconComponent} from '../../components';
-import {useAuth, useAppSettings, useApp} from '../../context';
-import {ProfileStackParams} from '../../models';
+import {useAuth, useAppSettings} from '../../context';
+import {ProfileStackParams, UserModel} from '../../models';
 import {AppScrollView} from '../../styles/GlobalStyle';
 import {
   ProfileHeader,
@@ -29,18 +29,13 @@ type SettingsNavigationProp = StackNavigationProp<
  * @returns the profile screen
  */
 const ProfileScreen = () => {
-  const {signOut} = useAuth();
   const {theme} = useAppSettings();
   const {user} = useAuth();
-  console.log('user from profile screen', user);
+  console.log('profile user', user);
 
   const lightDarkIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/settings-32-dark.png')
     : require('../../assets/Images/settings-32-light.png');
-
-  const handleSignOut = () => {
-    signOut();
-  };
 
   const navigation = useNavigation<SettingsNavigationProp>();
 

@@ -79,12 +79,12 @@ const SignInScreen: React.FC = () => {
 
       console.log('sign in successful - file sign in screen.tsx');
       reset();
-    } catch (e) {
+    } catch (e: any) {
       setBadCredentials(true);
       setTimeout(() => {
         setBadCredentials(false);
       }, 8000);
-      throw new Error('error while submitting form in file signInScreen');
+      throw new Error(e.message);
     }
   };
 

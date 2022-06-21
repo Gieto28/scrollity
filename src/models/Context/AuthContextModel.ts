@@ -1,6 +1,7 @@
 import FormEditProfileModel from '../Form/FormEditProfileModel';
 import FormSignInModel from '../Form/FormSignInModel';
 import FormSignUpModel from '../Form/FormSignUpModel';
+import UserModel from '../Models/UserModel';
 import JwtDecodedModel from './JwtDecodedModel';
 
 /**
@@ -16,6 +17,7 @@ interface AuthContextModel {
   signIn(data: FormSignInModel): Promise<void>;
   signUp(data: FormSignUpModel): Promise<void>;
   signOut(): Promise<void>;
+  getUser(id: string): any;
   updateProfile: (data: FormEditProfileModel) => Promise<void>;
 }
 

@@ -2,7 +2,7 @@ import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {PATH_CREATE_POST} from '../../utils/env';
 import {v4 as uuid} from 'uuid';
-import {PostResponse, MediaPostModel} from '../../models';
+import {SuccessResponse, MediaPostModel} from '../../models';
 
 /**
  * After using image native picker to get the image information I call this method and send all of the form information through it.To be able to get the image on the node server I have to send content-type: multipart/form-data through the headers and send the information through a new FormData object with the following keys and values:
@@ -22,7 +22,8 @@ const createPostAxios = async (
   mediaUri: string | null,
   mediaType: string | null,
   category: string,
-): Promise<PostResponse> => {
+  mediaHeight: number,
+): Promise<SuccessResponse> => {
   const formData: FormData = new FormData();
   const uniqueId: string = uuid();
   const mediaName: string | null = mediaUri
@@ -42,10 +43,11 @@ const createPostAxios = async (
   formData.append('title', title);
   formData.append('description', description);
   formData.append('category', category);
+  formData.append('mediaHeight', mediaHeight);
 
   try {
-    const res: AxiosResponse<PostResponse, ErrorConstructor> =
-      await api.post<PostResponse>(PATH_CREATE_POST, formData, {
+    const res: AxiosResponse<SuccessResponse, ErrorConstructor> =
+      await api.post<SuccessResponse>(PATH_CREATE_POST, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

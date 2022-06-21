@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   PostBody,
   PostDescription,
@@ -16,24 +16,27 @@ import {
   PostButtonIcon,
   PostHeaderTop,
   PostHeaderTopText,
+  PostDescriptionWrapper,
+  PostMediaWrapper,
 } from './Styled.PostComponent';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {ImageSourcePropType} from 'react-native';
+import {Dimensions, Image, ImageSourcePropType, Text} from 'react-native';
 import {useAppSettings} from '../../context';
-import {HomeStackParams} from '../../models';
+import {HomeStackParams, PostModel} from '../../models';
+import {URL} from '../../utils/env';
 
 interface Props {
   title: string;
   timeStamp: string;
   category: string;
-  source: ImageSourcePropType;
+  source: string;
   description: string;
-  upVotes: number;
-  downVotes: number;
+  upVotes: string;
+  downVotes: string;
   postId: string;
-  commentsAmount?: number;
-  postObject: {} | undefined;
+  commentsAmount?: any;
+  postObject: PostModel;
   IconToCommentsScreen?: boolean;
 }
 
@@ -66,16 +69,20 @@ const PostComponent: React.FC<Props> = ({
   IconToCommentsScreen,
 }) => {
   const {theme} = useAppSettings();
+  const [mediaHeight, setMediaHeight] = useState<number>();
+  const [mediaWidth, setImageWidth] = useState<number>(
+    Dimensions.get('window').width,
+  );
 
-  const upVoteIcon = theme.bool
+  const upVoteIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-24-upvote-dark.png')
     : require('../../assets/Images/arrow-24-upvote-light.png');
 
-  const downVoteIcon = theme.bool
+  const downVoteIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-24-downvote-dark.png')
     : require('../../assets/Images/arrow-24-downvote-light.png');
 
-  const commentsIcon = theme.bool
+  const commentsIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/comments-24-dark.png')
     : require('../../assets/Images/comments-24-light.png');
 
@@ -96,23 +103,11 @@ const PostComponent: React.FC<Props> = ({
     });
   };
 
-  const checkIfDescriptionExists = () => {
-    if (description) {
-      return <PostDescription>{description}</PostDescription>;
-    }
-  };
-
-  const checkIfMediaExists = () => {
-    if (source) {
-      return (
-        <PostMedia
-          source={source}
-          resizeMode="contain"
-          accessibilityLabel={title}
-        />
-      );
-    }
-  };
+  Image.getSize(`${URL}/${source}`, (width, height) => {
+    console.log(height, width, mediaHeight);
+    const calc: number = width / mediaWidth;
+    setMediaHeight(height / calc);
+  });
 
   return (
     <PostFullWidth>
@@ -126,8 +121,34 @@ const PostComponent: React.FC<Props> = ({
           <PostTitle>{title}</PostTitle>
         </PostHeader>
         <PostBody>
-          {checkIfMediaExists()}
-          {checkIfDescriptionExists()}
+          {source && (
+            <PostMediaWrapper
+              style={{
+                height: mediaHeight ? mediaHeight : 300,
+                width: mediaWidth,
+              }}>
+              <PostMedia
+                source={
+                  mediaHeight
+                    ? {
+                        uri: `${URL}/${source}`,
+                      }
+                    : require('../../assets/Images/loading-media.gif')
+                }
+                style={{
+                  height: mediaHeight ? mediaHeight : 300,
+                  width: mediaWidth,
+                }}
+                resizeMode="contain"
+                accessibilityLabel={title}
+              />
+            </PostMediaWrapper>
+          )}
+          {description && (
+            <PostDescriptionWrapper>
+              <PostDescription>{description}</PostDescription>
+            </PostDescriptionWrapper>
+          )}
         </PostBody>
         <PostFooter>
           <PostValuesWrapper>
@@ -156,7 +177,7 @@ const PostComponent: React.FC<Props> = ({
                     accessibilityLabel="Comments Icon, redirects to IconToCommentsScreen screen"
                   />
                 </PostButtonIcon>
-                <PostValues>{commentsAmount}</PostValues>
+                <PostValues>{commentsAmount?.length}</PostValues>
               </>
             )}
           </PostValuesWrapper>

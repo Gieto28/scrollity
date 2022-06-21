@@ -69,10 +69,7 @@ const ImageWrapper = styled.View<PropsView>`
   overflow: hidden;
   z-index: 1000;
 `;
-const ImagePreview = styled.Image.attrs({overflow: 'visible'})`
-  /* width: ${Dimensions.get('window').width * 0.9}px;
-  min-height: ${Dimensions.get('window').width * 0.9}px;
-  background-color: grey; */
+const ImagePreview = styled.Image`
   overflow: hidden;
   z-index: 1000;
 `;

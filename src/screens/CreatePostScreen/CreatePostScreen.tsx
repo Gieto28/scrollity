@@ -27,9 +27,9 @@ import {useAppSettings} from '../../context';
 import SelectDropdown from 'react-native-select-dropdown';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {
-  CategoryArrayProps,
+  CategoryArrayModel,
   CreatePostModel,
-  PostResponse,
+  SuccessResponse,
   SchemaCreatePost,
 } from '../../models';
 import {
@@ -53,7 +53,7 @@ const CreatePostScreen: React.FC = () => {
   const [mediaUri, setMediaUri] = useState<string | null>(null);
   const [mediaType, setMediaType] = useState<string | null>(null);
   const [mediaHeight, setMediaHeight] = useState<number>(400);
-  const [mediaMaxWidth, setMediaMaxWidth] = useState<number>(
+  const [screenWidth, setScreenWidth] = useState<number>(
     Dimensions.get('window').width * 0.9,
   );
   const [imageError, setImageError] = useState(false);
@@ -61,7 +61,7 @@ const CreatePostScreen: React.FC = () => {
   const navigation = useNavigation();
 
   //array of category
-  const categoryArray: CategoryArrayProps[] = [
+  const categoryArray: CategoryArrayModel[] = [
     {category: 'Funny', id: 0},
     {category: 'Pet', id: 1},
     {category: 'Help', id: 2},
@@ -107,10 +107,8 @@ const CreatePostScreen: React.FC = () => {
       setMediaType(mediaValue!.type!);
 
       if (mediaValue.width && mediaValue.height) {
-        setMediaMaxWidth(mediaValue.width);
-        setMediaHeight(
-          (mediaValue.height / mediaValue.width) * mediaValue.width,
-        );
+        const calc: number = mediaValue.width / Dimensions.get('window').width;
+        setMediaHeight(mediaValue.height / calc);
       }
     }
   };
@@ -119,7 +117,6 @@ const CreatePostScreen: React.FC = () => {
     setMediaUri(null);
     setMediaType(null);
     setMediaHeight(400);
-    setMediaMaxWidth(Dimensions.get('window').width * 0.9);
   };
 
   const handleGoBack = () => {
@@ -137,13 +134,14 @@ const CreatePostScreen: React.FC = () => {
     try {
       const user_id: string | null = await AsyncStorage.getItem('userId');
 
-      const data: PostResponse = await createPostAxios(
+      const data: SuccessResponse = await createPostAxios(
         user_id,
         title,
         description,
         mediaUri,
         mediaType,
         category,
+        mediaHeight,
       );
 
       console.log(data);
@@ -151,7 +149,6 @@ const CreatePostScreen: React.FC = () => {
       setMediaUri(null);
       setMediaType(null);
       setMediaHeight(400);
-      setMediaMaxWidth(Dimensions.get('window').width * 0.9);
       setCategory('Other');
     } catch (e: any) {
       console.log(
@@ -228,14 +225,14 @@ const CreatePostScreen: React.FC = () => {
         <ImageWrapper
           style={{
             height: mediaHeight,
-            maxWidth: mediaMaxWidth,
+            minWidth: screenWidth,
           }}>
           <ImagePreview
             source={{uri: mediaUri ? mediaUri : placeholder}}
             resizeMode="contain"
             style={{
-              width: '100%',
-              height: '100%',
+              height: mediaHeight,
+              width: screenWidth,
             }}
           />
         </ImageWrapper>

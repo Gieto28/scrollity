@@ -18,8 +18,8 @@ const signInAxios = async (
     const res: AxiosResponse<TokenResponse, ErrorConstructor> =
       await api.post<TokenResponse>(AUTH_LOGIN, {email, password});
     return res.data;
-  } catch (e) {
-    throw new Error('Bad Credentials');
+  } catch (e: any) {
+    throw new Error(e.message);
   }
 };
 

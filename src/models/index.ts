@@ -5,12 +5,11 @@ import SchemaSearch from './YupSchema/SearchYupModel';
 import SchemaSignIn from './YupSchema/SignInYupModel';
 import SchemaSignUp from './YupSchema/SignUpYupModel';
 import SchemaCreatePost from './YupSchema/CreatePostYupModel';
-//Models
 // Axios
 import MediaPostModel from './Axios/MediaPostModel';
 // Axios Response
 import TokenResponse from './AxiosResponse/TokenResponse';
-import PostResponse from './AxiosResponse/PostResponse';
+import SuccessResponse from './AxiosResponse/SuccessResponse';
 // - context
 import AppSettingsContextModel from './Context/AppSettingsContextModel';
 import AppContextModel from './Context/AppContextModel';
@@ -29,8 +28,10 @@ import AuthStackParams from './ScreenStackModels/AuthStackParams';
 import AppStackParams from './ScreenStackModels/AppStackParams';
 import HomeStackParams from './ScreenStackModels/HomeStackParams';
 import ProfileStackParams from './ScreenStackModels/ProfileStackParams';
-//Screens
-import CategoryArrayProps from './ScreenModels/CategoryArrayProps';
+//Models
+import CategoryArrayModel from './Models/CategoryArrayModel';
+import PostModel from './Models/PostModel';
+import UserModel from './Models/UserModel';
 //Props
 import ReactChildrenProps from './Context/ReactChildProps';
 
@@ -44,11 +45,10 @@ export {
 };
 
 export type {
-  //Models
   //Axios
   MediaPostModel,
   //Axios Response
-  PostResponse,
+  SuccessResponse,
   TokenResponse,
   // - form ( matches yup amount)
   CommentModel,
@@ -68,8 +68,10 @@ export type {
   AppStackParams,
   HomeStackParams,
   ProfileStackParams,
-  //screens
-  CategoryArrayProps,
+  //Model
+  CategoryArrayModel,
+  PostModel,
+  UserModel,
   //Props
   ReactChildrenProps,
 };

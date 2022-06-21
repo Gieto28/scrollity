@@ -20,8 +20,9 @@ interface ButtonProps extends TouchableOpacityProps {
 }
 
 const HomeScreenWrapper = styled.View<PropsView>`
-  background-color: ${props => props.theme.screen.background};
   position: relative;
+  min-height: 100%;
+  background-color: ${props => props.theme.fonts.colors.secondary};
 `;
 
 const HomeLabel = styled.Text<PropsText>`
@@ -31,17 +32,15 @@ const HomeLabel = styled.Text<PropsText>`
 
 const LabelWrapper = styled.View<PropsView>`
   display: flex;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
   margin-top: 90px;
   padding: 5px 0 10px 0;
-  border-bottom-color: ${props => props.theme.separator.line};
   align-items: center;
   justify-content: center;
 `;
 
 // goal failed
 const SearchView = styled.View<PropsView>`
+  background-color: ${props => props.theme.fonts.colors.secondary};
   padding: 0 15px;
   flex: 1;
 `;

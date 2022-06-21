@@ -7,9 +7,10 @@ import {
   JwtDecodedModel,
   ReactChildrenProps,
   TokenResponse,
+  UserModel,
 } from '../models';
 import AsyncStorage from '@react-native-community/async-storage';
-import {api, signInAxios, signUpAxios} from '../services';
+import {api, getProfileAxios, signInAxios, signUpAxios} from '../services';
 import jwt_decode from 'jwt-decode';
 import {updateProfileAxios} from '../services';
 
@@ -34,18 +35,19 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       try {
         const storedToken: string | null = await AsyncStorage.getItem('token');
         const storedUser: string | null = await AsyncStorage.getItem('user');
-        const storedUserId: string | null = await AsyncStorage.getItem(
-          'userId',
-        );
 
         if (storedUser && storedToken) {
+          const userObj = JSON.parse(storedUser);
+
           api.defaults.headers.common.Authorization = `Bearer ${storedToken}`;
           setToken(storedToken);
-          setUser(JSON.parse(storedUser));
-          setUserId(storedUserId);
+          const user: UserModel = await getUser(userObj._id);
+          setUser(user);
+          setUserId(user._id);
         }
-      } catch (error) {
-        throw new Error('error while loading storage data in Auth Context.tsx');
+      } catch (e: any) {
+        console.log('error while loading storage data in Auth Context.tsx');
+        throw new Error(e.message);
       }
       setLoading(false);
     };
@@ -62,19 +64,22 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       }
 
       const decoded: JwtDecodedModel = await jwt_decode(data.token);
+      console.log(data.token);
 
       api.defaults.headers.common.Authorization = `Bearer ${data.token}`;
       await AsyncStorage.setItem('token', data.token);
-      await AsyncStorage.setItem('userId', decoded._id.toString());
-      await AsyncStorage.setItem('user', JSON.stringify(decoded));
+
+      const user: UserModel = await getUser(decoded._id.toString());
+
+      await AsyncStorage.setItem('userId', user._id.toString());
+      await AsyncStorage.setItem('user', JSON.stringify(user));
       setToken(data.token);
-      setUser(decoded);
-      setUserId(decoded._id.toString());
+      setUser(user);
+      setUserId(user._id);
 
       console.log('sign in successful - file auth.tsx');
-    } catch (e) {
-      console.error(e);
-      throw new Error('Token exists but found an error while signing in');
+    } catch (e: any) {
+      throw new Error(e.message);
     }
   };
 
@@ -95,12 +100,14 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
 
       const decoded: JwtDecodedModel = await jwt_decode(data.token);
       api.defaults.headers.common.Authorization = `Bearer ${data.token}`;
+
       await AsyncStorage.setItem('token', data.token);
-      await AsyncStorage.setItem('userId', decoded._id.toString());
-      await AsyncStorage.setItem('user', JSON.stringify(decoded));
+      const user = await getUser(decoded._id.toString());
+      await AsyncStorage.setItem('userId', user._id.toString());
+      await AsyncStorage.setItem('user', JSON.stringify(user));
       setToken(data.token);
-      setUser(decoded);
-      setUserId(decoded._id.toString());
+      setUser(user);
+      setUserId(user._id);
       //
       console.log('sign up successful - file auth.tsx');
       //
@@ -130,19 +137,31 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       }
 
       const decoded: JwtDecodedModel = await jwt_decode(data.token);
+
       api.defaults.headers.common.Authorization = `Bearer ${data.token}`;
       await AsyncStorage.setItem('token', data.token);
-      await AsyncStorage.setItem('userId', decoded._id.toString());
-      await AsyncStorage.setItem('user', JSON.stringify(decoded));
+
+      const user = await getUser(decoded._id.toString());
+
+      await AsyncStorage.setItem('user', JSON.stringify(user));
       setToken(data.token);
-      setUser(decoded);
-      setUserId(decoded._id.toString());
+      setUser(user);
+      setUserId(user._id);
     } catch (error) {
       throw new Error('error while updating profile on file app context');
     }
   };
 
-  const signOut = async () => {
+  const getUser = async (id: string): Promise<UserModel> => {
+    try {
+      const user: UserModel = await getProfileAxios(id);
+      return user;
+    } catch (e: any) {
+      throw new Error(e.message);
+    }
+  };
+
+  const signOut = async (): Promise<void> => {
     setUser(null);
     setUserId(null);
     setToken(null);
@@ -164,8 +183,9 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
         // functions
         signIn,
         signUp,
-        signOut,
         updateProfile,
+        getUser,
+        signOut,
       }}>
       {children}
     </AuthContext.Provider>

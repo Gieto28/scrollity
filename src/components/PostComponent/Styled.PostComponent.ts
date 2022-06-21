@@ -32,10 +32,11 @@ interface PropsTouchable extends TouchableOpacityProps {
 const PostFullWidth = styled.View<PropsView>`
   border-top-width: 1px;
   border-top-color: ${props => props.theme.input.border};
-  margin-bottom: 15px;
+  margin: 24px 0 0 0;
   display: flex;
   justify-content: center;
   width: 100%;
+  background-color: ${props => props.theme.screen.background};
 `;
 
 const PostWrapper = styled.View<PropsView>`
@@ -66,11 +67,11 @@ const PostBody = styled.View<PropsView>`
   height: auto;
   margin-bottom: 3px;
 `;
-const PostMedia = styled.Image<PropsImage>`
-  max-width: 100%;
-  width: auto;
-  max-height: 100%;
-`;
+const PostMedia = styled.Image<PropsImage>``;
+
+const PostDescriptionWrapper = styled.View``;
+const PostMediaWrapper = styled.View``;
+
 const PostDescription = styled.Text<PropsText>`
   color: ${props => props.theme.screen.text};
   font-size: ${props => props.theme.fonts.fontSize.md};
@@ -116,10 +117,12 @@ export {
   PostHeaderTop,
   PostFullWidth,
   PostWrapper,
+  PostMediaWrapper,
   PostMedia,
   PostHeader,
   PostBody,
   PostTitle,
+  PostDescriptionWrapper,
   PostDescription,
   PostFooter,
   PostValuesWrapper,
