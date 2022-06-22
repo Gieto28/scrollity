@@ -26,6 +26,7 @@ import {Dimensions, ImageSourcePropType} from 'react-native';
 import {useAppSettings} from '../../context';
 import SelectDropdown from 'react-native-select-dropdown';
 import {yupResolver} from '@hookform/resolvers/yup';
+import {v4 as uuid} from 'uuid';
 import {
   CategoryArrayModel,
   CreatePostModel,
@@ -37,7 +38,7 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {AppScrollView} from '../../styles/GlobalStyle';
-import {createPostAxios} from '../../services';
+import {createPostAxios, uploadFileAxios} from '../../services';
 import AsyncStorage from '@react-native-community/async-storage';
 
 /**
@@ -50,8 +51,9 @@ const CreatePostScreen: React.FC = () => {
   const [placeholder, setPlaceholder] = useState<string>(
     'https://via.placeholder.com/400',
   );
-  const [mediaUri, setMediaUri] = useState<string | null>(null);
-  const [mediaType, setMediaType] = useState<string | null>(null);
+  const [mediaValue, setMediaValue] = useState<any>();
+  const [mediaUri, setMediaUri] = useState<string | undefined>(undefined);
+  const [mediaType, setMediaType] = useState<string | undefined>(undefined);
   const [mediaHeight, setMediaHeight] = useState<number>(400);
   const [screenWidth, setScreenWidth] = useState<number>(
     Dimensions.get('window').width * 0.9,
@@ -83,8 +85,12 @@ const CreatePostScreen: React.FC = () => {
     ? require('../../assets/Images/arrow-left-dark-24.png')
     : require('../../assets/Images/arrow-left-light-24.png');
 
-  const handleMediaState = async () => {
+  const handleMediaState = async (): Promise<void> => {
     imageError === true && setImageError(false);
+
+    setMediaUri(undefined);
+    setMediaType(undefined);
+    setMediaHeight(400);
 
     const res: ImagePickerResponse = await launchImageLibrary({
       mediaType: 'mixed',
@@ -100,22 +106,22 @@ const CreatePostScreen: React.FC = () => {
       throw new Error('Image is too tall!');
     }
 
-    if (res!.assets![0]) {
-      const mediaValue = res!.assets![0];
+    const media = res.assets![0];
 
-      setMediaUri(mediaValue!.uri!);
-      setMediaType(mediaValue!.type!);
+    setMediaValue(media);
 
-      if (mediaValue.width && mediaValue.height) {
-        const calc: number = mediaValue.width / Dimensions.get('window').width;
-        setMediaHeight(mediaValue.height / calc);
-      }
+    setMediaUri(media.uri);
+    setMediaType(media.type);
+
+    if (media.width && media.height) {
+      const calc: number = media.width / Dimensions.get('window').width;
+      setMediaHeight(media.height / calc);
     }
   };
 
-  const handleResetMedia = () => {
-    setMediaUri(null);
-    setMediaType(null);
+  const handleResetMedia = (): void => {
+    setMediaUri(undefined);
+    setMediaType(undefined);
     setMediaHeight(400);
   };
 
@@ -123,7 +129,7 @@ const CreatePostScreen: React.FC = () => {
     navigation.dispatch(CommonActions.goBack());
   };
 
-  const handleSelectOptions = (option: any, index: number) => {
+  const handleSelectOptions = (option: any, index: number): void => {
     setCategory(categoryArray[index].category);
   };
 
@@ -131,31 +137,48 @@ const CreatePostScreen: React.FC = () => {
     data: CreatePostModel,
   ) => {
     const {title, description} = data;
-    try {
-      const user_id: string | null = await AsyncStorage.getItem('userId');
 
-      const data: SuccessResponse = await createPostAxios(
+    const uniqueId: string = uuid();
+    const user_id: string | null = await AsyncStorage.getItem('userId');
+
+    const fileType = mediaType?.split('/')[0];
+    const media_id = mediaUri
+      ? `post.${user_id}.${fileType}.${uniqueId}.${mediaUri.split('.').pop()}`
+      : null;
+
+    if (mediaType && media_id && mediaUri) {
+      try {
+        const uploadResult: SuccessResponse = await uploadFileAxios(
+          mediaUri,
+          media_id,
+          mediaType,
+        );
+        console.log(uploadResult);
+        reset();
+        handleResetMedia();
+      } catch (e: any) {
+        console.log('error when sending file');
+        throw new Error(e.message);
+      }
+    }
+
+    try {
+      const postCreationResponse: SuccessResponse = await createPostAxios(
         user_id,
         title,
         description,
-        mediaUri,
-        mediaType,
+        media_id,
         category,
-        mediaHeight,
       );
-
-      console.log(data);
-      reset();
-      setMediaUri(null);
-      setMediaType(null);
-      setMediaHeight(400);
-      setCategory('Other');
+      console.log(postCreationResponse);
     } catch (e: any) {
-      console.log(
-        'error while sending data to createPostAxios in file createPostScreen',
-      );
+      console.log('error when sending post creation');
       throw new Error(e.message);
     }
+
+    reset();
+    handleResetMedia();
+    setCategory('Other');
   };
 
   return (
@@ -229,10 +252,10 @@ const CreatePostScreen: React.FC = () => {
           }}>
           <ImagePreview
             source={{uri: mediaUri ? mediaUri : placeholder}}
-            resizeMode="contain"
+            resizeMode="stretch"
             style={{
               height: mediaHeight,
-              width: screenWidth,
+              minWidth: screenWidth,
             }}
           />
         </ImageWrapper>

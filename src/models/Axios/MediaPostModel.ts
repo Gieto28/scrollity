@@ -3,9 +3,9 @@
  *
  */
 interface MediaPostModel {
-  uri: string | null;
-  type: string | null;
-  name: string | null;
+  uri: string;
+  type: string;
+  name: string;
 }
 
 export default MediaPostModel;

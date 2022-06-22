@@ -1,13 +1,11 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {UserModel} from '../../models';
-import {AUTH_PROFILE} from '../../utils/env';
+import {PROFILE_GET} from '../../utils/env';
 
 const getProfileAxios = async (id: string): Promise<UserModel> => {
   try {
-    const res: AxiosResponse<UserModel> = await api.get(
-      `${AUTH_PROFILE}/${id}`,
-    );
+    const res: AxiosResponse<UserModel> = await api.get(`${PROFILE_GET}/${id}`);
     return res.data;
   } catch (e) {
     throw new Error(

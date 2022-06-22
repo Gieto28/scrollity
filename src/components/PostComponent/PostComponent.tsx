@@ -24,13 +24,13 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {Dimensions, Image, ImageSourcePropType, Text} from 'react-native';
 import {useAppSettings} from '../../context';
 import {HomeStackParams, PostModel} from '../../models';
-import {URL} from '../../utils/env';
+import {PUBLIC_POST_PATH_SERVER, URL} from '../../utils/env';
 
 interface Props {
   title: string;
   timeStamp: string;
   category: string;
-  source: string;
+  media_id: string;
   description: string;
   upVotes: string;
   downVotes: string;
@@ -45,7 +45,7 @@ interface Props {
  * @param title title of the post set by the user when creating the post
  * @param timeStamp time when the post was created
  * @param category category set by the user when creating the post
- * @param source image source that the user defined
+ * @param media_id image source that the user defined
  * @param description description of the post set by the user when creating the post
  * @param upVotes number of up votes the post has
  * @param downVotes number of down votes the post has
@@ -59,7 +59,7 @@ const PostComponent: React.FC<Props> = ({
   title,
   timeStamp,
   category,
-  source,
+  media_id,
   description,
   upVotes,
   downVotes,
@@ -70,7 +70,7 @@ const PostComponent: React.FC<Props> = ({
 }) => {
   const {theme} = useAppSettings();
   const [mediaHeight, setMediaHeight] = useState<number>();
-  const [mediaWidth, setImageWidth] = useState<number>(
+  const [deviceWidth, setDeviceWidth] = useState<number>(
     Dimensions.get('window').width,
   );
 
@@ -103,11 +103,25 @@ const PostComponent: React.FC<Props> = ({
     });
   };
 
-  Image.getSize(`${URL}/${source}`, (width, height) => {
-    console.log(height, width, mediaHeight);
-    const calc: number = width / mediaWidth;
-    setMediaHeight(height / calc);
-  });
+  const getFolderName = () => {
+    if (media_id)
+      if (media_id.split('.')[2].toString() === 'image') {
+        return 'images';
+      } else if (media_id.split('.')[2].toString() === 'video') {
+        return 'videos';
+      }
+  };
+
+  const path: string = `${URL}${PUBLIC_POST_PATH_SERVER}/${getFolderName()}/${media_id}`;
+
+  //calculating height according to device width
+  if (media_id)
+    Image.getSize(path, (width, height) => {
+      const calc: number = width / deviceWidth;
+      setMediaHeight(height / calc);
+    });
+
+  console.log(path);
 
   return (
     <PostFullWidth>
@@ -121,33 +135,35 @@ const PostComponent: React.FC<Props> = ({
           <PostTitle>{title}</PostTitle>
         </PostHeader>
         <PostBody>
-          {source && (
+          {media_id && (
             <PostMediaWrapper
               style={{
-                height: mediaHeight ? mediaHeight : 300,
-                width: mediaWidth,
+                height: mediaHeight ? mediaHeight : 280,
+                width: deviceWidth,
               }}>
               <PostMedia
                 source={
                   mediaHeight
                     ? {
-                        uri: `${URL}/${source}`,
+                        uri: path,
                       }
                     : require('../../assets/Images/loading-media.gif')
                 }
                 style={{
-                  height: mediaHeight ? mediaHeight : 300,
-                  width: mediaWidth,
+                  height: mediaHeight ? mediaHeight : 280,
+                  width: deviceWidth,
                 }}
-                resizeMode="contain"
+                resizeMode="stretch"
                 accessibilityLabel={title}
               />
             </PostMediaWrapper>
           )}
-          {description && (
+          {description ? (
             <PostDescriptionWrapper>
               <PostDescription>{description}</PostDescription>
             </PostDescriptionWrapper>
+          ) : (
+            <Text></Text>
           )}
         </PostBody>
         <PostFooter>

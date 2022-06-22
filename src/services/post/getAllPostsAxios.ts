@@ -1,6 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
-import {PATH_GET_ALL_POSTS} from '../../utils/env';
+import {POST_GET_ALL} from '../../utils/env';
 
 /**
  *
@@ -11,9 +11,8 @@ import {PATH_GET_ALL_POSTS} from '../../utils/env';
  */
 const getAllPosts = async (category: string): Promise<any> => {
   try {
-    const path: string = `${PATH_GET_ALL_POSTS}${category}`;
+    const path: string = `${POST_GET_ALL}${category}`;
     const res: AxiosResponse = await api.get(path);
-    console.log(res.data.data);
     return res.data;
   } catch (e: any) {
     console.log(

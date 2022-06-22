@@ -1,5 +1,6 @@
 import {
   Animated,
+  Dimensions,
   TextProps,
   TouchableOpacityProps,
   ViewProps,
@@ -21,7 +22,13 @@ interface ButtonProps extends TouchableOpacityProps {
 
 const HomeScreenWrapper = styled.View<PropsView>`
   position: relative;
-  min-height: 100%;
+  background-color: ${props => props.theme.fonts.colors.secondary};
+`;
+
+const HomeContentView = styled.View<PropsView>`
+  flex: 1;
+  display: flex;
+  justify-content: center;
   background-color: ${props => props.theme.fonts.colors.secondary};
 `;
 
@@ -161,6 +168,7 @@ export {
   HorizontalScrollWrapper,
   CategoryScroll,
   HomeScreenWrapper,
+  HomeContentView,
   CategoryView,
   scrollY,
   scrollYIconsWrapper,

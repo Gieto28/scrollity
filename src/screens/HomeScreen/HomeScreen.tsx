@@ -22,6 +22,7 @@ import {
   styledHeaderAnimation,
   ToTopIconView,
   styledIConsWrapperAnimation,
+  HomeContentView,
 } from './Styled.HomeScreen';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -49,7 +50,8 @@ const HomeScreen: React.FC = () => {
   const {theme} = useAppSettings();
   const [categoryId, setCategoryId] = useState<number>(0);
   const [category, setCategory] = useState<string>('Top');
-  const [posts, setPosts] = useState<PostModel[]>();
+  const [posts, setPosts] = useState<PostModel[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const searchIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/search-24-dark.png')
@@ -68,22 +70,20 @@ const HomeScreen: React.FC = () => {
   useFocusEffect(
     useCallback(() => {
       const loadPosts = async (): Promise<void> => {
-        const res: {data: PostModel[]} = await getAllPosts(category);
-        setPosts(res.data);
+        try {
+          setLoading(true);
+          console.log(loading);
+          const res: {data: PostModel[]} = await getAllPosts(category);
+          setPosts(res.data);
+        } catch (e: any) {
+          throw new Error(e.message);
+        }
+        setLoading(false);
+        console.log(loading);
       };
       loadPosts();
     }, [category]),
   );
-
-  useEffect(() => {
-    const loadPosts = async (): Promise<void> => {
-      const res: {data: PostModel[]} = await getAllPosts(category);
-      setPosts(res.data);
-    };
-    loadPosts();
-  }, [category]);
-
-  console.log(Array.isArray(posts));
 
   // search handler
   const {control, handleSubmit} = useForm<SearchModel>({
@@ -102,7 +102,7 @@ const HomeScreen: React.FC = () => {
 
   const currentFilter: number = categoryArray[categoryId].id;
 
-  const searchData = (data: {}) => {
+  const searchData = (data: SearchModel) => {
     console.log('search', data);
   };
 
@@ -134,6 +134,8 @@ const HomeScreen: React.FC = () => {
     refScroll?.current?.scrollTo({x: 0, y: 0, animated: true});
   };
 
+  console.log(posts.length);
+
   return (
     <HomeScreenWrapper>
       <Animated.View style={styledHeaderAnimation}>
@@ -150,7 +152,7 @@ const HomeScreen: React.FC = () => {
         </HorizontalScrollWrapper> */}
       </Animated.View>
       <AppScrollView ref={refScroll} onScroll={e => handleAnimateOnScroll(e)}>
-        <AppView>
+        <HomeContentView>
           <LabelWrapper>
             <HomeLabel>{categoryArray[currentFilter].category}</HomeLabel>
           </LabelWrapper>
@@ -166,12 +168,14 @@ const HomeScreen: React.FC = () => {
             />
           </SearchView>
           {/* here goes a map of all of the posts being retrieved from the axios get */}
-          {posts ? (
+          {loading ? (
+            <Text>Loading....</Text>
+          ) : (
             posts.map((post: PostModel) => (
               <PostComponent
                 key={post._id}
                 title={post.title}
-                source={post.media}
+                media_id={post.media_id}
                 description={post.description}
                 upVotes={post.up_votes}
                 downVotes={post.down_votes}
@@ -183,10 +187,8 @@ const HomeScreen: React.FC = () => {
                 postObject={post}
               />
             ))
-          ) : (
-            <Text>Oops</Text>
           )}
-        </AppView>
+        </HomeContentView>
       </AppScrollView>
       <Animated.View style={styledIConsWrapperAnimation}>
         <IconsWrapper>

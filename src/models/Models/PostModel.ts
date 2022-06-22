@@ -6,12 +6,11 @@ interface PostModel {
   dateCreated: string;
   description: string;
   down_votes: string;
-  media: string;
+  media_id: string;
   title: string;
   up_votes: string;
   user: UserModel;
   comments: any;
-  mediaHeight: number;
 }
 
 export default PostModel;
