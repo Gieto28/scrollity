@@ -3,9 +3,14 @@ import {api} from '..';
 import {UserModel} from '../../models';
 import {PROFILE_GET} from '../../utils/env';
 
+/**
+ *
+ * @param id id used to retrieve the desired profile
+ * @returns
+ */
 const getProfileAxios = async (id: string): Promise<UserModel> => {
   try {
-    const res: AxiosResponse<UserModel> = await api.get(`${PROFILE_GET}/${id}`);
+    const res: AxiosResponse<UserModel> = await api.get(`${PROFILE_GET}${id}`);
     return res.data;
   } catch (e) {
     throw new Error(
