@@ -90,7 +90,10 @@ const InputTextComponent: React.FC<Props> = ({
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
-            style={style}
+            style={{
+              borderColor: errors?.message ? '#e63225' : '#262626',
+              borderWidth: errors?.message ? 2 : 1,
+            }}
             placeholder={placeholder}
             onBlur={onBlur}
             onChangeText={onChange}

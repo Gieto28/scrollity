@@ -66,22 +66,30 @@ const SettingsScreen = () => {
     resolver: yupResolver(SchemaEditProfile),
   });
 
+  const handleError = () => {
+    setFormError(true);
+    setTimeout(() => {
+      setFormError(false);
+    }, 8000);
+  };
+
   const handleEditProfile: SubmitHandler<FormEditProfileModel> = async (
     data: FormEditProfileModel,
   ) => {
     try {
-      console.log(data);
+      const {name, password} = data;
 
+      if (!name && !password) {
+        handleError();
+        return;
+      }
       await updateProfile(data);
-
       console.log('update successful');
+
       reset();
     } catch (error) {
-      setFormError(true);
       resetField('name');
-      setTimeout(() => {
-        setFormError(false);
-      }, 8000);
+      handleError();
       throw new Error('error while updating profile in file settings screen');
     }
   };
@@ -123,7 +131,9 @@ const SettingsScreen = () => {
       <SeparatorLineComponent />
       <EditProfileBody>
         <SettingsLabel>Edit Profile</SettingsLabel>
-        {formError && <FormErrorText>Name already exists!</FormErrorText>}
+        {formError && (
+          <FormErrorText>Oops! Something went wrong.</FormErrorText>
+        )}
         <InputTextComponent
           placeholder={'Your new username...'}
           value={''}

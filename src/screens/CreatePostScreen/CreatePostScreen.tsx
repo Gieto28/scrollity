@@ -68,7 +68,6 @@ const CreatePostScreen: React.FC = () => {
     {category: 'Pet', id: 1},
     {category: 'Help', id: 2},
     {category: 'Other', id: 3},
-    {category: 'Random', id: 4},
   ];
 
   //form hook

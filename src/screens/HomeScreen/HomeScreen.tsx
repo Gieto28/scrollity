@@ -174,15 +174,6 @@ const HomeScreen: React.FC = () => {
             posts.map((post: PostModel) => (
               <PostComponent
                 key={post._id}
-                title={post.title}
-                media_id={post.media_id}
-                description={post.description}
-                upVotes={post.up_votes}
-                downVotes={post.down_votes}
-                postId={post._id}
-                commentsAmount={post.comments}
-                category={post.category}
-                timeStamp={post.dateCreated}
                 IconToCommentsScreen={true}
                 postObject={post}
               />
