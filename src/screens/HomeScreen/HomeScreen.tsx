@@ -130,7 +130,6 @@ const HomeScreen: React.FC = () => {
   };
 
   const handleBackToTop = () => {
-    console.log('to top icon');
     refScroll?.current?.scrollTo({x: 0, y: 0, animated: true});
   };
 

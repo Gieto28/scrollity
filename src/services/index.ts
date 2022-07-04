@@ -6,6 +6,7 @@ import updateProfileAxios from './auth/updateProfileAxios';
 //POSTS
 import createPostAxios from './post/createPostAxios';
 import getAllPosts from './post/getAllPostsAxios';
+import handleVoteAxios from './post/handleVoteAxios';
 //COMMENTS
 //PROFILE
 import getProfileAxios from './profile/getProfileAxios';
@@ -20,6 +21,7 @@ export {
   getProfileAxios,
   updateProfileAxios,
   //POSTS
+  handleVoteAxios,
   createPostAxios,
   getAllPosts,
   //FILE

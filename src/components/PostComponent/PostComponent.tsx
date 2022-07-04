@@ -22,9 +22,11 @@ import {
   PostDescriptionWrapper,
   PostMediaWrapper,
 } from './Styled.PostComponent';
-import {useAppSettings} from '../../context';
+import {useAppSettings, useAuth} from '../../context';
 import {HomeStackParams, PostModel} from '../../models';
 import {PUBLIC_POST_PATH_SERVER, URL} from '../../utils/env';
+import {handleVoteAxios} from '../../services';
+import AsyncStorage from '@react-native-community/async-storage';
 
 interface Props {
   postObject: PostModel;
@@ -47,16 +49,17 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     up_votes,
     media_id,
     title,
-    user,
+    user: {_id: creator_id},
   } = postObject;
   //
   const {theme} = useAppSettings();
+  const {userId} = useAuth();
   const [mediaHeight, setMediaHeight] = useState<number>();
   const [deviceWidth, setDeviceWidth] = useState<number>(
     Dimensions.get('window').width,
   );
-
-  console.log(postObject);
+  const [waitingUpVote, setWaitingUpVote] = useState<boolean>(false);
+  const [waitingDownVote, setWaitingDownVote] = useState<boolean>(false);
 
   const upVoteIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-24-upvote-dark.png')
@@ -70,11 +73,23 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     ? require('../../assets/Images/comments-24-dark.png')
     : require('../../assets/Images/comments-24-light.png');
 
-  const handleUpVote = (postId: string) => {
-    console.log('Upvote Button widh id:', _id);
-  };
-  const handleDownVote = (postId: string) => {
-    console.log('DownVote Button with id:', _id);
+  const handleVote = async (
+    vote: string,
+    post_id: string,
+    user_id: string | null,
+  ) => {
+    if (user_id === null) return;
+
+    try {
+      if (vote === 'up') setWaitingUpVote(true);
+      if (vote === 'down') setWaitingDownVote(true);
+
+      await handleVoteAxios(vote, post_id, user_id!);
+    } catch (e: any) {
+      throw new Error(e.message);
+    }
+    if (vote === 'up') setWaitingUpVote(false);
+    if (vote === 'down') setWaitingDownVote(false);
   };
 
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>();
@@ -104,8 +119,6 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
       const calc: number = width / deviceWidth;
       setMediaHeight(height / calc);
     });
-
-  console.log(path);
 
   return (
     <PostFullWidth>
@@ -153,14 +166,18 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
         <PostFooter>
           <PostValuesWrapper>
             <PostValues>{up_votes}</PostValues>
-            <PostButtonIcon onPress={() => handleUpVote(_id)}>
+            <PostButtonIcon
+              disabled={waitingUpVote}
+              onPress={() => handleVote('up', _id, userId)}>
               <PostUpVoteIcon
                 source={upVoteIcon}
                 accessibilityLabel="Up vote Icon"
               />
             </PostButtonIcon>
             <PostValues>{down_votes}</PostValues>
-            <PostButtonIcon onPress={() => handleDownVote(_id)}>
+            <PostButtonIcon
+              disabled={waitingDownVote}
+              onPress={() => handleVote('down', _id, userId)}>
               <PostDownVoteIcon
                 source={downVoteIcon}
                 accessibilityLabel="Down vote Icon"
