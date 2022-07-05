@@ -1,14 +1,14 @@
 import UserModel from './UserModel';
 
 interface PostModel {
-  _id: string;
+  _id: number;
   category: string;
   dateCreated: string;
   description: string;
-  down_votes: string;
+  down_votes: number;
   media_id: string;
   title: string;
-  up_votes: string;
+  up_votes: number;
   user: UserModel;
   comments: any;
 }

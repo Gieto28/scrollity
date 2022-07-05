@@ -74,22 +74,21 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     : require('../../assets/Images/comments-24-light.png');
 
   const handleVote = async (
-    vote: string,
-    post_id: string,
+    vote: number,
+    post_id: number,
     user_id: string | null,
   ) => {
     if (user_id === null) return;
-
     try {
-      if (vote === 'up') setWaitingUpVote(true);
-      if (vote === 'down') setWaitingDownVote(true);
+      if (vote === 1) setWaitingUpVote(true);
+      if (vote === 0) setWaitingDownVote(true);
 
       await handleVoteAxios(vote, post_id, user_id!);
     } catch (e: any) {
       throw new Error(e.message);
     }
-    if (vote === 'up') setWaitingUpVote(false);
-    if (vote === 'down') setWaitingDownVote(false);
+    if (vote === 1) setWaitingUpVote(false);
+    if (vote === 0) setWaitingDownVote(false);
   };
 
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>();
@@ -168,7 +167,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
             <PostValues>{up_votes}</PostValues>
             <PostButtonIcon
               disabled={waitingUpVote}
-              onPress={() => handleVote('up', _id, userId)}>
+              onPress={() => handleVote(1, _id, userId)}>
               <PostUpVoteIcon
                 source={upVoteIcon}
                 accessibilityLabel="Up vote Icon"
@@ -177,7 +176,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
             <PostValues>{down_votes}</PostValues>
             <PostButtonIcon
               disabled={waitingDownVote}
-              onPress={() => handleVote('down', _id, userId)}>
+              onPress={() => handleVote(0, _id, userId)}>
               <PostDownVoteIcon
                 source={downVoteIcon}
                 accessibilityLabel="Down vote Icon"

@@ -51,7 +51,6 @@ const CreatePostScreen: React.FC = () => {
   const [placeholder, setPlaceholder] = useState<string>(
     'https://via.placeholder.com/400',
   );
-  const [mediaValue, setMediaValue] = useState<any>();
   const [mediaUri, setMediaUri] = useState<string | undefined>(undefined);
   const [mediaType, setMediaType] = useState<string | undefined>(undefined);
   const [mediaHeight, setMediaHeight] = useState<number>(400);
@@ -106,8 +105,6 @@ const CreatePostScreen: React.FC = () => {
     }
 
     const media = res.assets![0];
-
-    setMediaValue(media);
 
     setMediaUri(media.uri);
     setMediaType(media.type);

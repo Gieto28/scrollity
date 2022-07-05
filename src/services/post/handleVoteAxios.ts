@@ -10,14 +10,11 @@ import {POST_VOTE} from '../../utils/env';
  * @returns
  */
 const handleVoteAxios = async (
-  vote: string,
-  post_id: string,
+  vote: number,
+  post_id: number,
   user_id: string | null,
 ): Promise<any> => {
   try {
-    if (!vote) return;
-
-    console.log('axios console log handle vote', vote, post_id, user_id);
     const res: AxiosResponse = await api.post(POST_VOTE, {
       vote,
       post_id,
