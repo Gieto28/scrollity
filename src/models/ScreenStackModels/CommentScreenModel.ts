@@ -1,4 +1,7 @@
 import {ImageSourcePropType} from 'react-native';
+import CommentModel from '../Form/FormCommentModel';
+import PostModel from '../Models/PostModel';
+import UserModel from '../Models/UserModel';
 
 /**
  * Post model for the Posts - pretty straight forward interface
@@ -25,14 +28,15 @@ import {ImageSourcePropType} from 'react-native';
  *
  */
 interface CommentScreenModel {
+  _id: number;
   title: string;
-  source: ImageSourcePropType;
+  media_id: string;
+  dateCreated: string;
   description: string;
-  upVotes: number;
-  downVotes: number;
-  postId: string;
-  commentsAmount: number;
-  timestamp: string;
+  up_votes: number;
+  down_votes: number;
+  user: UserModel;
+  comments: string;
   category: string;
 }
 

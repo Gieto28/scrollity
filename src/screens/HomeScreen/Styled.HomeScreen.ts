@@ -111,6 +111,10 @@ const CategoryText = styled.Text<PropsText>`
   font-weight: ${props => props.theme.fonts.fontWeight.l};
 `;
 
+const PostWrapper = styled.View<ViewProps>`
+  margin: 24px 0 0 0;
+`;
+
 const IconsWrapper = styled.View<PropsView>`
   position: absolute;
   bottom: 30px;
@@ -170,6 +174,7 @@ export {
   HomeScreenWrapper,
   HomeContentView,
   CategoryView,
+  PostWrapper,
   scrollY,
   scrollYIconsWrapper,
   styledHeaderAnimation,

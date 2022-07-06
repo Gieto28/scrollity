@@ -23,6 +23,7 @@ import {
   ToTopIconView,
   styledIConsWrapperAnimation,
   HomeContentView,
+  PostWrapper,
 } from './Styled.HomeScreen';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -171,11 +172,13 @@ const HomeScreen: React.FC = () => {
             <Text>Loading....</Text>
           ) : (
             posts.map((post: PostModel) => (
-              <PostComponent
-                key={post._id}
-                IconToCommentsScreen={true}
-                postObject={post}
-              />
+              <PostWrapper>
+                <PostComponent
+                  key={post._id}
+                  IconToCommentsScreen={true}
+                  postObject={post}
+                />
+              </PostWrapper>
             ))
           )}
         </HomeContentView>

@@ -32,7 +32,6 @@ interface PropsTouchable extends TouchableOpacityProps {
 const PostFullWidth = styled.View<PropsView>`
   border-top-width: 1px;
   border-top-color: ${props => props.theme.input.border};
-  margin: 24px 0 0 0;
   display: flex;
   justify-content: center;
   width: 100%;

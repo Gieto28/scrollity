@@ -11,12 +11,12 @@ const api: AxiosInstance = axios.create({
 
 api.interceptors.request.use(
   (res: AxiosRequestConfig) => {
-    console.log(URL);
     return res;
   },
   error => {
     if (error.response.status === 401) {
       console.log('error 401');
+      throw new Error(error.response.message);
     }
   },
 );

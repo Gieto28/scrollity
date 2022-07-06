@@ -40,14 +40,13 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
   });
 
   // Functions
+  const object = route.params.postObject;
 
-  const sendComment: SubmitHandler<CommentModel> = (data: CommentModel) => {
+  const sendComment = (data: CommentModel) => {
     console.log('sending comment...');
-    console.log('comment', data.comment);
+    console.log('comment', object._id, data.comment);
     reset();
   };
-
-  const object = route.params.postObject;
 
   const navigation = useNavigation();
 
@@ -76,18 +75,7 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
             altText={'Go back to previous screen'}
             onPress={handleGoBack}
           />
-          <PostComponent
-            title={object.title}
-            source={object.source}
-            description={object.description}
-            upVotes={object.upVotes}
-            downVotes={object.downVotes}
-            postId={object.postId}
-            commentsAmount={object.commentsAmount}
-            timeStamp={object.timestamp}
-            category={object.category}
-            postObject={object}
-          />
+          <PostComponent postObject={object} />
           <ScrollComments>
             <ViewComments>
               {/* map goes here */}

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, Image, ImageSourcePropType, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -25,8 +25,8 @@ import {
 import {useAppSettings, useAuth} from '../../context';
 import {HomeStackParams, PostModel} from '../../models';
 import {PUBLIC_POST_PATH_SERVER, URL} from '../../utils/env';
-import {handleVoteAxios} from '../../services';
-import AsyncStorage from '@react-native-community/async-storage';
+import {getPost, handleVoteAxios} from '../../services';
+import getUserVote from '../../services/post/getUserVoteAxios';
 
 interface Props {
   postObject: PostModel;
@@ -49,17 +49,20 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     up_votes,
     media_id,
     title,
-    user: {_id: creator_id},
   } = postObject;
-  //
+
+  // destructuring from context
   const {theme} = useAppSettings();
   const {userId} = useAuth();
+
+  // states
   const [mediaHeight, setMediaHeight] = useState<number>();
-  const [deviceWidth, setDeviceWidth] = useState<number>(
-    Dimensions.get('window').width,
-  );
   const [waitingUpVote, setWaitingUpVote] = useState<boolean>(false);
   const [waitingDownVote, setWaitingDownVote] = useState<boolean>(false);
+  const [updatePost, setUpdatePost] = useState<PostModel>();
+
+  // set values that won't change
+  const deviceWidth = Dimensions.get('window').width;
 
   const upVoteIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-24-upvote-dark.png')
@@ -78,12 +81,21 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     post_id: number,
     user_id: string | null,
   ) => {
-    if (user_id === null) return;
     try {
       if (vote === 1) setWaitingUpVote(true);
       if (vote === 0) setWaitingDownVote(true);
 
-      await handleVoteAxios(vote, post_id, user_id!);
+      const data = await handleVoteAxios(vote, post_id, user_id!);
+      //
+      //
+      //
+      //
+      //
+      // const user_vote = await getUserVote(post_id, user_id);
+      // console.log(user_vote);
+      const post = await getPost(_id);
+      setUpdatePost(post);
+      console.log(data);
     } catch (e: any) {
       throw new Error(e.message);
     }
@@ -93,7 +105,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
 
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>();
 
-  const handleCommentsScreen = (postObject: any) => {
+  const handleCommentsScreen = () => {
     console.log('Redirect post to CommentsScreen with object:', postObject);
 
     navigation.navigate('CommentsScreen', {
@@ -158,13 +170,13 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
             <PostDescriptionWrapper>
               <PostDescription>{description}</PostDescription>
             </PostDescriptionWrapper>
-          ) : (
-            <Text></Text>
-          )}
+          ) : null}
         </PostBody>
         <PostFooter>
           <PostValuesWrapper>
-            <PostValues>{up_votes}</PostValues>
+            <PostValues>
+              {updatePost ? updatePost.up_votes : up_votes}
+            </PostValues>
             <PostButtonIcon
               disabled={waitingUpVote}
               onPress={() => handleVote(1, _id, userId)}>
@@ -173,7 +185,9 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
                 accessibilityLabel="Up vote Icon"
               />
             </PostButtonIcon>
-            <PostValues>{down_votes}</PostValues>
+            <PostValues>
+              {updatePost ? updatePost.down_votes : down_votes}
+            </PostValues>
             <PostButtonIcon
               disabled={waitingDownVote}
               onPress={() => handleVote(0, _id, userId)}>
@@ -186,8 +200,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
           <PostValuesWrapper>
             {IconToCommentsScreen && (
               <>
-                <PostButtonIcon
-                  onPress={() => handleCommentsScreen(postObject)}>
+                <PostButtonIcon onPress={() => handleCommentsScreen()}>
                   <PostMessageIcon
                     source={commentsIcon}
                     accessibilityLabel="Comments Icon, redirects to IconToCommentsScreen screen"
