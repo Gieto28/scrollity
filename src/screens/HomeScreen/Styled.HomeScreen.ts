@@ -21,15 +21,15 @@ interface ButtonProps extends TouchableOpacityProps {
 }
 
 const HomeScreenWrapper = styled.View<PropsView>`
-  position: relative;
-  background-color: ${props => props.theme.fonts.colors.secondary};
+  min-height: 100%;
+  background-color: ${props => props.theme.screen.primaryColor};
 `;
 
 const HomeContentView = styled.View<PropsView>`
   flex: 1;
   display: flex;
   justify-content: center;
-  background-color: ${props => props.theme.fonts.colors.secondary};
+  background-color: ${props => props.theme.screen.primaryColor};
 `;
 
 const HomeLabel = styled.Text<PropsText>`
@@ -47,8 +47,8 @@ const LabelWrapper = styled.View<PropsView>`
 
 // goal failed
 const SearchView = styled.View<PropsView>`
-  background-color: ${props => props.theme.fonts.colors.secondary};
-  padding: 0 15px;
+  background-color: ${props => props.theme.screen.primaryColor};
+  margin: 0 15px 24px 15px;
   flex: 1;
 `;
 
@@ -112,7 +112,14 @@ const CategoryText = styled.Text<PropsText>`
 `;
 
 const PostWrapper = styled.View<ViewProps>`
-  margin: 24px 0 0 0;
+  margin: 0 0 24px 0;
+`;
+
+const LoadingWrapper = styled.View<ViewProps>`
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const IconsWrapper = styled.View<PropsView>`
@@ -175,6 +182,7 @@ export {
   HomeContentView,
   CategoryView,
   PostWrapper,
+  LoadingWrapper,
   scrollY,
   scrollYIconsWrapper,
   styledHeaderAnimation,

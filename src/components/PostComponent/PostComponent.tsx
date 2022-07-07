@@ -60,6 +60,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
   const [waitingUpVote, setWaitingUpVote] = useState<boolean>(false);
   const [waitingDownVote, setWaitingDownVote] = useState<boolean>(false);
   const [updatePost, setUpdatePost] = useState<PostModel>();
+  const [userVote, setUserVote] = useState<any | null>();
 
   // set values that won't change
   const deviceWidth = Dimensions.get('window').width;
@@ -76,6 +77,26 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     ? require('../../assets/Images/comments-24-dark.png')
     : require('../../assets/Images/comments-24-light.png');
 
+  const activeUpvote: ImageSourcePropType = theme.bool
+    ? require('../../assets/Images/arrow-24-upvote-active-dark.png')
+    : require('../../assets/Images/arrow-24-upvote-active-light.png');
+
+  const activeDownvote: ImageSourcePropType = theme.bool
+    ? require('../../assets/Images/arrow-24-downvote-active-dark.png')
+    : require('../../assets/Images/arrow-24-downvote-active-light.png');
+
+  useEffect(() => {
+    const checkUserLikes = async () => {
+      try {
+        const user_vote = await getUserVote(_id, userId);
+        setUserVote(user_vote.data);
+      } catch (e: any) {
+        throw new Error(e.message);
+      }
+    };
+    checkUserLikes();
+  }, [updatePost]);
+
   const handleVote = async (
     vote: number,
     post_id: number,
@@ -86,16 +107,8 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
       if (vote === 0) setWaitingDownVote(true);
 
       const data = await handleVoteAxios(vote, post_id, user_id!);
-      //
-      //
-      //
-      //
-      //
-      // const user_vote = await getUserVote(post_id, user_id);
-      // console.log(user_vote);
       const post = await getPost(_id);
       setUpdatePost(post);
-      console.log(data);
     } catch (e: any) {
       throw new Error(e.message);
     }
@@ -181,7 +194,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
               disabled={waitingUpVote}
               onPress={() => handleVote(1, _id, userId)}>
               <PostUpVoteIcon
-                source={upVoteIcon}
+                source={userVote?.vote === 1 ? activeUpvote : upVoteIcon}
                 accessibilityLabel="Up vote Icon"
               />
             </PostButtonIcon>
@@ -192,7 +205,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
               disabled={waitingDownVote}
               onPress={() => handleVote(0, _id, userId)}>
               <PostDownVoteIcon
-                source={downVoteIcon}
+                source={userVote?.vote === 0 ? activeDownvote : downVoteIcon}
                 accessibilityLabel="Down vote Icon"
               />
             </PostButtonIcon>

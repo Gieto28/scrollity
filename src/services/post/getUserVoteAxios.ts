@@ -17,7 +17,7 @@ const getUserVote = async (post_id: number, user_id: string | null) => {
     return res.data;
   } catch (e: any) {
     console.log(
-      'error while getting post from server - get post axios.ts failed',
+      'error while getting votes from server - get post axios.ts failed',
     );
     throw new Error(e.message);
   }

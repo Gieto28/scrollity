@@ -80,6 +80,8 @@ const lightTheme = {
   screen: {
     background: '#fcf7fc',
     text: '#262626',
+    primaryColor: '#24e2e5',
+    secondaryColor: '#e82e8e',
   },
   button: {
     border: '#262626',
@@ -117,6 +119,8 @@ const darkTheme = {
   screen: {
     background: '#262626',
     text: '#fcf7fc',
+    primaryColor: '#e82e8e',
+    secondaryColor: '#24e2e5',
   },
   button: {
     border: '#fcf7fc',

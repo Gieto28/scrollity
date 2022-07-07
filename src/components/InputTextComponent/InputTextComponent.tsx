@@ -74,11 +74,9 @@ const InputTextComponent: React.FC<Props> = ({
   // icon
   icon,
 }) => {
-  useEffect(() => {
-    console.log('Error', errors);
-  }, [errors]);
-
   const {theme} = useAppSettings();
+
+  const borderColor = theme.bool ? '#fcf7fc' : '#262626';
 
   return (
     <InputWrapper>
@@ -91,7 +89,7 @@ const InputTextComponent: React.FC<Props> = ({
         render={({field: {onChange, onBlur, value}}) => (
           <Input
             style={{
-              borderColor: errors?.message ? '#e63225' : '#262626',
+              borderColor: errors?.message ? '#e63225' : borderColor,
               borderWidth: errors?.message ? 2 : 1,
             }}
             placeholder={placeholder}

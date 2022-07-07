@@ -1,4 +1,9 @@
-import {Animated, ImageSourcePropType, Text} from 'react-native';
+import {
+  Animated,
+  ImageSourcePropType,
+  RefreshControl,
+  Text,
+} from 'react-native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   IconComponent,
@@ -24,6 +29,7 @@ import {
   styledIConsWrapperAnimation,
   HomeContentView,
   PostWrapper,
+  LoadingWrapper,
 } from './Styled.HomeScreen';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -37,6 +43,7 @@ import {
 } from '../../models';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {getAllPosts} from '../../services';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 type CreatePostNavigationProp = StackNavigationProp<
   HomeStackParams,
@@ -66,25 +73,24 @@ const HomeScreen: React.FC = () => {
     ? require('../../assets/Images/to-top-46-dark.png')
     : require('../../assets/Images/to-top-46-light.png');
 
-  // posts when app loads
+  const loadPosts = async (): Promise<void> => {
+    try {
+      setLoading(true);
+      const res: {data: PostModel[]} = await getAllPosts(category);
+      setPosts(res.data);
+    } catch (e: any) {
+      throw new Error(e.message);
+    }
+    setLoading(false);
+  };
 
-  useFocusEffect(
-    useCallback(() => {
-      const loadPosts = async (): Promise<void> => {
-        try {
-          setLoading(true);
-          console.log(loading);
-          const res: {data: PostModel[]} = await getAllPosts(category);
-          setPosts(res.data);
-        } catch (e: any) {
-          throw new Error(e.message);
-        }
-        setLoading(false);
-        console.log(loading);
-      };
-      loadPosts();
-    }, [category]),
-  );
+  useEffect(() => {
+    loadPosts();
+  }, [category]);
+
+  const onRefresh = async () => {
+    loadPosts();
+  };
 
   // search handler
   const {control, handleSubmit} = useForm<SearchModel>({
@@ -133,9 +139,6 @@ const HomeScreen: React.FC = () => {
   const handleBackToTop = () => {
     refScroll?.current?.scrollTo({x: 0, y: 0, animated: true});
   };
-
-  console.log(posts.length);
-
   return (
     <HomeScreenWrapper>
       <Animated.View style={styledHeaderAnimation}>
@@ -151,7 +154,18 @@ const HomeScreen: React.FC = () => {
         {/* </CategoryScroll>
         </HorizontalScrollWrapper> */}
       </Animated.View>
-      <AppScrollView ref={refScroll} onScroll={e => handleAnimateOnScroll(e)}>
+      <AppScrollView
+        ref={refScroll}
+        onScroll={e => handleAnimateOnScroll(e)}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={onRefresh}
+            colors={[theme.screen.secondaryColor]}
+            tintColor={theme.screen.secondaryColor}
+            progressViewOffset={300}
+          />
+        }>
         <HomeContentView>
           <LabelWrapper>
             <HomeLabel>{categoryArray[currentFilter].category}</HomeLabel>
@@ -168,19 +182,16 @@ const HomeScreen: React.FC = () => {
             />
           </SearchView>
           {/* here goes a map of all of the posts being retrieved from the axios get */}
-          {loading ? (
-            <Text>Loading....</Text>
-          ) : (
-            posts.map((post: PostModel) => (
-              <PostWrapper>
-                <PostComponent
-                  key={post._id}
-                  IconToCommentsScreen={true}
-                  postObject={post}
-                />
-              </PostWrapper>
-            ))
-          )}
+          {loading
+            ? null
+            : posts.map((post: PostModel) => (
+                <PostWrapper key={post._id}>
+                  <PostComponent
+                    IconToCommentsScreen={true}
+                    postObject={post}
+                  />
+                </PostWrapper>
+              ))}
         </HomeContentView>
       </AppScrollView>
       <Animated.View style={styledIConsWrapperAnimation}>
