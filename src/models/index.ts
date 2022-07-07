@@ -23,6 +23,7 @@ import FormSearchModel from './Form/FormSearchModel';
 import FormEditProfileModel from './Form/FormEditProfileModel';
 import FormCreatePostModel from './Form/FormCreatePostModel';
 import FormControllerName from './Form/FormControllerName';
+import FormControlType from './Form/FormControlType';
 //ScreensStacks
 import CommentScreenModel from './ScreenStackModels/CommentScreenModel';
 import AuthStackParams from './ScreenStackModels/AuthStackParams';
@@ -53,12 +54,12 @@ export type {
   SuccessResponse,
   TokenResponse,
   // - form ( matches yup amount)
-
   FormCommentModel,
   FormSignInModel,
   FormSignUpModel,
   FormSearchModel,
   FormEditProfileModel,
+  FormControlType,
   FormCreatePostModel,
   // - Context
   AppSettingsContextModel,

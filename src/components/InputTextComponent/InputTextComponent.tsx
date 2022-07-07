@@ -15,35 +15,12 @@ import {
   ViewStyle,
 } from 'react-native';
 import {useAppSettings} from '../../context';
-import {
-  FormControllerName,
-  FormCreatePostModel,
-  FormSearchModel,
-  FormSignInModel,
-  FormSignUpModel,
-} from '../../models';
+import {FormControllerName} from '../../models';
 
-// enum ControllerName name: "title" | "name" | "search" | "email" | "comment" | "description" | "password" | "passwordConfirmation"
-
-// interface ControllerType
-//   extends FormCreatePostModel,
-//     FormEditProfileModel,
-//     FormSearchModel,
-//     FormSignUpModel,
-//     FormSignInModel,
-//     FormSearchModel {}
-export type ControlType =
-  | FormSignUpModel
-  | FormSearchModel
-  | FormSignInModel
-  | FormSignInModel
-  | FormSearchModel
-  | FormCreatePostModel;
 interface Props {
   placeholder: string;
   controllerName: FormControllerName;
-  // control: Control<ControllerType, object>;
-  control: Control<ControlType, object>;
+  control: Control<any>;
   errors?: FieldError | undefined;
   icon?: ImageSourcePropType;
   multiline?: boolean;
@@ -94,7 +71,12 @@ const InputTextComponent: React.FC<Props> = ({
     borderWidth: errors?.message ? 2 : 1,
   };
 
-  const iconStyles = {marginTop: 16, marginRight: 5};
+  // {height: 100, textAlignVertical: 'top'}
+
+  const iconStyles = {
+    marginTop: label ? 16 : 0,
+    marginRight: 5,
+  };
 
   return (
     <InputWrapper>

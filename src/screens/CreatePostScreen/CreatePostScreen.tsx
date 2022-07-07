@@ -48,19 +48,16 @@ import AsyncStorage from '@react-native-community/async-storage';
  */
 const CreatePostScreen: React.FC = () => {
   const {theme} = useAppSettings();
+  const navigation = useNavigation();
+
   const [category, setCategory] = useState<string>('Other');
-  const [placeholder, setPlaceholder] = useState<string>(
-    'https://via.placeholder.com/400',
-  );
   const [mediaUri, setMediaUri] = useState<string | undefined>(undefined);
   const [mediaType, setMediaType] = useState<string | undefined>(undefined);
   const [mediaHeight, setMediaHeight] = useState<number>(400);
-  const [screenWidth, setScreenWidth] = useState<number>(
-    Dimensions.get('window').width * 0.9,
-  );
   const [imageError, setImageError] = useState(false);
 
-  const navigation = useNavigation();
+  const placeholder = 'https://via.placeholder.com/400';
+  const screenWidth = Dimensions.get('window').width * 0.9;
 
   //array of category
   const categoryArray: CategoryArrayModel[] = [
@@ -97,8 +94,12 @@ const CreatePostScreen: React.FC = () => {
       videoQuality: 'low',
     });
 
-    if (res.errorCode) console.log(res.errorMessage);
-    if (res.didCancel) console.log(res.didCancel);
+    if (res.errorCode) {
+      console.log(res.errorMessage);
+    }
+    if (res.didCancel) {
+      console.log(res.didCancel);
+    }
 
     if (res!.assets![0].height! > 900) {
       setImageError(true);
@@ -200,7 +201,6 @@ const CreatePostScreen: React.FC = () => {
             errors={errors.title}
           />
           <InputTextComponent
-            style={{height: 100, textAlignVertical: 'top'}}
             multiline={true}
             numberOfLines={4}
             label="Description"
@@ -228,11 +228,11 @@ const CreatePostScreen: React.FC = () => {
                 borderRadius: 10,
               }}
               buttonTextStyle={{}}
-              buttonTextAfterSelection={(selectedItem, index) => {
+              buttonTextAfterSelection={(selectedItem, _index) => {
                 // text represented after item is selected
                 return selectedItem.category;
               }}
-              rowTextForSelection={(item, index) => {
+              rowTextForSelection={(item, _index) => {
                 // text represented for each item in dropdown
                 return item.category;
               }}

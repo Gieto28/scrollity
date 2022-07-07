@@ -172,6 +172,14 @@ const HomeScreen: React.FC = () => {
               onSubmitEditing={handleSubmit(searchData)}
               icon={searchIcon}
             />
+            {/* <InputTextComponent
+              placeholder={'Confirm new password...'}
+              controllerName={FormControllerName.PASSWORDCONFIRMATION}
+              control={control}
+              label="Confirm new password"
+              icon={searchIcon}
+              onPress={handleSubmit(searchData)}
+            /> */}
           </SearchView>
           {/* here goes a map of all of the posts being retrieved from the axios get */}
           {loading
