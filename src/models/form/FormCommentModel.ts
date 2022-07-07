@@ -1,8 +1,8 @@
 /**
  * comment model for the form being used in the comments screen
  */
-interface CommentModel {
+interface FormCommentModel {
   comment: string;
 }
 
-export default CommentModel;
+export default FormCommentModel;

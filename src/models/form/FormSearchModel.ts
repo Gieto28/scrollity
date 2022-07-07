@@ -1,8 +1,8 @@
 /**
  * search model for the form being used in the Home screen
  */
-interface SearchModel {
+interface FormSearchModel {
   search: string;
 }
 
-export default SearchModel;
+export default FormSearchModel;

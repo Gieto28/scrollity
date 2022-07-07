@@ -18,7 +18,11 @@ import {
 } from './Styled.SettingsScreen';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {FormEditProfileModel, SchemaEditProfile} from '../../models';
+import {
+  FormControllerName,
+  FormEditProfileModel,
+  SchemaEditProfile,
+} from '../../models';
 
 const SettingsScreen = () => {
   const {theme, changeTheme} = useAppSettings();
@@ -136,35 +140,30 @@ const SettingsScreen = () => {
         )}
         <InputTextComponent
           placeholder={'Your new username...'}
-          value={''}
-          controllerName={'name'}
+          controllerName={FormControllerName.NAME}
           errors={errors.name}
           control={control}
           label="Your new username"
         />
         <InputTextComponent
           placeholder={'Your new password...'}
-          value={''}
-          controllerName={'password'}
+          controllerName={FormControllerName.PASSWORD}
           errors={errors.password}
           control={control}
           label="Your new password"
           securedBoolean={isPasswordHidden}
           icon={isPasswordHiddenIcon}
           onPress={handleShowPassword}
-          customIconStyles={{marginTop: 16, marginRight: 5}}
         />
         <InputTextComponent
           placeholder={'Confirm new password...'}
-          value={''}
-          controllerName={'passwordConfirmation'}
+          controllerName={FormControllerName.PASSWORDCONFIRMATION}
           errors={errors.passwordConfirmation}
           control={control}
           label="Confirm new password"
           securedBoolean={isPasswordConfirmationHidden}
           icon={isPasswordConfirmationHiddenIcon}
           onPress={handleShowPasswordConfirmation}
-          customIconStyles={{marginTop: 16, marginRight: 5}}
         />
         <FormButtonComponent
           name="Edit Profile"

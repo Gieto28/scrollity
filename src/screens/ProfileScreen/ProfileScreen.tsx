@@ -1,10 +1,10 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {ImageSourcePropType} from 'react-native';
 import {IconComponent} from '../../components';
 import {useAuth, useAppSettings} from '../../context';
-import {ProfileStackParams, UserModel} from '../../models';
+import {ProfileStackParams} from '../../models';
 import {AppScrollView} from '../../styles/GlobalStyle';
 import {
   ProfileHeader,

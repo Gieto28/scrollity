@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {AuthLoadingScreen, SignInScreen, SignUpScreen} from '../../screens';
+import {LoadingScreen, SignInScreen, SignUpScreen} from '../../screens';
 import {AuthStackParams} from '../../models';
 
 const AuthStackNavigator = createNativeStackNavigator<AuthStackParams>();
@@ -18,8 +18,8 @@ const AuthStack: React.FC = () => {
       <AuthStackNavigator.Screen name="SignInScreen" component={SignInScreen} />
       <AuthStackNavigator.Screen name="SignUpScreen" component={SignUpScreen} />
       <AuthStackNavigator.Screen
-        name="AuthLoadingScreen"
-        component={AuthLoadingScreen}
+        name="LoadingScreen"
+        component={LoadingScreen}
       />
     </AuthStackNavigator.Navigator>
   );

@@ -1,4 +1,4 @@
-import {View, Text, ActivityIndicator} from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import React from 'react';
 import {LoadingView} from './Styled.LoadingScreen';
 import {useAppSettings} from '../../context';

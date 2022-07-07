@@ -16,7 +16,12 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthScrollView, AuthView} from '../../styles/GlobalStyle';
 import {ImageSourcePropType, View} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {AuthStackParams, FormSignInModel, SchemaSignIn} from '../../models';
+import {
+  AuthStackParams,
+  FormControllerName,
+  FormSignInModel,
+  SchemaSignIn,
+} from '../../models';
 import {useAuth, useAppSettings} from '../../context';
 
 type SignUpNavigationProp = StackNavigationProp<
@@ -121,8 +126,7 @@ const SignInScreen: React.FC = () => {
         )}
         <InputTextComponent
           placeholder="E-mail"
-          value={''}
-          controllerName="email"
+          controllerName={FormControllerName.EMAIL}
           control={control}
           errors={errors.email}
           // label
@@ -131,8 +135,7 @@ const SignInScreen: React.FC = () => {
 
         <InputTextComponent
           placeholder="Password"
-          value=""
-          controllerName="password"
+          controllerName={FormControllerName.PASSWORD}
           control={control}
           errors={errors.password}
           securedBoolean={isPasswordHidden}
@@ -140,7 +143,6 @@ const SignInScreen: React.FC = () => {
           label="Password"
           icon={isPasswordHiddenIcon}
           onPress={handleShowPassword}
-          customIconStyles={{marginTop: 16, marginRight: 5}}
         />
 
         <FormButtonComponent

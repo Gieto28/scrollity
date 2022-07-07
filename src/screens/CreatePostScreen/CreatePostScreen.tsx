@@ -29,9 +29,10 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {v4 as uuid} from 'uuid';
 import {
   CategoryArrayModel,
-  CreatePostModel,
   SuccessResponse,
   SchemaCreatePost,
+  FormCreatePostModel,
+  FormControllerName,
 } from '../../models';
 import {
   ImagePickerResponse,
@@ -75,7 +76,7 @@ const CreatePostScreen: React.FC = () => {
     handleSubmit,
     formState: {errors},
     reset,
-  } = useForm<CreatePostModel>({
+  } = useForm<FormCreatePostModel>({
     resolver: yupResolver(SchemaCreatePost),
   });
 
@@ -129,8 +130,8 @@ const CreatePostScreen: React.FC = () => {
     setCategory(categoryArray[index].category);
   };
 
-  const handleSubmitPost: SubmitHandler<CreatePostModel> = async (
-    data: CreatePostModel,
+  const handleSubmitPost: SubmitHandler<FormCreatePostModel> = async (
+    data: FormCreatePostModel,
   ) => {
     const {title, description} = data;
 
@@ -193,9 +194,8 @@ const CreatePostScreen: React.FC = () => {
         <CreateBody>
           <InputTextComponent
             placeholder={'Title...'}
-            value={''}
             label="title"
-            controllerName={'title'}
+            controllerName={FormControllerName.TITLE}
             control={control}
             errors={errors.title}
           />
@@ -205,8 +205,7 @@ const CreatePostScreen: React.FC = () => {
             numberOfLines={4}
             label="Description"
             placeholder={'Description...'}
-            value={''}
-            controllerName={'description'}
+            controllerName={FormControllerName.DESCRIPTION}
             control={control}
             errors={errors.description}
           />

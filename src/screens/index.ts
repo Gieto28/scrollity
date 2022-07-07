@@ -5,11 +5,11 @@ import SignInScreen from './SignInScreen/SignInScreen';
 import SignUpScreen from './SignUpScreen/SignUpScreen';
 import CommentsScreen from './CommentsScreen/CommentsScreen';
 import CreatePostScreen from './CreatePostScreen/CreatePostScreen';
-import AuthLoadingScreen from './LoadingScreen/LoadingScreen';
+import LoadingScreen from './LoadingScreen/LoadingScreen';
 import SettingsScreen from './SettingsScreen/SettingsScreen';
 
 export {
-  AuthLoadingScreen,
+  LoadingScreen,
   CommentsScreen,
   CreatePostScreen,
   HomeScreen,

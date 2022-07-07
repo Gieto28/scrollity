@@ -1,6 +1,5 @@
 import {
   Animated,
-  Dimensions,
   TextProps,
   TouchableOpacityProps,
   ViewProps,
@@ -111,11 +110,17 @@ const CategoryText = styled.Text<PropsText>`
   font-weight: ${props => props.theme.fonts.fontWeight.l};
 `;
 
-const PostWrapper = styled.View<ViewProps>`
+const HomeScreenScroll = styled.ScrollView<PropsView>`
+  flex-grow: 1;
+  background-color: ${props => props.theme.screen.primaryColor};
+  color: ${props => props.theme.screen.text};
+`;
+
+const PostWrapper = styled.View<PropsView>`
   margin: 0 0 24px 0;
 `;
 
-const LoadingWrapper = styled.View<ViewProps>`
+const LoadingWrapper = styled.View<PropsView>`
   margin-top: 100px;
   display: flex;
   align-items: center;
@@ -182,6 +187,7 @@ export {
   HomeContentView,
   CategoryView,
   PostWrapper,
+  HomeScreenScroll,
   LoadingWrapper,
   scrollY,
   scrollYIconsWrapper,

@@ -9,7 +9,7 @@ import {
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {ErrorWhileSignUpText, IconWrapper} from './Styled.SignUpScreen';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {FormSignUpModel, SchemaSignUp} from '../../models';
+import {FormControllerName, FormSignUpModel, SchemaSignUp} from '../../models';
 import {useAuth, useAppSettings} from '../../context';
 import {ImageSourcePropType} from 'react-native';
 
@@ -117,43 +117,37 @@ const SignUpScreen = () => {
         )}
         <InputTextComponent
           placeholder="Your Username"
-          value={''}
-          controllerName="name"
+          controllerName={FormControllerName.NAME}
           control={control}
           errors={errors.name}
           label="Your Username"
         />
         <InputTextComponent
           placeholder="Your Email"
-          value={''}
-          controllerName="email"
+          controllerName={FormControllerName.EMAIL}
           control={control}
           errors={errors.email}
           label="Your Email"
         />
         <InputTextComponent
           placeholder="Your Password"
-          value={''}
-          controllerName="password"
+          controllerName={FormControllerName.PASSWORD}
           control={control}
           errors={errors.password}
           label="Your Password"
           securedBoolean={isPasswordHidden}
           icon={isPasswordHiddenIcon}
           onPress={handleShowPassword}
-          customIconStyles={{marginTop: 16, marginRight: 5}}
         />
         <InputTextComponent
           placeholder="Confirm Password"
-          value={''}
-          controllerName="passwordConfirmation"
+          controllerName={FormControllerName.PASSWORDCONFIRMATION}
           control={control}
           errors={errors.passwordConfirmation}
           label="Confirm Password"
           securedBoolean={isPasswordConfirmationHidden}
           icon={isPasswordConfirmationHiddenIcon}
           onPress={handleShowPasswordConfirmation}
-          customIconStyles={{marginTop: 16, marginRight: 5}}
         />
 
         <FormButtonComponent

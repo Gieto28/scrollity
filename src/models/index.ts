@@ -18,10 +18,11 @@ import JwtDecodedModel from './Context/JwtDecodedModel';
 // - form
 import FormSignInModel from './Form/FormSignInModel';
 import FormSignUpModel from './Form/FormSignUpModel';
-import CommentModel from './Form/FormCommentModel';
-import SearchModel from './Form/FormSearchModel';
+import FormCommentModel from './Form/FormCommentModel';
+import FormSearchModel from './Form/FormSearchModel';
 import FormEditProfileModel from './Form/FormEditProfileModel';
-import CreatePostModel from './Form/FormCreatePostModel';
+import FormCreatePostModel from './Form/FormCreatePostModel';
+import FormControllerName from './Form/FormControllerName';
 //ScreensStacks
 import CommentScreenModel from './ScreenStackModels/CommentScreenModel';
 import AuthStackParams from './ScreenStackModels/AuthStackParams';
@@ -42,6 +43,7 @@ export {
   SchemaCreatePost,
   SchemaSearch,
   SchemaEditProfile,
+  FormControllerName,
 };
 
 export type {
@@ -51,19 +53,20 @@ export type {
   SuccessResponse,
   TokenResponse,
   // - form ( matches yup amount)
-  CommentModel,
+
+  FormCommentModel,
   FormSignInModel,
   FormSignUpModel,
-  CommentScreenModel,
-  SearchModel,
+  FormSearchModel,
   FormEditProfileModel,
-  CreatePostModel,
+  FormCreatePostModel,
   // - Context
   AppSettingsContextModel,
   AppContextModel,
   AuthContextModel,
   JwtDecodedModel,
   //ScreensStacks
+  CommentScreenModel,
   AuthStackParams,
   AppStackParams,
   HomeStackParams,

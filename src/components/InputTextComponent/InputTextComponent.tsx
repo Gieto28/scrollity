@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {Controller} from 'react-hook-form';
+import React from 'react';
+import {Control, Controller, FieldError} from 'react-hook-form';
 import {
   Input,
   Label,
@@ -15,32 +15,49 @@ import {
   ViewStyle,
 } from 'react-native';
 import {useAppSettings} from '../../context';
+import {
+  FormControllerName,
+  FormCreatePostModel,
+  FormSearchModel,
+  FormSignInModel,
+  FormSignUpModel,
+} from '../../models';
 
+// enum ControllerName name: "title" | "name" | "search" | "email" | "comment" | "description" | "password" | "passwordConfirmation"
+
+// interface ControllerType
+//   extends FormCreatePostModel,
+//     FormEditProfileModel,
+//     FormSearchModel,
+//     FormSignUpModel,
+//     FormSignInModel,
+//     FormSearchModel {}
+export type ControlType =
+  | FormSignUpModel
+  | FormSearchModel
+  | FormSignInModel
+  | FormSignInModel
+  | FormSearchModel
+  | FormCreatePostModel;
 interface Props {
   placeholder: string;
-  value: string;
-  controllerName: string;
-  control: any;
-  errors?: any;
+  controllerName: FormControllerName;
+  // control: Control<ControllerType, object>;
+  control: Control<ControlType, object>;
+  errors?: FieldError | undefined;
   icon?: ImageSourcePropType;
   multiline?: boolean;
   numberOfLines?: number;
   style?: StyleProp<ViewStyle | TextStyle>;
-  customIconStyles?: StyleProp<ViewStyle>;
   onPress?: () => void;
   onSubmitEditing?: () => void;
-
-  // label
   label?: string;
-
-  // customizing component
   securedBoolean?: boolean;
 }
 
 /**
  * Uses React-Hook-Forms
  * @param placeholder - string that goes inside the input
- * @param value - initial value you want the input to have
  * @param controllerName - name of the controller assigned to that input i.e password field input would have controllerName attribute = to "password"
  * @param control - the variable retrieved from the useForm destructuring, usually control
  * @param label - **OPTIONAL** adds a string to the top of the input, good for forms to specify what the input correlates to. i.e. password input has a "Your password" label
@@ -61,22 +78,23 @@ const InputTextComponent: React.FC<Props> = ({
   errors,
   placeholder,
   multiline,
-  style,
   numberOfLines,
   securedBoolean,
   onPress,
   onSubmitEditing,
-  customIconStyles,
-
-  // label
   label,
-
-  // icon
   icon,
 }) => {
   const {theme} = useAppSettings();
 
   const borderColor = theme.bool ? '#fcf7fc' : '#262626';
+
+  const ifErrorStyle = {
+    borderColor: errors?.message ? '#e63225' : borderColor,
+    borderWidth: errors?.message ? 2 : 1,
+  };
+
+  const iconStyles = {marginTop: 16, marginRight: 5};
 
   return (
     <InputWrapper>
@@ -88,14 +106,11 @@ const InputTextComponent: React.FC<Props> = ({
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
-            style={{
-              borderColor: errors?.message ? '#e63225' : borderColor,
-              borderWidth: errors?.message ? 2 : 1,
-            }}
+            style={ifErrorStyle}
+            value={value}
             placeholder={placeholder}
             onBlur={onBlur}
             onChangeText={onChange}
-            value={value}
             secureTextEntry={securedBoolean}
             placeholderTextColor={theme.input.text}
             onSubmitEditing={onSubmitEditing}
@@ -106,7 +121,7 @@ const InputTextComponent: React.FC<Props> = ({
         name={controllerName}
       />
       {icon && (
-        <SubmitButton style={customIconStyles} onPress={onPress}>
+        <SubmitButton style={icon ? iconStyles : null} onPress={onPress}>
           <IconImage source={icon} />
         </SubmitButton>
       )}

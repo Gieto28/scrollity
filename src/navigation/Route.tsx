@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {AppState} from 'react-native';
 import {ThemeProvider} from 'styled-components';
 import {useAppSettings, useAuth} from '../context';
-import {AuthLoadingScreen} from '../screens';
+import {LoadingScreen} from '../screens';
 import AppStack from './AppStack/AppStack';
 import AuthStack from './AuthStack/AuthStack';
 
@@ -27,7 +27,7 @@ const Route: React.FC = () => {
     return () => handleAppState.remove();
   }, [appState]);
 
-  if (loading) return <AuthLoadingScreen />;
+  if (loading) return <LoadingScreen />;
 
   return (
     <ThemeProvider theme={theme}>

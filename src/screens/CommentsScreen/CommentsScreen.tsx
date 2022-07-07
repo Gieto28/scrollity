@@ -12,12 +12,17 @@ import {
   ViewComments,
 } from './Styled.CommentsScreen';
 import {ImageSourcePropType, ScrollView, View} from 'react-native';
-import {SubmitHandler, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import IconComponent from '../../components/IconComponent/IconComponent';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {useAppSettings} from '../../context';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {CommentModel, HomeStackParams, SchemaComment} from '../../models';
+import {
+  FormCommentModel,
+  FormControllerName,
+  HomeStackParams,
+  SchemaComment,
+} from '../../models';
 
 type Props = NativeStackScreenProps<HomeStackParams, 'CommentsScreen'>;
 
@@ -35,14 +40,14 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
     ? require('../../assets/Images/arrow-left-dark-24.png')
     : require('../../assets/Images/arrow-left-light-24.png');
 
-  const {control, handleSubmit, reset} = useForm<CommentModel>({
+  const {control, handleSubmit, reset} = useForm<FormCommentModel>({
     resolver: yupResolver(SchemaComment),
   });
 
   // Functions
   const object = route.params.postObject;
 
-  const sendComment = (data: CommentModel) => {
+  const sendComment = (data: FormCommentModel) => {
     console.log('sending comment...');
     console.log('comment', object._id, data.comment);
     reset();
@@ -98,8 +103,7 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
           onPress={handleSubmit(sendComment)}
           onSubmitEditing={handleSubmit(sendComment)}
           placeholder={'Your comment..'}
-          value={''}
-          controllerName={'comment'}
+          controllerName={FormControllerName.COMMENT}
           control={control}
           icon={sendCommentIcon}
         />

@@ -1,17 +1,11 @@
-import {
-  Animated,
-  ImageSourcePropType,
-  RefreshControl,
-  Text,
-} from 'react-native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Animated, ImageSourcePropType, RefreshControl} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   IconComponent,
   InputTextComponent,
   PostComponent,
 } from '../../components';
 import {useForm} from 'react-hook-form';
-import {AppScrollView, AppView} from '../../styles/GlobalStyle';
 import {
   CategoryButton,
   CategoryText,
@@ -29,9 +23,9 @@ import {
   styledIConsWrapperAnimation,
   HomeContentView,
   PostWrapper,
-  LoadingWrapper,
+  HomeScreenScroll,
 } from './Styled.HomeScreen';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useAppSettings} from '../../context';
 import {
@@ -39,11 +33,11 @@ import {
   HomeStackParams,
   PostModel,
   SchemaSearch,
-  SearchModel,
+  FormSearchModel,
+  FormControllerName,
 } from '../../models';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {getAllPosts} from '../../services';
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 type CreatePostNavigationProp = StackNavigationProp<
   HomeStackParams,
@@ -86,6 +80,7 @@ const HomeScreen: React.FC = () => {
 
   useEffect(() => {
     loadPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
   const onRefresh = async () => {
@@ -93,7 +88,7 @@ const HomeScreen: React.FC = () => {
   };
 
   // search handler
-  const {control, handleSubmit} = useForm<SearchModel>({
+  const {control, handleSubmit} = useForm<FormSearchModel>({
     resolver: yupResolver(SchemaSearch),
   });
 
@@ -109,7 +104,7 @@ const HomeScreen: React.FC = () => {
 
   const currentFilter: number = categoryArray[categoryId].id;
 
-  const searchData = (data: SearchModel) => {
+  const searchData = (data: FormSearchModel) => {
     console.log('search', data);
   };
 
@@ -145,16 +140,14 @@ const HomeScreen: React.FC = () => {
         {/* <HorizontalScrollWrapper>
           <CategoryScroll horizontal> */}
         <CategoryView>
-          {categoryArray.map((cat: any, index: number) => (
+          {categoryArray.map((cat: CategoryArrayModel, index: number) => (
             <CategoryButton key={cat.id} onPress={() => handleFilter(index)}>
               <CategoryText>{cat.category}</CategoryText>
             </CategoryButton>
           ))}
         </CategoryView>
-        {/* </CategoryScroll>
-        </HorizontalScrollWrapper> */}
       </Animated.View>
-      <AppScrollView
+      <HomeScreenScroll
         ref={refScroll}
         onScroll={e => handleAnimateOnScroll(e)}
         refreshControl={
@@ -172,8 +165,7 @@ const HomeScreen: React.FC = () => {
           </LabelWrapper>
           <SearchView>
             <InputTextComponent
-              value=""
-              controllerName="search"
+              controllerName={FormControllerName.SEARCH}
               placeholder="Search.."
               onPress={handleSubmit(searchData)}
               control={control}
@@ -193,7 +185,7 @@ const HomeScreen: React.FC = () => {
                 </PostWrapper>
               ))}
         </HomeContentView>
-      </AppScrollView>
+      </HomeScreenScroll>
       <Animated.View style={styledIConsWrapperAnimation}>
         <IconsWrapper>
           <ToTopIconView>
