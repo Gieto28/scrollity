@@ -27,7 +27,9 @@ const Route: React.FC = () => {
     return () => handleAppState.remove();
   }, [appState]);
 
-  if (loading) return <LoadingScreen />;
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <ThemeProvider theme={theme}>

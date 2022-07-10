@@ -45,7 +45,9 @@ const AppStack: React.FC = () => {
         component={NotificationsScreen}
         listeners={{
           tabPress: () => {
-            if (notificationAmount > 0) setNotificationAmount(0);
+            if (notificationAmount > 0) {
+              setNotificationAmount(0);
+            }
           },
         }}
         options={{

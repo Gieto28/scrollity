@@ -25,7 +25,7 @@ export const AuthContext: React.Context<AuthContextModel> =
  */
 const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   //
-  const [user, setUser] = useState<JwtDecodedModel | any>(null);
+  const [user, setUser] = useState<UserModel | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -41,9 +41,9 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
 
           api.defaults.headers.common.Authorization = `Bearer ${storedToken}`;
           setToken(storedToken);
-          const user: UserModel = await getUser(userObj._id);
-          setUser(user);
-          setUserId(user._id);
+          const currentUser: UserModel = await getUser(userObj._id);
+          setUser(currentUser);
+          setUserId(currentUser._id);
         }
       } catch (e: any) {
         console.log('error while loading storage data in Auth Context.tsx');
@@ -58,24 +58,24 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   const signIn = async (data: FormSignInModel): Promise<void> => {
     const {email, password} = data;
     try {
-      const data: TokenResponse = await signInAxios(email, password);
-      if (!data.token) {
+      const res: TokenResponse = await signInAxios(email, password);
+      if (!res.token) {
         throw new Error('Error while signing in, missing token');
       }
 
-      const decoded: JwtDecodedModel = await jwt_decode(data.token);
-      console.log(data.token);
+      const decoded: JwtDecodedModel = await jwt_decode(res.token);
+      console.log(res.token);
 
-      api.defaults.headers.common.Authorization = `Bearer ${data.token}`;
-      await AsyncStorage.setItem('token', data.token);
+      api.defaults.headers.common.Authorization = `Bearer ${res.token}`;
+      await AsyncStorage.setItem('token', res.token);
 
-      const user: UserModel = await getUser(decoded._id.toString());
+      const currentUser: UserModel = await getUser(decoded._id.toString());
 
-      await AsyncStorage.setItem('userId', user._id.toString());
-      await AsyncStorage.setItem('user', JSON.stringify(user));
-      setToken(data.token);
-      setUser(user);
-      setUserId(user._id);
+      await AsyncStorage.setItem('userId', currentUser._id.toString());
+      await AsyncStorage.setItem('currentUser', JSON.stringify(currentUser));
+      setToken(res.token);
+      setUser(currentUser);
+      setUserId(currentUser._id);
 
       console.log('sign in successful - file auth.tsx');
     } catch (e: any) {
@@ -87,27 +87,27 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
     const {name, email, password, passwordConfirmation} = data;
 
     try {
-      const data: TokenResponse = await signUpAxios(
+      const res: TokenResponse = await signUpAxios(
         name,
         email,
         password,
         passwordConfirmation,
       );
 
-      if (!data.token) {
+      if (!res.token) {
         throw new Error('Error while signing up, missing token');
       }
 
-      const decoded: JwtDecodedModel = await jwt_decode(data.token);
-      api.defaults.headers.common.Authorization = `Bearer ${data.token}`;
+      const decoded: JwtDecodedModel = await jwt_decode(res.token);
+      api.defaults.headers.common.Authorization = `Bearer ${res.token}`;
 
-      await AsyncStorage.setItem('token', data.token);
-      const user = await getUser(decoded._id.toString());
-      await AsyncStorage.setItem('userId', user._id.toString());
-      await AsyncStorage.setItem('user', JSON.stringify(user));
-      setToken(data.token);
-      setUser(user);
-      setUserId(user._id);
+      await AsyncStorage.setItem('token', res.token);
+      const currentUser = await getUser(decoded._id.toString());
+      await AsyncStorage.setItem('userId', currentUser._id.toString());
+      await AsyncStorage.setItem('currentUser', JSON.stringify(currentUser));
+      setToken(res.token);
+      setUser(currentUser);
+      setUserId(currentUser._id);
       //
       console.log('sign up successful - file auth.tsx');
       //
@@ -119,34 +119,40 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   const updateProfile = async (data: FormEditProfileModel): Promise<void> => {
     let {name, password, passwordConfirmation} = data;
 
-    if (name === undefined) name = null;
-    if (password === undefined) password = null;
-    if (passwordConfirmation === undefined) passwordConfirmation = null;
+    if (name === undefined) {
+      name = null;
+    }
+    if (password === undefined) {
+      password = null;
+    }
+    if (passwordConfirmation === undefined) {
+      passwordConfirmation = null;
+    }
 
     try {
-      const data: TokenResponse = await updateProfileAxios(
+      const res: TokenResponse = await updateProfileAxios(
         name,
         password,
         passwordConfirmation,
       );
 
-      console.log('data from update profile, file auth context', data);
+      console.log('res from update profile, file auth context', res);
 
-      if (!data.token) {
+      if (!res.token) {
         throw new Error('error while updating profile, missing token');
       }
 
-      const decoded: JwtDecodedModel = await jwt_decode(data.token);
+      const decoded: JwtDecodedModel = await jwt_decode(res.token);
 
-      api.defaults.headers.common.Authorization = `Bearer ${data.token}`;
-      await AsyncStorage.setItem('token', data.token);
+      api.defaults.headers.common.Authorization = `Bearer ${res.token}`;
+      await AsyncStorage.setItem('token', res.token);
 
-      const user = await getUser(decoded._id.toString());
+      const currentUser = await getUser(decoded._id.toString());
 
-      await AsyncStorage.setItem('user', JSON.stringify(user));
-      setToken(data.token);
-      setUser(user);
-      setUserId(user._id);
+      await AsyncStorage.setItem('currentUser', JSON.stringify(currentUser));
+      setToken(res.token);
+      setUser(currentUser);
+      setUserId(currentUser._id);
     } catch (error) {
       throw new Error('error while updating profile on file app context');
     }
@@ -154,8 +160,8 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
 
   const getUser = async (id: string): Promise<UserModel> => {
     try {
-      const user: UserModel = await getProfileAxios(id);
-      return user;
+      const currentUser: UserModel = await getProfileAxios(id);
+      return currentUser;
     } catch (e: any) {
       throw new Error(e.message);
     }
@@ -175,7 +181,6 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
         // states
         isSignedIn: !!user,
         user,
-        setUser,
         userId,
         loading,
         token,

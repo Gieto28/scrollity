@@ -1,4 +1,10 @@
-import {Animated, ImageSourcePropType, RefreshControl} from 'react-native';
+import {
+  Animated,
+  ImageSourcePropType,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  RefreshControl,
+} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   IconComponent,
@@ -108,7 +114,9 @@ const HomeScreen: React.FC = () => {
     console.log('search', data);
   };
 
-  const handleAnimateOnScroll = (e: any) => {
+  const handleAnimateOnScroll = (
+    e: NativeSyntheticEvent<NativeScrollEvent>,
+  ) => {
     scrollY.setValue(e.nativeEvent.contentOffset.y);
     scrollYIconsWrapper.setValue(e.nativeEvent.contentOffset.y);
   };
@@ -119,6 +127,10 @@ const HomeScreen: React.FC = () => {
   const handleRedirectToCreatePostScreen = () => {
     navigation.navigate('CreatePostScreen');
   };
+
+  // interface Type {
+  //   scrollTo: () => undefined;
+  // }
 
   // const refScroll: React.MutableRefObject<ScrollView | null> =
   //   useRef<null>(null);
@@ -137,8 +149,6 @@ const HomeScreen: React.FC = () => {
   return (
     <HomeScreenWrapper>
       <Animated.View style={styledHeaderAnimation}>
-        {/* <HorizontalScrollWrapper>
-          <CategoryScroll horizontal> */}
         <CategoryView>
           {categoryArray.map((cat: CategoryArrayModel, index: number) => (
             <CategoryButton key={cat.id} onPress={() => handleFilter(index)}>
@@ -149,7 +159,9 @@ const HomeScreen: React.FC = () => {
       </Animated.View>
       <HomeScreenScroll
         ref={refScroll}
-        onScroll={e => handleAnimateOnScroll(e)}
+        onScroll={(e: NativeSyntheticEvent<NativeScrollEvent>) =>
+          handleAnimateOnScroll(e)
+        }
         refreshControl={
           <RefreshControl
             refreshing={loading}
@@ -172,16 +184,7 @@ const HomeScreen: React.FC = () => {
               onSubmitEditing={handleSubmit(searchData)}
               icon={searchIcon}
             />
-            {/* <InputTextComponent
-              placeholder={'Confirm new password...'}
-              controllerName={FormControllerName.PASSWORDCONFIRMATION}
-              control={control}
-              label="Confirm new password"
-              icon={searchIcon}
-              onPress={handleSubmit(searchData)}
-            /> */}
           </SearchView>
-          {/* here goes a map of all of the posts being retrieved from the axios get */}
           {loading
             ? null
             : posts.map((post: PostModel) => (

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {useAppSettings} from '../../context';
 import IconComponent from '../IconComponent/IconComponent';

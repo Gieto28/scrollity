@@ -18,16 +18,18 @@ const signUpAxios = async (
   passwordConfirmation: string,
 ): Promise<TokenResponse> => {
   try {
-    const res: AxiosResponse<TokenResponse, ErrorConstructor> =
-      await api.post<TokenResponse>(AUTH_REGISTER, {
+    const res: AxiosResponse<TokenResponse> = await api.post<TokenResponse>(
+      AUTH_REGISTER,
+      {
         name,
         email,
         password,
         passwordConfirmation,
-      });
+      },
+    );
     return res.data;
-  } catch (e) {
-    throw new Error('Email already exists or missing/wrong data');
+  } catch (e: any) {
+    throw new Error(e.message);
   }
 };
 

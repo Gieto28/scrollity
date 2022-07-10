@@ -18,10 +18,12 @@ const createPostAxios = async (
   user_id: string | null,
   title: string,
   description: string,
-  media_id: string | null | any,
+  media_id: string | null,
   category: string,
 ): Promise<SuccessResponse> => {
-  if (!user_id) throw new Error('user null');
+  if (!user_id) {
+    throw new Error('user null');
+  }
   try {
     const res: AxiosResponse<SuccessResponse> = await api.post<SuccessResponse>(
       POST_CREATE,

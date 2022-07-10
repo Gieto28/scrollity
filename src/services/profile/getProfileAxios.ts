@@ -10,12 +10,12 @@ import {PROFILE_GET} from '../../utils/env';
  */
 const getProfileAxios = async (id: string): Promise<UserModel> => {
   try {
-    const res: AxiosResponse<UserModel> = await api.get(`${PROFILE_GET}${id}`);
+    const res: AxiosResponse<UserModel> = await api.get<UserModel>(
+      `${PROFILE_GET}${id}`,
+    );
     return res.data;
   } catch (e: any) {
-    console.log(
-      'error while getting profile from server - get profile axios.ts failed',
-    );
+    // reportError({message: getErrorMessage(e)});
     throw new Error(e.message);
   }
 };

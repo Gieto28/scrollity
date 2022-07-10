@@ -2,6 +2,7 @@ import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {SuccessResponse} from '../../models';
 import {POST_VOTE} from '../../utils/env';
+import {getErrorMessage, reportError} from '../../utils/getErrorMessage';
 
 /**
  *
@@ -14,7 +15,7 @@ const handleVoteAxios = async (
   vote: number,
   post_id: number,
   user_id: string | null,
-): Promise<SuccessResponse> => {
+): Promise<SuccessResponse | undefined> => {
   try {
     const res: AxiosResponse<SuccessResponse> = await api.post<SuccessResponse>(
       POST_VOTE,
@@ -25,11 +26,8 @@ const handleVoteAxios = async (
       },
     );
     return res.data;
-  } catch (e: any) {
-    console.log(
-      'error while getting profile from server - get profile.ts failed',
-    );
-    throw new Error(e.message);
+  } catch (e) {
+    reportError({message: getErrorMessage(e)});
   }
 };
 

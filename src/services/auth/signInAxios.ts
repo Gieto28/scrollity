@@ -15,8 +15,10 @@ const signInAxios = async (
   password: string,
 ): Promise<TokenResponse> => {
   try {
-    const res: AxiosResponse<TokenResponse, ErrorConstructor> =
-      await api.post<TokenResponse>(AUTH_LOGIN, {email, password});
+    const res: AxiosResponse<TokenResponse> = await api.post<TokenResponse>(
+      AUTH_LOGIN,
+      {email, password},
+    );
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

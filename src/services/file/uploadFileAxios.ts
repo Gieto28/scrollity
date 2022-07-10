@@ -31,12 +31,15 @@ const uploadFileAxios = async (
   formData.append('media', media);
 
   try {
-    const res: AxiosResponse<SuccessResponse, ErrorConstructor> =
-      await api.post<SuccessResponse>(FILE_UPLOAD, formData, {
+    const res: AxiosResponse<SuccessResponse> = await api.post<SuccessResponse>(
+      FILE_UPLOAD,
+      formData,
+      {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      });
+      },
+    );
     return res.data;
   } catch (e: any) {
     console.log('error while sending file to back end');

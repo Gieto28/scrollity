@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, Image, ImageSourcePropType, Text} from 'react-native';
+import {Dimensions, Image, ImageSourcePropType} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {
@@ -95,6 +95,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
       }
     };
     checkUserLikes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updatePost]);
 
   const handleVote = async (
@@ -103,17 +104,25 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     user_id: string | null,
   ) => {
     try {
-      if (vote === 1) setWaitingUpVote(true);
-      if (vote === 0) setWaitingDownVote(true);
+      if (vote === 1) {
+        setWaitingUpVote(true);
+      }
+      if (vote === 0) {
+        setWaitingDownVote(true);
+      }
 
-      const data = await handleVoteAxios(vote, post_id, user_id!);
+      await handleVoteAxios(vote, post_id, user_id!);
       const post = await getPost(_id);
       setUpdatePost(post);
     } catch (e: any) {
       throw new Error(e.message);
     }
-    if (vote === 1) setWaitingUpVote(false);
-    if (vote === 0) setWaitingDownVote(false);
+    if (vote === 1) {
+      setWaitingUpVote(false);
+    }
+    if (vote === 0) {
+      setWaitingDownVote(false);
+    }
   };
 
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>();
@@ -127,22 +136,29 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
   };
 
   const getFolderName = () => {
-    if (media_id)
+    if (media_id) {
       if (media_id.split('.')[2].toString() === 'image') {
         return 'images';
       } else if (media_id.split('.')[2].toString() === 'video') {
         return 'videos';
       }
+    }
   };
 
   const path: string = `${URL}${PUBLIC_POST_PATH_SERVER}/${getFolderName()}/${media_id}`;
 
   //calculating height according to device width
-  if (media_id)
+  if (media_id) {
     Image.getSize(path, (width, height) => {
       const calc: number = width / deviceWidth;
       setMediaHeight(height / calc);
     });
+  }
+
+  const mediaStyling = {
+    height: mediaHeight ? mediaHeight : 280,
+    width: deviceWidth,
+  };
 
   return (
     <PostFullWidth>
@@ -157,11 +173,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
         </PostHeader>
         <PostBody>
           {media_id && (
-            <PostMediaWrapper
-              style={{
-                height: mediaHeight ? mediaHeight : 280,
-                width: deviceWidth,
-              }}>
+            <PostMediaWrapper style={mediaStyling}>
               <PostMedia
                 source={
                   mediaHeight
@@ -170,10 +182,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
                       }
                     : require('../../assets/Images/loading-media.gif')
                 }
-                style={{
-                  height: mediaHeight ? mediaHeight : 280,
-                  width: deviceWidth,
-                }}
+                style={mediaStyling}
                 resizeMode="stretch"
                 accessibilityLabel={title}
               />

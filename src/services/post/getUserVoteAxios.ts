@@ -1,5 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
+import {GetUserVote} from '../../models';
 import {POST_CHECK_USER_VOTES} from '../../utils/env';
 
 /**
@@ -10,10 +11,13 @@ import {POST_CHECK_USER_VOTES} from '../../utils/env';
  * @param user_id the id of the user
  * @returns a value, either 0 or 1, 0 being dislike and 1 being like
  */
-const getUserVote = async (post_id: number, user_id: string | null) => {
+const getUserVote = async (
+  post_id: number,
+  user_id: string | null,
+): Promise<GetUserVote> => {
   try {
     const path: string = `${POST_CHECK_USER_VOTES}${post_id}/${user_id}`;
-    const res = await api.get(path);
+    const res: AxiosResponse<GetUserVote> = await api.get<GetUserVote>(path);
     return res.data;
   } catch (e: any) {
     console.log(

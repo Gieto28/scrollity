@@ -1,5 +1,4 @@
 import {useContext} from 'react';
-import {AppContext, AppProvider} from './AppContext';
 import {AppSettingsContext, AppSettingsProvider} from './AppSettingsContext';
 import {AuthContext, AuthProvider} from './AuthContext';
 
@@ -10,10 +9,6 @@ const useAppSettings = () => {
 const useAuth = () => {
   return useContext(AuthContext);
 };
-
-// const useApp = () => {
-//   return useContext(AppContext);
-// };
 
 export {
   // app settings context

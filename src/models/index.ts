@@ -10,6 +10,9 @@ import MediaPostModel from './Axios/MediaPostModel';
 // Axios Response
 import TokenResponse from './AxiosResponse/TokenResponse';
 import SuccessResponse from './AxiosResponse/SuccessResponse';
+import AllPostsResponse from './AxiosResponse/AllPosts';
+import GetUserVote from './AxiosResponse/GetUserVote';
+import ErrorMessage from './AxiosResponse/ErrorMessage';
 // - context
 import AppSettingsContextModel from './Context/AppSettingsContextModel';
 import AppContextModel from './Context/AppContextModel';
@@ -53,6 +56,9 @@ export type {
   //Axios Response
   SuccessResponse,
   TokenResponse,
+  AllPostsResponse,
+  GetUserVote,
+  ErrorMessage,
   // - form ( matches yup amount)
   FormCommentModel,
   FormSignInModel,

@@ -13,6 +13,7 @@ export const AppSettingsContext: React.Context<AppSettingsContextModel> =
  * @returns AppSettings Provider being used in the app.tsx file
  */
 const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [language, setLanguage] = useState<string>('pt');
   const [theme, setTheme] = useState<ThemeProps>(lightTheme);
 
@@ -27,16 +28,22 @@ const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
 
       if (!checkIfAsyncStorageHasTheme) {
         // if error here then {} are needed
-        if (deviceTheme === 'light') setTheme(lightTheme);
-        if (deviceTheme === 'dark') setTheme(darkTheme);
-        else console.log('deviceTheme was neither light nor dark', deviceTheme);
-
+        if (deviceTheme === 'light') {
+          setTheme(lightTheme);
+        }
+        if (deviceTheme === 'dark') {
+          setTheme(darkTheme);
+        } else {
+          console.log('deviceTheme was neither light nor dark', deviceTheme);
+        }
         await AsyncStorage.setItem('theme', theme!.key);
         return theme;
       }
       return;
     };
     checkThemeOnAppStartUp();
+    //
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const changeTheme = async (): Promise<void> => {
