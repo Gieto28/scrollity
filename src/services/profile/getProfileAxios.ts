@@ -6,7 +6,7 @@ import {PROFILE_GET} from '../../utils/env';
 /**
  *
  * @param id id used to retrieve the desired profile
- * @returns a profile
+ * @returns a profile.
  */
 const getProfileAxios = async (id: string): Promise<UserModel> => {
   try {
