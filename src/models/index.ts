@@ -1,10 +1,10 @@
 //Yup Schema
-import SchemaEditProfile from './Yup/EditProfileYupModel';
-import SchemaComment from './Yup/CommentYupModel';
-import SchemaSearch from './Yup/SearchYupModel';
-import SchemaSignIn from './Yup/signInYupModel';
-import SchemaSignUp from './Yup/signUpYupModel';
-import SchemaCreatePost from './Yup/CreatePostYupModel';
+import SchemaEditProfile from './YupSchema/EditProfileYupModel';
+import SchemaComment from './YupSchema/CommentYupModel';
+import SchemaSearch from './YupSchema/SearchYupModel';
+import SchemaSignIn from './YupSchema/signInYupModel';
+import SchemaSignUp from './YupSchema/signUpYupModel';
+import SchemaCreatePost from './YupSchema/CreatePostYupModel';
 // Axios
 import MediaPostModel from './Axios/MediaPostModel';
 // Axios Response

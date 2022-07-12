@@ -7,11 +7,12 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   CommentsView,
+  ScreenWrapper,
   ScrollComments,
   SendMessageView,
   ViewComments,
 } from './Styled.CommentsScreen';
-import {ImageSourcePropType, ScrollView, View} from 'react-native';
+import {ImageSourcePropType, ScrollView} from 'react-native';
 import {useForm} from 'react-hook-form';
 import IconComponent from '../../components/IconComponent/IconComponent';
 import {CommonActions, useNavigation} from '@react-navigation/native';
@@ -65,14 +66,14 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
     commentId: '0101010-comment-id-0101010',
     userId: '123456-123456',
     comment:
-      'This was such a cool post, thanks for contributing to the community with your funny images and content. I hope to see more of this type of posts on my feed again!',
+      'This was such a cool post, thanks for contributing to the community with your funny images and content. I hope to see more of this type ofthanks for contributing to the community with your funny images and content. I hope to see more of this type ofthanks for contributing to the community with your funny images and content. I hope to see more of this type ofthanks for contributing to the community with your funny images and content. I hope to see more of this type ofthanks for contributing to the community with your funny images and content. I hope to see more of this type of posts on my feed again!',
     timeStamp: '1d ago',
     upVotes: 5,
     downVotes: 19,
   };
 
   return (
-    <View>
+    <ScreenWrapper>
       <ScrollView>
         <CommentsView>
           <IconComponent
@@ -85,6 +86,7 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
             <ViewComments>
               {/* map goes here */}
               <CommentComponent
+                commentObj={fakeComment}
                 name={fakeComment.name}
                 image={fakeComment.image}
                 commentId={fakeComment.commentId}
@@ -108,7 +110,7 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
           icon={sendCommentIcon}
         />
       </SendMessageView>
-    </View>
+    </ScreenWrapper>
   );
 };
 

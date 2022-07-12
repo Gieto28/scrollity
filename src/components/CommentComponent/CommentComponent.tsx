@@ -26,6 +26,7 @@ interface Props {
   timeStamp: string;
   upVotes: number;
   downVotes: number;
+  commentObj: any;
 }
 
 /**
@@ -61,8 +62,6 @@ const CommentComponent: React.FC<Props> = ({
   const handleDeleteComment = () => {
     console.log('deleting Comment - I may or may not implements deletions');
   };
-
-  console.log(comment);
 
   const handleUpVoteComment = () => {
     console.log('this comment has been up voted');
