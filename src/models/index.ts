@@ -1,10 +1,10 @@
 //Yup Schema
-import SchemaEditProfile from './YupSchema/EditProfileYupModel';
-import SchemaComment from './YupSchema/CommentYupModel';
-import SchemaSearch from './YupSchema/SearchYupModel';
-import SchemaSignIn from './YupSchema/SignInYupModel';
-import SchemaSignUp from './YupSchema/SignUpYupModel';
-import SchemaCreatePost from './YupSchema/CreatePostYupModel';
+import SchemaEditProfile from './Yup/EditProfileYupModel';
+import SchemaComment from './Yup/CommentYupModel';
+import SchemaSearch from './Yup/SearchYupModel';
+import SchemaSignIn from './Yup/signInYupModel';
+import SchemaSignUp from './Yup/signUpYupModel';
+import SchemaCreatePost from './Yup/CreatePostYupModel';
 // Axios
 import MediaPostModel from './Axios/MediaPostModel';
 // Axios Response
@@ -15,18 +15,17 @@ import GetUserVote from './AxiosResponse/GetUserVote';
 import ErrorMessage from './AxiosResponse/ErrorMessage';
 // - context
 import AppSettingsContextModel from './Context/AppSettingsContextModel';
-import AppContextModel from './Context/AppContextModel';
 import AuthContextModel from './Context/AuthContextModel';
 import JwtDecodedModel from './Context/JwtDecodedModel';
 // - form
-import FormSignInModel from './Form/FormSignInModel';
-import FormSignUpModel from './Form/FormSignUpModel';
-import FormCommentModel from './Form/FormCommentModel';
-import FormSearchModel from './Form/FormSearchModel';
-import FormEditProfileModel from './Form/FormEditProfileModel';
-import FormCreatePostModel from './Form/FormCreatePostModel';
-import FormControllerName from './Form/FormControllerName';
-import FormControlType from './Form/FormControlType';
+import FormSignInModel from './Forms/FormSignInModel';
+import FormSignUpModel from './Forms/FormSignUpModel';
+import FormCommentModel from './Forms/FormCommentModel';
+import FormSearchModel from './Forms/FormSearchModel';
+import FormEditProfileModel from './Forms/FormEditProfileModel';
+import FormCreatePostModel from './Forms/FormCreatePostModel';
+import FormControlType from './Forms/FormControlType';
+import FormControllerName from './Forms/FormControllerName';
 //ScreensStacks
 import CommentScreenModel from './ScreenStackModels/CommentScreenModel';
 import AuthStackParams from './ScreenStackModels/AuthStackParams';
@@ -69,7 +68,6 @@ export type {
   FormCreatePostModel,
   // - Context
   AppSettingsContextModel,
-  AppContextModel,
   AuthContextModel,
   JwtDecodedModel,
   //ScreensStacks

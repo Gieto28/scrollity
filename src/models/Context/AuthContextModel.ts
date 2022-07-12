@@ -1,6 +1,6 @@
 import FormEditProfileModel from '../Form/FormEditProfileModel';
 import FormSignInModel from '../Form/FormSignInModel';
-import FormSignUpModel from '../Form/FormSignUpModel';
+import FormSignUpModel from '../Forms/FormSignUpModel';
 import UserModel from '../Models/UserModel';
 
 /**
