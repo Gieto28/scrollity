@@ -30,6 +30,8 @@ import {
   HomeContentView,
   PostWrapper,
   HomeScreenScroll,
+  NoPostsView,
+  NoPostsText,
 } from './Styled.HomeScreen';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -128,13 +130,6 @@ const HomeScreen: React.FC = () => {
     navigation.navigate('CreatePostScreen');
   };
 
-  // interface Type {
-  //   scrollTo: () => undefined;
-  // }
-
-  // const refScroll: React.MutableRefObject<ScrollView | null> =
-  //   useRef<null>(null);
-  // Can't find the type - losing too much time on this
   const refScroll: any = useRef<null>(null);
 
   const handleFilter = (index: number) => {
@@ -146,6 +141,24 @@ const HomeScreen: React.FC = () => {
   const handleBackToTop = () => {
     refScroll?.current?.scrollTo({x: 0, y: 0, animated: true});
   };
+
+  const renderPosts = () => {
+    return posts.length > 0 ? (
+      posts.map((post: PostModel) => (
+        <PostWrapper key={post._id}>
+          <PostComponent IconToCommentsScreen={true} postObject={post} />
+        </PostWrapper>
+      ))
+    ) : (
+      <NoPostsView>
+        <NoPostsText>No posts found...</NoPostsText>
+        <NoPostsText>
+          Please select another category or try again later..
+        </NoPostsText>
+      </NoPostsView>
+    );
+  };
+
   return (
     <HomeScreenWrapper>
       <Animated.View style={styledHeaderAnimation}>
@@ -185,16 +198,7 @@ const HomeScreen: React.FC = () => {
               icon={searchIcon}
             />
           </SearchView>
-          {loading
-            ? null
-            : posts.map((post: PostModel) => (
-                <PostWrapper key={post._id}>
-                  <PostComponent
-                    IconToCommentsScreen={true}
-                    postObject={post}
-                  />
-                </PostWrapper>
-              ))}
+          {loading ? null : renderPosts()}
         </HomeContentView>
       </HomeScreenScroll>
       <Animated.View style={styledIConsWrapperAnimation}>

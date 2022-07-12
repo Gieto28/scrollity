@@ -44,16 +44,10 @@ const LabelWrapper = styled.View<PropsView>`
   justify-content: center;
 `;
 
-// goal failed
 const SearchView = styled.View<PropsView>`
   background-color: ${props => props.theme.screen.primaryColor};
   margin: 0 15px 24px 15px;
   flex: 1;
-`;
-
-// goal failed
-const HorizontalScrollWrapper = styled.View<PropsView>`
-  position: relative;
 `;
 
 const CategoryScroll = styled.ScrollView`
@@ -113,6 +107,17 @@ const CategoryText = styled.Text<PropsText>`
 const HomeScreenScroll = styled.ScrollView<PropsView>`
   flex-grow: 1;
   background-color: ${props => props.theme.screen.primaryColor};
+  color: ${props => props.theme.screen.text};
+`;
+
+const NoPostsView = styled.View<PropsView>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NoPostsText = styled.Text<PropsText>`
+  margin-top: 30px;
   color: ${props => props.theme.screen.text};
 `;
 
@@ -181,11 +186,12 @@ const styledIConsWrapperAnimation = {
 export {
   CreatePostIcon,
   ToTopIconView,
-  HorizontalScrollWrapper,
   CategoryScroll,
   HomeScreenWrapper,
   HomeContentView,
   CategoryView,
+  NoPostsView,
+  NoPostsText,
   PostWrapper,
   HomeScreenScroll,
   LoadingWrapper,
