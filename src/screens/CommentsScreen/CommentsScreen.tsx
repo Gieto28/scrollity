@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CommentComponent,
   InputTextComponent,
@@ -12,18 +12,20 @@ import {
   SendMessageView,
   ViewComments,
 } from './Styled.CommentsScreen';
-import {ImageSourcePropType, ScrollView} from 'react-native';
+import {ImageSourcePropType} from 'react-native';
 import {useForm} from 'react-hook-form';
 import IconComponent from '../../components/IconComponent/IconComponent';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {useAppSettings} from '../../context';
+import {useAppSettings, useAuth} from '../../context';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {
   FormCommentModel,
   FormControllerName,
   HomeStackParams,
   SchemaComment,
+  SuccessResponse,
 } from '../../models';
+import {createCommentAxios, getAllCommentsAxios} from '../../services';
 
 type Props = NativeStackScreenProps<HomeStackParams, 'CommentsScreen'>;
 
@@ -33,6 +35,10 @@ type Props = NativeStackScreenProps<HomeStackParams, 'CommentsScreen'>;
  */
 const CommentsScreen: React.FC<Props> = ({route}) => {
   const {theme} = useAppSettings();
+  const {user} = useAuth();
+  const post = route.params.postObject;
+  const [loading, setLoading] = useState<boolean>(false);
+  const [comments, setComments] = useState<any>();
 
   const sendCommentIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/sent-24-dark.png')
@@ -41,16 +47,40 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
     ? require('../../assets/Images/arrow-left-dark-24.png')
     : require('../../assets/Images/arrow-left-light-24.png');
 
+  const loadComments = async () => {
+    try {
+      setLoading(true);
+      const res = await getAllCommentsAxios(post._id);
+      console.log(res.data);
+      setComments(res.data);
+      // setComments(res);
+    } catch (e: any) {
+      console.log('error while getting posts');
+      throw new Error(e.message);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    loadComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const {control, handleSubmit, reset} = useForm<FormCommentModel>({
     resolver: yupResolver(SchemaComment),
   });
 
-  // Functions
-  const object = route.params.postObject;
-
-  const sendComment = (data: FormCommentModel) => {
-    console.log('sending comment...');
-    console.log('comment', object._id, data.comment);
+  const sendComment = async (data: FormCommentModel) => {
+    try {
+      const commentCreationResponse: SuccessResponse = await createCommentAxios(
+        user?._id,
+        post._id,
+        data.comment,
+      );
+      console.log(commentCreationResponse);
+    } catch (e: any) {
+      throw new Error(e.message);
+    }
     reset();
   };
 
@@ -60,46 +90,36 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
     navigation.dispatch(CommonActions.goBack());
   };
 
-  const fakeComment = {
-    name: 'Matateu ',
-    image: undefined,
-    commentId: '0101010-comment-id-0101010',
-    userId: '123456-123456',
-    comment:
-      'This was such a cool post, thanks for contributing to the community with your funny images and content. I hope to see more of this type ofthanks for contributing to the community with your funny images and content. I hope to see more of this type ofthanks for contributing to the community with your funny images and content. I hope to see more of this type ofthanks for contributing to the community with your funny images and content. I hope to see more of this type ofthanks for contributing to the community with your funny images and content. I hope to see more of this type of posts on my feed again!',
-    timeStamp: '1d ago',
-    upVotes: 5,
-    downVotes: 19,
-  };
+  // const renderComments = () => {
+  //   return comments.map((comment) => (
+  //     <CommentComponent commentObj={comment}
+  //   ))
+  // }
 
   return (
     <ScreenWrapper>
-      <ScrollView>
+      <ScrollComments>
         <CommentsView>
           <IconComponent
             image={leftArrowIcon}
             altText={'Go back to previous screen'}
             onPress={handleGoBack}
           />
-          <PostComponent postObject={object} />
-          <ScrollComments>
-            <ViewComments>
-              {/* map goes here */}
-              <CommentComponent
-                commentObj={fakeComment}
-                name={fakeComment.name}
-                image={fakeComment.image}
-                commentId={fakeComment.commentId}
-                userId={fakeComment.userId}
-                comment={fakeComment.comment}
-                timeStamp={fakeComment.timeStamp}
-                upVotes={fakeComment.upVotes}
-                downVotes={fakeComment.downVotes}
-              />
-            </ViewComments>
-          </ScrollComments>
+          <PostComponent postObject={post} />
+          {loading ? (
+            <ScrollComments />
+          ) : (
+            <ScrollComments>
+              <ViewComments>
+                {/* {comments &&
+                  comments.map((comment: any) => {
+                    <CommentComponent commentObj={comment} />;
+                  })} */}
+              </ViewComments>
+            </ScrollComments>
+          )}
         </CommentsView>
-      </ScrollView>
+      </ScrollComments>
       <SendMessageView>
         <InputTextComponent
           onPress={handleSubmit(sendComment)}

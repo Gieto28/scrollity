@@ -21,6 +21,7 @@ const CommentsView = styled.View<PropsView>`
 `;
 
 const ScrollComments = styled.ScrollView<PropsScroll>`
+  min-height: 100%;
   background-color: ${props => props.theme.screen.background};
 `;
 

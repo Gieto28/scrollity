@@ -56,8 +56,8 @@ const CreatePostScreen: React.FC = () => {
   const [mediaHeight, setMediaHeight] = useState<number>(400);
   const [imageError, setImageError] = useState(false);
 
-  const placeholder = 'https://via.placeholder.com/400';
-  const screenWidth = Dimensions.get('window').width * 0.9;
+  const placeholder = require('../../assets/Images/image_preview.png');
+  const screenWidth = Dimensions.get('window').width * 0.87;
 
   //array of category
   const categoryArray: CategoryArrayModel[] = [
@@ -170,7 +170,6 @@ const CreatePostScreen: React.FC = () => {
       );
       console.log(postCreationResponse);
     } catch (e: any) {
-      console.log('error when sending post creation');
       throw new Error(e.message);
     }
 
@@ -219,6 +218,7 @@ const CreatePostScreen: React.FC = () => {
               onSelect={(selectedItem, index) =>
                 handleSelectOptions(selectedItem, index)
               }
+              // eslint-disable-next-line react-native/no-inline-styles
               buttonStyle={{
                 width: 130,
                 borderWidth: 1,
@@ -227,7 +227,6 @@ const CreatePostScreen: React.FC = () => {
                 backgroundColor: theme.screen.background,
                 borderRadius: 10,
               }}
-              buttonTextStyle={{}}
               buttonTextAfterSelection={(selectedItem, _index) => {
                 // text represented after item is selected
                 return selectedItem.category;
@@ -243,10 +242,10 @@ const CreatePostScreen: React.FC = () => {
         <ImageWrapper
           style={{
             height: mediaHeight,
-            minWidth: screenWidth,
+            width: screenWidth,
           }}>
           <ImagePreview
-            source={{uri: mediaUri ? mediaUri : placeholder}}
+            source={mediaUri ? {uri: mediaUri} : placeholder}
             resizeMode="stretch"
             style={{
               height: mediaHeight,

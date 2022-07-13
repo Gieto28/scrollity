@@ -1,9 +1,4 @@
-import {
-  Dimensions,
-  TextProps,
-  TouchableOpacityProps,
-  ViewProps,
-} from 'react-native';
+import {TextProps, TouchableOpacityProps, ViewProps} from 'react-native';
 import styled from 'styled-components/native';
 import {ThemeProps} from '../../styles/theme';
 

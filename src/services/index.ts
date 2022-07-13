@@ -5,14 +5,19 @@ import signInAxios from './auth/signInAxios';
 import updateProfileAxios from './auth/updateProfileAxios';
 //POSTS
 import createPostAxios from './post/createPostAxios';
-import getAllPosts from './post/getAllPostsAxios';
-import getPost from './post/getPostAxios';
+import getAllPostsAxios from './post/getAllPostsAxios';
+import getPostAxios from './post/getPostAxios';
 import handleVoteAxios from './post/handleVoteAxios';
-//COMMENTS
+import getUserVoteAxios from './post/getUserVoteAxios';
 //PROFILE
 import getProfileAxios from './profile/getProfileAxios';
 //FILE
 import uploadFileAxios from './file/uploadFileAxios';
+// COMMENTS
+import createCommentAxios from './comment/createCommentAxios';
+import getAllCommentsAxios from './comment/getAllCommentsAxios';
+import getUserVoteCommentsAxios from './comment/getUserVoteCommentsAxios';
+import handleVoteCommentsAxios from './comment/handleVoteComments';
 
 export {
   //AUTH
@@ -24,8 +29,14 @@ export {
   //POSTS
   handleVoteAxios,
   createPostAxios,
-  getAllPosts,
-  getPost,
+  getAllPostsAxios,
+  getUserVoteAxios,
+  getPostAxios,
   //FILE
   uploadFileAxios,
+  //COMMENTS
+  createCommentAxios,
+  getAllCommentsAxios,
+  getUserVoteCommentsAxios,
+  handleVoteCommentsAxios,
 };

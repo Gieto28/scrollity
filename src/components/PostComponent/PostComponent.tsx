@@ -25,8 +25,8 @@ import {
 import {useAppSettings, useAuth} from '../../context';
 import {HomeStackParams, PostModel} from '../../models';
 import {PUBLIC_POST_PATH_SERVER, URL} from '../../utils/env';
-import {getPost, handleVoteAxios} from '../../services';
-import getUserVote from '../../services/post/getUserVoteAxios';
+import {getPostAxios, handleVoteAxios} from '../../services';
+import getUserVoteAxios from '../../services/post/getUserVoteAxios';
 
 interface Props {
   postObject: PostModel;
@@ -88,7 +88,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
   useEffect(() => {
     const checkUserLikes = async () => {
       try {
-        const user_vote = await getUserVote(_id, userId);
+        const user_vote = await getUserVoteAxios(_id, userId);
         setUserVote(user_vote.data);
       } catch (e: any) {
         throw new Error(e.message);
@@ -103,6 +103,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     post_id: number,
     user_id: string | null,
   ) => {
+    console.log(post_id);
     try {
       if (vote === 1) {
         setWaitingUpVote(true);
@@ -112,7 +113,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
       }
 
       await handleVoteAxios(vote, post_id, user_id!);
-      const post = await getPost(_id);
+      const post = await getPostAxios(_id);
       setUpdatePost(post);
     } catch (e: any) {
       throw new Error(e.message);
@@ -128,8 +129,6 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>();
 
   const handleCommentsScreen = () => {
-    console.log('Redirect post to CommentsScreen with object:', postObject);
-
     navigation.navigate('CommentsScreen', {
       postObject,
     });

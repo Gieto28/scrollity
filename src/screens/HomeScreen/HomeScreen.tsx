@@ -45,7 +45,7 @@ import {
   FormControllerName,
 } from '../../models';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {getAllPosts} from '../../services';
+import {getAllPostsAxios} from '../../services';
 
 type CreatePostNavigationProp = StackNavigationProp<
   HomeStackParams,
@@ -78,8 +78,9 @@ const HomeScreen: React.FC = () => {
   const loadPosts = async (): Promise<void> => {
     try {
       setLoading(true);
-      const res: {data: PostModel[]} = await getAllPosts(category);
+      const res: {data: PostModel[]} = await getAllPostsAxios(category);
       setPosts(res.data);
+      console.log(res.data);
     } catch (e: any) {
       throw new Error(e.message);
     }

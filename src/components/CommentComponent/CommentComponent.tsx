@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
+import React, {useState} from 'react';
 import {useAppSettings} from '../../context';
 import IconComponent from '../IconComponent/IconComponent';
 import {
@@ -18,14 +18,6 @@ import {
 } from './Styled.CommentComponent';
 
 interface Props {
-  name: string;
-  image: string | undefined;
-  commentId: string;
-  userId: string;
-  comment: string;
-  timeStamp: string;
-  upVotes: number;
-  downVotes: number;
   commentObj: any;
 }
 
@@ -33,31 +25,13 @@ interface Props {
  *
  * @returns comment component being used in the comments screen, it's used in a map to iterate through all the comments of a specific post
  */
-const CommentComponent: React.FC<Props> = ({
-  name,
-  image,
-  commentId,
-  userId,
-  comment,
-  timeStamp,
-  upVotes,
-  downVotes,
-}) => {
+const CommentComponent: React.FC<Props> = ({commentObj}) => {
+  console.log(commentObj);
   const {theme} = useAppSettings();
-
   const upVoteIcon = theme.bool
     ? require('../../assets/Images/arrow-24-upvote-dark.png')
     : require('../../assets/Images/arrow-24-upvote-light.png');
-
-  let imageSource;
-
-  const checkIfImageExists = () => {
-    if (!image) {
-      return (imageSource = require('../../assets/Images/profile-Placeholder.png'));
-    } else {
-      return (imageSource = image);
-    }
-  };
+  const placeholder = require('../../assets/Images/profile-Placeholder.png');
 
   const handleDeleteComment = () => {
     console.log('deleting Comment - I may or may not implements deletions');
@@ -69,29 +43,30 @@ const CommentComponent: React.FC<Props> = ({
   const handleDownVoteComment = () => {
     console.log('this comment has been down voted');
   };
-
+  // {user.image ? { uri: user.image } : }
+  // user.image ? {uri: user.image} :
   return (
     <CommentWrapper>
       <ImageWrapper>
-        <UserImage source={checkIfImageExists()} />
+        <UserImage source={placeholder} />
       </ImageWrapper>
       <BodyWrapper>
         <BodyHeader>
-          <UserName>{name}</UserName>
-          <TimeStamp> ● {timeStamp}</TimeStamp>
+          <UserName>{'user.name'}</UserName>
+          <TimeStamp> ● {'dateCreated'}</TimeStamp>
         </BodyHeader>
         <BodyComment>
-          <Comment>{comment}</Comment>
+          <Comment>{commentObj.comment}</Comment>
         </BodyComment>
         <BodyFooter>
           <VotesWrapper>
-            <CommentVote>{upVotes}</CommentVote>
+            <CommentVote>{'up_votes'}</CommentVote>
             <IconComponent
               image={upVoteIcon}
               altText="number of up votes this comment has"
               onPress={handleUpVoteComment}
             />
-            <CommentVote>{downVotes}</CommentVote>
+            <CommentVote>{'down_votes'}</CommentVote>
             <IconComponent
               image={upVoteIcon}
               altText="number of down votes this comment has"
