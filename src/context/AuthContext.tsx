@@ -46,12 +46,10 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
           setUserId(currentUser._id);
         }
       } catch (e: any) {
-        console.log('error while loading storage data in Auth Context.tsx');
         throw new Error(e.message);
       }
       setLoading(false);
     };
-
     loadStorageData();
   }, []);
 
@@ -64,7 +62,6 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       }
 
       const decoded: JwtDecodedModel = await jwt_decode(res.token);
-      console.log(res.token);
 
       api.defaults.headers.common.Authorization = `Bearer ${res.token}`;
       await AsyncStorage.setItem('token', res.token);
@@ -72,12 +69,10 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       const currentUser: UserModel = await getUser(decoded._id.toString());
 
       await AsyncStorage.setItem('userId', currentUser._id.toString());
-      await AsyncStorage.setItem('currentUser', JSON.stringify(currentUser));
+      await AsyncStorage.setItem('user', JSON.stringify(currentUser));
       setToken(res.token);
       setUser(currentUser);
       setUserId(currentUser._id);
-
-      console.log('sign in successful - file auth.tsx');
     } catch (e: any) {
       throw new Error(e.message);
     }
@@ -104,13 +99,10 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       await AsyncStorage.setItem('token', res.token);
       const currentUser = await getUser(decoded._id.toString());
       await AsyncStorage.setItem('userId', currentUser._id.toString());
-      await AsyncStorage.setItem('currentUser', JSON.stringify(currentUser));
+      await AsyncStorage.setItem('user', JSON.stringify(currentUser));
       setToken(res.token);
       setUser(currentUser);
       setUserId(currentUser._id);
-      //
-      console.log('sign up successful - file auth.tsx');
-      //
     } catch (e) {
       throw new Error('Token exists but found an error while signing up');
     }
@@ -136,8 +128,6 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
         passwordConfirmation,
       );
 
-      console.log('res from update profile, file auth context', res);
-
       if (!res.token) {
         throw new Error('error while updating profile, missing token');
       }
@@ -149,12 +139,12 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
 
       const currentUser = await getUser(decoded._id.toString());
 
-      await AsyncStorage.setItem('currentUser', JSON.stringify(currentUser));
+      await AsyncStorage.setItem('user', JSON.stringify(currentUser));
       setToken(res.token);
       setUser(currentUser);
       setUserId(currentUser._id);
-    } catch (error) {
-      throw new Error('error while updating profile on file app context');
+    } catch (e: any) {
+      throw new Error(e.message);
     }
   };
 
