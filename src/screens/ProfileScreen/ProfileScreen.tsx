@@ -1,10 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React from 'react';
+import React, {useState} from 'react';
 import {ImageSourcePropType} from 'react-native';
 import {IconComponent} from '../../components';
 import {useAuth, useAppSettings} from '../../context';
 import {ProfileStackParams} from '../../models';
+import {getProfilePostsAxios} from '../../services';
 import {AppScrollView} from '../../styles/GlobalStyle';
 import {
   ProfileHeader,
@@ -30,7 +31,9 @@ type SettingsNavigationProp = StackNavigationProp<
  */
 const ProfileScreen = () => {
   const {theme} = useAppSettings();
-  const {user} = useAuth();
+  const {user, userId} = useAuth();
+
+  const [posts, setPosts] = useState();
 
   const lightDarkIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/settings-32-dark.png')
@@ -42,12 +45,15 @@ const ProfileScreen = () => {
     navigation.navigate('SettingsScreen');
   };
 
-  const handleShowPosts = () => {
-    console.log('show posts button is working');
-  };
-
-  const handleShowLikes = () => {
-    console.log('show likes button is working');
+  const fetchPosts = async (option: string) => {
+    try {
+      const res = await getProfilePostsAxios(userId, option);
+      console.log(res.data[0].posts);
+      console.log(res.data[0].likes);
+      setPosts(res.data);
+    } catch (e: any) {
+      throw new Error(e.message);
+    }
   };
 
   return (
@@ -72,10 +78,10 @@ const ProfileScreen = () => {
         />
       </ProfileInfoWrapper>
       <ProfileMediaOptionsWrapper>
-        <ProfileOptionsButton onPress={handleShowPosts}>
+        <ProfileOptionsButton onPress={() => fetchPosts('posts')}>
           <ProfileMediaOptionsText>Posts</ProfileMediaOptionsText>
         </ProfileOptionsButton>
-        <ProfileOptionsButton onPress={handleShowLikes}>
+        <ProfileOptionsButton onPress={() => fetchPosts('likes')}>
           <ProfileMediaOptionsText>Likes</ProfileMediaOptionsText>
         </ProfileOptionsButton>
       </ProfileMediaOptionsWrapper>

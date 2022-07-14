@@ -2,7 +2,6 @@
 import api from './auth/api';
 import signUpAxios from './auth/signUpAxios';
 import signInAxios from './auth/signInAxios';
-import updateProfileAxios from './auth/updateProfileAxios';
 //POSTS
 import createPostAxios from './post/createPostAxios';
 import getAllPostsAxios from './post/getAllPostsAxios';
@@ -11,6 +10,8 @@ import handleVoteAxios from './post/handleVoteAxios';
 import getUserVoteAxios from './post/getUserVoteAxios';
 //PROFILE
 import getProfileAxios from './profile/getProfileAxios';
+import updateProfileAxios from './profile/updateProfileAxios';
+import getProfilePostsAxios from './profile/getProfilePostsAxios';
 //FILE
 import uploadFileAxios from './file/uploadFileAxios';
 // COMMENTS
@@ -25,6 +26,8 @@ export {
   api,
   signUpAxios,
   signInAxios,
+  //profile
+  getProfilePostsAxios,
   getProfileAxios,
   updateProfileAxios,
   //POSTS

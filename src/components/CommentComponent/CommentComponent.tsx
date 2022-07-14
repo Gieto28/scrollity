@@ -34,7 +34,6 @@ interface Props {
  * @returns comment component being used in the comments screen, it's used in a map to iterate through all the comments of a specific post
  */
 const CommentComponent: React.FC<Props> = ({commentObj}) => {
-  console.log(commentObj);
   const {theme} = useAppSettings();
   const {userId} = useAuth();
 

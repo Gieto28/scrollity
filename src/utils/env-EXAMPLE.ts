@@ -58,7 +58,7 @@ const AUTH_REGISTER = '/auth/register';
  *
  * `AUTH_UPDATE_PROFILE` = /auth/update
  */
-const AUTH_UPDATE_PROFILE = '/auth/update';
+const PROFILE_UPDATE = '/auth/update';
 
 /**
  * Path to get all profiles
@@ -120,7 +120,7 @@ export {
   //AUTH
   AUTH_LOGIN,
   AUTH_REGISTER,
-  AUTH_UPDATE_PROFILE,
+  PROFILE_UPDATE,
   PROFILE_GET,
   AUTH_ALL_PROFILES,
   //POST

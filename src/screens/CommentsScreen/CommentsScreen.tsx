@@ -7,12 +7,14 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   CommentsView,
+  NoCommentsText,
+  NoCommentsView,
   ScreenWrapper,
   ScrollComments,
   SendMessageView,
   ViewComments,
 } from './Styled.CommentsScreen';
-import {ImageSourcePropType} from 'react-native';
+import {ImageSourcePropType, RefreshControl} from 'react-native';
 import {useForm} from 'react-hook-form';
 import IconComponent from '../../components/IconComponent/IconComponent';
 import {CommonActions, useNavigation} from '@react-navigation/native';
@@ -38,7 +40,7 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
   const {user} = useAuth();
   const post = route.params.postObject;
   const [loading, setLoading] = useState<boolean>(false);
-  const [comments, setComments] = useState<any>();
+  const [comments, setComments] = useState<CommentModel[]>([]);
 
   const sendCommentIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/sent-24-dark.png')
@@ -50,7 +52,7 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
   const loadComments = async () => {
     try {
       setLoading(true);
-      const res = await getAllCommentsAxios(post._id);
+      const res: {data: CommentModel[]} = await getAllCommentsAxios(post._id);
       setComments(res.data);
     } catch (e: any) {
       throw new Error(e.message);
@@ -73,7 +75,12 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
     } catch (e: any) {
       throw new Error(e.message);
     }
+    loadComments();
     reset();
+  };
+
+  const onRefresh = async () => {
+    loadComments();
   };
 
   const navigation = useNavigation();
@@ -82,15 +89,35 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
     navigation.dispatch(CommonActions.goBack());
   };
 
-  const renderComments = (arrayOfComment: CommentModel[]) => {
-    return arrayOfComment!.map((comment: CommentModel, i: number) => (
-      <CommentComponent commentObj={comment} key={i} />
-    ));
+  const renderComments = () => {
+    return comments.length > 0 ? (
+      <ViewComments>
+        {comments.map((comment: CommentModel, i: number) => (
+          <CommentComponent commentObj={comment} key={i} />
+        ))}
+      </ViewComments>
+    ) : (
+      <NoCommentsView>
+        <NoCommentsText>Oops! No comments found.</NoCommentsText>
+        <NoCommentsText>
+          Be the first one to say something about it!
+        </NoCommentsText>
+      </NoCommentsView>
+    );
   };
 
   return (
     <ScreenWrapper>
-      <ScrollComments>
+      <ScrollComments
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={onRefresh}
+            colors={[theme.screen.secondaryColor]}
+            tintColor={theme.screen.secondaryColor}
+            progressViewOffset={480}
+          />
+        }>
         <CommentsView>
           <IconComponent
             image={leftArrowIcon}
@@ -98,15 +125,7 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
             onPress={handleGoBack}
           />
           <PostComponent postObject={post} />
-          {loading ? (
-            <ScrollComments />
-          ) : (
-            <ScrollComments>
-              <ViewComments>
-                {comments && renderComments(comments)}
-              </ViewComments>
-            </ScrollComments>
-          )}
+          <ScrollComments>{loading ? null : renderComments()}</ScrollComments>
         </CommentsView>
       </ScrollComments>
       <SendMessageView>

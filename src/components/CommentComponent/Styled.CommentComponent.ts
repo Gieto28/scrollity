@@ -15,28 +15,27 @@ interface PropsTouchable extends TouchableOpacityProps {
 }
 
 const CommentWrapper = styled.View<PropsView>`
-  border-color: ${props => props.theme.button.border};
-  border-bottom-style: solid;
-  border-top-style: solid;
-  border-bottom-width: 1px;
-  border-top-width: 1px;
+  border: 1px solid ${props => props.theme.button.border};
   margin-top: 10px;
   display: flex;
   flex-direction: row;
-  max-width: 80%;
-  margin-left: 20px;
-  padding: 5px 10px;
+  margin: 8px 5% 5px 5%;
+  padding: 10px 0 10px 10px;
+  background-color: ${props => props.theme.screen.background};
 `;
 
-const ImageWrapper = styled.View``;
+const ImageWrapper = styled.View`
+  width: 15%;
+`;
 
 const UserImage = styled.Image`
-  max-width: 100px;
-  max-height: 100px;
+  width: 50px;
+  height: 50px;
 `;
 
 const BodyWrapper = styled.View`
-  margin-left: 10px;
+  width: 75%;
+  margin: 0 0 8px 24px;
 `;
 
 const BodyHeader = styled.View<PropsView>`
@@ -47,7 +46,7 @@ const BodyHeader = styled.View<PropsView>`
 
 const UserName = styled.Text<PropsText>`
   color: ${props => props.theme.comment.text};
-  font-size: ${props => props.theme.fonts.fontSize.l};
+  font-size: ${props => props.theme.fonts.fontSize.md};
 `;
 
 const TimeStamp = styled.Text<PropsText>`
@@ -56,7 +55,7 @@ const TimeStamp = styled.Text<PropsText>`
 `;
 
 const BodyComment = styled.View`
-  margin-top: 4px;
+  margin: 5px 0;
 `;
 
 const Comment = styled.Text<PropsText>`
@@ -68,6 +67,7 @@ const VotesWrapper = styled.View<PropsView>`
   display: flex;
   align-items: center;
   flex-direction: ${props => props.theme.display.directionRow};
+  justify-content: flex-end;
 `;
 
 const CommentVoteButton = styled.TouchableOpacity<PropsTouchable>``;
@@ -75,11 +75,12 @@ const CommentVoteButton = styled.TouchableOpacity<PropsTouchable>``;
 const CommentVote = styled.Text<PropsText>`
   color: ${props => props.theme.screen.text};
   font-size: ${props => props.theme.fonts.fontSize.md};
-  margin-left: 16px;
 `;
 
 const BodyFooter = styled.View`
-  margin-top: 8px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 `;
 
 export {

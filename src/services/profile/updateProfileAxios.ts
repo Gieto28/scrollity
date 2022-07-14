@@ -1,7 +1,7 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {TokenResponse} from '../../models';
-import {AUTH_UPDATE_PROFILE} from '../../utils/env';
+import {PROFILE_UPDATE} from '../../utils/env';
 
 /**
  *
@@ -17,7 +17,7 @@ const updateProfileAxios = async (
 ): Promise<TokenResponse> => {
   try {
     const res: AxiosResponse<TokenResponse> = await api.post<TokenResponse>(
-      AUTH_UPDATE_PROFILE,
+      PROFILE_UPDATE,
       {
         name,
         password,

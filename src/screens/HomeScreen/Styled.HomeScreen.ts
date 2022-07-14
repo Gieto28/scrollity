@@ -111,12 +111,15 @@ const HomeScreenScroll = styled.ScrollView<PropsView>`
 `;
 
 const NoPostsView = styled.View<PropsView>`
+  width: 90%;
+  align-self: center;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const NoPostsText = styled.Text<PropsText>`
+  font-size: ${props => props.theme.fonts.fontSize.l};
   margin-top: 30px;
   color: ${props => props.theme.screen.text};
 `;

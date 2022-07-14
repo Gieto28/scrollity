@@ -1,4 +1,4 @@
-import {ScrollViewProps, ViewProps} from 'react-native';
+import {ScrollViewProps, TextProps, ViewProps} from 'react-native';
 import styled from 'styled-components/native';
 import {ThemeProps} from '../../styles/theme';
 
@@ -7,6 +7,10 @@ interface PropsView extends ViewProps {
 }
 
 interface PropsScroll extends ScrollViewProps {
+  theme: ThemeProps;
+}
+
+interface PropsText extends TextProps {
   theme: ThemeProps;
 }
 
@@ -21,12 +25,27 @@ const CommentsView = styled.View<PropsView>`
 `;
 
 const ScrollComments = styled.ScrollView<PropsScroll>`
+  background-color: ${props => props.theme.screen.primaryColor};
+
   min-height: 100%;
-  background-color: ${props => props.theme.screen.background};
 `;
 
 const ViewComments = styled.View<PropsView>`
   background-color: ${props => props.theme.screen.background};
+  background-color: ${props => props.theme.screen.primaryColor};
+`;
+
+const NoCommentsView = styled.View`
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  width: 90%;
+  align-self: center;
+`;
+const NoCommentsText = styled.Text<PropsText>`
+  font-size: ${props => props.theme.fonts.fontSize.l};
+  color: ${props => props.theme.screen.text};
+  text-align: center;
 `;
 
 const SendMessageView = styled.View<PropsView>`
@@ -39,6 +58,8 @@ const SendMessageView = styled.View<PropsView>`
 
 export {
   CommentsView,
+  NoCommentsView,
+  NoCommentsText,
   ScreenWrapper,
   ScrollComments,
   ViewComments,
