@@ -29,7 +29,6 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {v4 as uuid} from 'uuid';
 import {
   CategoryArrayModel,
-  SuccessResponse,
   SchemaCreatePost,
   FormCreatePostModel,
   FormControllerName,
@@ -94,13 +93,6 @@ const CreatePostScreen: React.FC = () => {
       videoQuality: 'low',
     });
 
-    if (res.errorCode) {
-      console.log(res.errorMessage);
-    }
-    if (res.didCancel) {
-      console.log(res.didCancel);
-    }
-
     if (res!.assets![0].height! > 900) {
       setImageError(true);
       throw new Error('Image is too tall!');
@@ -127,7 +119,10 @@ const CreatePostScreen: React.FC = () => {
     navigation.dispatch(CommonActions.goBack());
   };
 
-  const handleSelectOptions = (option: any, index: number): void => {
+  const handleSelectOptions = (
+    option: CategoryArrayModel,
+    index: number,
+  ): void => {
     setCategory(categoryArray[index].category);
   };
 
@@ -146,29 +141,16 @@ const CreatePostScreen: React.FC = () => {
 
     if (mediaType && media_id && mediaUri) {
       try {
-        const uploadResult: SuccessResponse = await uploadFileAxios(
-          mediaUri,
-          media_id,
-          mediaType,
-        );
-        console.log(uploadResult);
+        await uploadFileAxios(mediaUri, media_id, mediaType);
         reset();
         handleResetMedia();
       } catch (e: any) {
-        console.log('error when sending file');
         throw new Error(e.message);
       }
     }
 
     try {
-      const postCreationResponse: SuccessResponse = await createPostAxios(
-        user_id,
-        title,
-        description,
-        media_id,
-        category,
-      );
-      console.log(postCreationResponse);
+      await createPostAxios(user_id, title, description, media_id, category);
     } catch (e: any) {
       throw new Error(e.message);
     }

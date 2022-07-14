@@ -17,7 +17,8 @@ import uploadFileAxios from './file/uploadFileAxios';
 import createCommentAxios from './comment/createCommentAxios';
 import getAllCommentsAxios from './comment/getAllCommentsAxios';
 import getUserVoteCommentsAxios from './comment/getUserVoteCommentsAxios';
-import handleVoteCommentsAxios from './comment/handleVoteComments';
+import handleVoteCommentAxios from './comment/handleVoteCommentAxios';
+import getCommentAxios from './comment/getCommentAxios';
 
 export {
   //AUTH
@@ -38,5 +39,6 @@ export {
   createCommentAxios,
   getAllCommentsAxios,
   getUserVoteCommentsAxios,
-  handleVoteCommentsAxios,
+  handleVoteCommentAxios,
+  getCommentAxios,
 };

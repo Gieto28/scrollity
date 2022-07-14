@@ -77,6 +77,7 @@ const PostDescription = styled.Text<PropsText>`
   margin: 3px 16px;
 `;
 const PostFooter = styled.View<PropsView>`
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -87,21 +88,19 @@ const PostValuesWrapper = styled.View<PropsView>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0 10px;
+  margin: 0 8px 0 16px;
 `;
-const PostUpVoteIcon = styled.Image<PropsImage>`
-  margin-right: 2px;
-  width: ${props => props.theme.posts.icons.width};
-  height: ${props => props.theme.posts.icons.height};
+
+const PostCommentIconWrapper = styled.View<PropsView>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 24px;
 `;
-const PostDownVoteIcon = styled.Image<PropsImage>`
-  width: ${props => props.theme.posts.icons.width};
-  height: ${props => props.theme.posts.icons.height};
-`;
+
 const PostValues = styled.Text<PropsText>`
   color: ${props => props.theme.screen.text};
   font-size: ${props => props.theme.fonts.fontSize.md};
-  margin: 0 2px 0 0;
 `;
 
 const PostButtonIcon = styled.TouchableOpacity<PropsTouchable>``;
@@ -113,6 +112,7 @@ const PostMessageIcon = styled.Image<PropsImage>`
 `;
 
 export {
+  PostCommentIconWrapper,
   PostHeaderTop,
   PostFullWidth,
   PostWrapper,
@@ -125,8 +125,6 @@ export {
   PostDescription,
   PostFooter,
   PostValuesWrapper,
-  PostUpVoteIcon,
-  PostDownVoteIcon,
   PostValues,
   PostButtonIcon,
   PostMessageIcon,

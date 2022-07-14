@@ -51,16 +51,8 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
 
       setLoading(false);
     };
-    const checkIfAppIsLoading = () => {
-      loading &&
-        setTimeout(() => {
-          console.log('app keeps loading without end');
-        }, 30000);
-    };
 
-    checkIfAppIsLoading();
     loadStorageData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const signIn = async (data: FormSignInModel): Promise<void> => {

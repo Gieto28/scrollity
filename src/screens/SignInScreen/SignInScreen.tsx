@@ -81,8 +81,6 @@ const SignInScreen: React.FC = () => {
   ) => {
     try {
       await signIn(data);
-
-      console.log('sign in successful - file sign in screen.tsx');
       reset();
     } catch (e: any) {
       setBadCredentials(true);
@@ -98,7 +96,6 @@ const SignInScreen: React.FC = () => {
 
   const handleShowPassword = () => {
     setIsPasswordHidden(!isPasswordHidden);
-    console.log(isPasswordHidden);
   };
 
   const handleRedirectToSignUp = () => {
@@ -131,6 +128,7 @@ const SignInScreen: React.FC = () => {
           errors={errors.email}
           // label
           label="Your email"
+          keyboard="email-address"
         />
 
         <InputTextComponent

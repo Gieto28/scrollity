@@ -1,3 +1,4 @@
+import CommentModel from '../Models/CommentModel';
 import UserModel from '../Models/UserModel';
 
 interface CommentScreenModel {
@@ -9,7 +10,7 @@ interface CommentScreenModel {
   up_votes: number;
   down_votes: number;
   user: UserModel;
-  comments: string;
+  comments: CommentModel[];
   category: string;
 }
 

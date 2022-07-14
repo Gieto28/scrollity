@@ -19,11 +19,11 @@ import {CommonActions, useNavigation} from '@react-navigation/native';
 import {useAppSettings, useAuth} from '../../context';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {
+  CommentModel,
   FormCommentModel,
   FormControllerName,
   HomeStackParams,
   SchemaComment,
-  SuccessResponse,
 } from '../../models';
 import {createCommentAxios, getAllCommentsAxios} from '../../services';
 
@@ -51,11 +51,8 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
     try {
       setLoading(true);
       const res = await getAllCommentsAxios(post._id);
-      console.log(res.data);
       setComments(res.data);
-      // setComments(res);
     } catch (e: any) {
-      console.log('error while getting posts');
       throw new Error(e.message);
     }
     setLoading(false);
@@ -72,12 +69,7 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
 
   const sendComment = async (data: FormCommentModel) => {
     try {
-      const commentCreationResponse: SuccessResponse = await createCommentAxios(
-        user?._id,
-        post._id,
-        data.comment,
-      );
-      console.log(commentCreationResponse);
+      await createCommentAxios(user?._id, post._id, data.comment);
     } catch (e: any) {
       throw new Error(e.message);
     }
@@ -90,11 +82,11 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
     navigation.dispatch(CommonActions.goBack());
   };
 
-  // const renderComments = () => {
-  //   return comments.map((comment) => (
-  //     <CommentComponent commentObj={comment}
-  //   ))
-  // }
+  const renderComments = (arrayOfComment: CommentModel[]) => {
+    return arrayOfComment!.map((comment: CommentModel, i: number) => (
+      <CommentComponent commentObj={comment} key={i} />
+    ));
+  };
 
   return (
     <ScreenWrapper>
@@ -111,10 +103,7 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
           ) : (
             <ScrollComments>
               <ViewComments>
-                {/* {comments &&
-                  comments.map((comment: any) => {
-                    <CommentComponent commentObj={comment} />;
-                  })} */}
+                {comments && renderComments(comments)}
               </ViewComments>
             </ScrollComments>
           )}

@@ -33,8 +33,6 @@ const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
         }
         if (deviceTheme === 'dark') {
           setTheme(darkTheme);
-        } else {
-          console.log('deviceTheme was neither light nor dark', deviceTheme);
         }
         await AsyncStorage.setItem('theme', theme!.key);
         return theme;

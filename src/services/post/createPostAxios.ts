@@ -37,7 +37,6 @@ const createPostAxios = async (
     );
     return res.data;
   } catch (e: any) {
-    console.log('error while sending post to back end');
     throw new Error(e.message);
   }
 };

@@ -2,7 +2,6 @@ import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {SuccessResponse} from '../../models';
 import {POST_VOTE} from '../../utils/env';
-import {getErrorMessage, reportError} from '../../utils/getErrorMessage';
 
 /**
  *
@@ -26,8 +25,8 @@ const handleVoteAxios = async (
       },
     );
     return res.data;
-  } catch (e) {
-    reportError({message: getErrorMessage(e)});
+  } catch (e: any) {
+    throw new Error(e.message);
   }
 };
 

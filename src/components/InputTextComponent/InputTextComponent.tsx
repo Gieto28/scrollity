@@ -10,6 +10,7 @@ import {
 } from './Styled.InputTextComponent';
 import {
   ImageSourcePropType,
+  KeyboardTypeOptions,
   StyleProp,
   TextStyle,
   ViewStyle,
@@ -19,17 +20,18 @@ import {FormControllerName} from '../../models';
 
 interface Props {
   placeholder: string;
+  multiline?: boolean;
+  numberOfLines?: number;
+  label?: string;
+  securedBoolean?: boolean;
+  keyboard?: KeyboardTypeOptions;
   controllerName: FormControllerName;
   control: Control<any>;
   errors?: FieldError | undefined;
   icon?: ImageSourcePropType;
-  multiline?: boolean;
-  numberOfLines?: number;
   style?: StyleProp<ViewStyle | TextStyle>;
   onPress?: () => void;
   onSubmitEditing?: () => void;
-  label?: string;
-  securedBoolean?: boolean;
 }
 
 /**
@@ -58,6 +60,7 @@ const InputTextComponent: React.FC<Props> = ({
   numberOfLines,
   securedBoolean,
   onPress,
+  keyboard,
   onSubmitEditing,
   label,
   icon,
@@ -89,6 +92,7 @@ const InputTextComponent: React.FC<Props> = ({
         render={({field: {onChange, onBlur, value}}) => (
           <Input
             style={ifErrorStyle}
+            keyboardType={keyboard}
             value={value}
             placeholder={placeholder}
             onBlur={onBlur}
@@ -107,7 +111,6 @@ const InputTextComponent: React.FC<Props> = ({
           <IconImage source={icon} />
         </SubmitButton>
       )}
-
       {errors && <ErrorLabel>{errors.message}</ErrorLabel>}
     </InputWrapper>
   );

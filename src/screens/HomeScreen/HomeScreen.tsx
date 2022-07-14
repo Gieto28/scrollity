@@ -80,7 +80,6 @@ const HomeScreen: React.FC = () => {
       setLoading(true);
       const res: {data: PostModel[]} = await getAllPostsAxios(category);
       setPosts(res.data);
-      console.log(res.data);
     } catch (e: any) {
       throw new Error(e.message);
     }
@@ -131,7 +130,7 @@ const HomeScreen: React.FC = () => {
     navigation.navigate('CreatePostScreen');
   };
 
-  const refScroll: any = useRef<null>(null);
+  const refScroll: any = useRef<any>(null);
 
   const handleFilter = (index: number) => {
     refScroll?.current?.scrollTo({x: 0, y: 0, animated: true});

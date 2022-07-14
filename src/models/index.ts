@@ -36,6 +36,7 @@ import ProfileStackParams from './ScreenStackModels/ProfileStackParams';
 import CategoryArrayModel from './Models/CategoryArrayModel';
 import PostModel from './Models/PostModel';
 import UserModel from './Models/UserModel';
+import CommentModel from './Models/CommentModel';
 //Props
 import ReactChildrenProps from './Context/ReactChildProps';
 
@@ -80,6 +81,7 @@ export type {
   CategoryArrayModel,
   PostModel,
   UserModel,
+  CommentModel,
   //Props
   ReactChildrenProps,
 };

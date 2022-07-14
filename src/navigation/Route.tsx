@@ -20,10 +20,8 @@ const Route: React.FC = () => {
 
   useEffect(() => {
     const handleAppState = AppState.addEventListener('change', nextAppState => {
-      console.log('next app state is: ' + nextAppState);
       setAppState(nextAppState);
     });
-    console.log('removing event listener...');
     return () => handleAppState.remove();
   }, [appState]);
 

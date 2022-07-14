@@ -1,4 +1,4 @@
-import {TextProps, ViewProps} from 'react-native';
+import {TextProps, TouchableOpacityProps, ViewProps} from 'react-native';
 import styled from 'styled-components/native';
 import {ThemeProps} from '../../styles/theme';
 
@@ -10,19 +10,29 @@ interface PropsView extends ViewProps {
   theme: ThemeProps;
 }
 
-const CommentWrapper = styled.View`
+interface PropsTouchable extends TouchableOpacityProps {
+  theme: ThemeProps;
+}
+
+const CommentWrapper = styled.View<PropsView>`
+  border-color: ${props => props.theme.button.border};
+  border-bottom-style: solid;
+  border-top-style: solid;
+  border-bottom-width: 1px;
+  border-top-width: 1px;
   margin-top: 10px;
   display: flex;
   flex-direction: row;
   max-width: 80%;
   margin-left: 20px;
+  padding: 5px 10px;
 `;
 
 const ImageWrapper = styled.View``;
 
 const UserImage = styled.Image`
-  max-width: 30px;
-  max-height: 30px;
+  max-width: 100px;
+  max-height: 100px;
 `;
 
 const BodyWrapper = styled.View`
@@ -45,7 +55,9 @@ const TimeStamp = styled.Text<PropsText>`
   font-size: ${props => props.theme.fonts.fontSize.md};
 `;
 
-const BodyComment = styled.View``;
+const BodyComment = styled.View`
+  margin-top: 4px;
+`;
 
 const Comment = styled.Text<PropsText>`
   font-size: ${props => props.theme.fonts.fontSize.md};
@@ -54,16 +66,21 @@ const Comment = styled.Text<PropsText>`
 
 const VotesWrapper = styled.View<PropsView>`
   display: flex;
+  align-items: center;
   flex-direction: ${props => props.theme.display.directionRow};
 `;
+
+const CommentVoteButton = styled.TouchableOpacity<PropsTouchable>``;
 
 const CommentVote = styled.Text<PropsText>`
   color: ${props => props.theme.screen.text};
   font-size: ${props => props.theme.fonts.fontSize.md};
-  margin-left: 10px;
+  margin-left: 16px;
 `;
 
-const BodyFooter = styled.View``;
+const BodyFooter = styled.View`
+  margin-top: 8px;
+`;
 
 export {
   CommentWrapper,
@@ -76,6 +93,7 @@ export {
   BodyComment,
   Comment,
   VotesWrapper,
+  CommentVoteButton,
   CommentVote,
   BodyFooter,
 };

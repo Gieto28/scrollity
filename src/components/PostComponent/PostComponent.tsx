@@ -5,7 +5,6 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {
   PostBody,
   PostDescription,
-  PostFooter,
   PostFullWidth,
   PostMedia,
   PostTitle,
@@ -13,20 +12,22 @@ import {
   PostValues,
   PostWrapper,
   PostHeader,
-  PostUpVoteIcon,
-  PostDownVoteIcon,
   PostMessageIcon,
   PostButtonIcon,
   PostHeaderTop,
   PostHeaderTopText,
   PostDescriptionWrapper,
   PostMediaWrapper,
+  PostFooter,
+  PostCommentIconWrapper,
 } from './Styled.PostComponent';
 import {useAppSettings, useAuth} from '../../context';
 import {HomeStackParams, PostModel} from '../../models';
 import {PUBLIC_POST_PATH_SERVER, URL} from '../../utils/env';
 import {getPostAxios, handleVoteAxios} from '../../services';
 import getUserVoteAxios from '../../services/post/getUserVoteAxios';
+import {timeAgo} from '../../utils/timeAgo';
+import {DownVoteIcon, UpVoteIcon, VoteButton} from '../../styles/GlobalStyle';
 
 interface Props {
   postObject: PostModel;
@@ -57,8 +58,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
 
   // states
   const [mediaHeight, setMediaHeight] = useState<number>();
-  const [waitingUpVote, setWaitingUpVote] = useState<boolean>(false);
-  const [waitingDownVote, setWaitingDownVote] = useState<boolean>(false);
+  const [waitingVote, setWaitingVote] = useState<boolean>(false);
   const [updatePost, setUpdatePost] = useState<PostModel>();
   const [userVote, setUserVote] = useState<any | null>();
 
@@ -98,32 +98,22 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updatePost]);
 
-  const handleVote = async (
-    vote: number,
-    post_id: number,
-    user_id: string | null,
-  ) => {
-    console.log(post_id);
+  const handleVote = async (vote: number, post_id: number) => {
     try {
       if (vote === 1) {
-        setWaitingUpVote(true);
+        setWaitingVote(true);
       }
       if (vote === 0) {
-        setWaitingDownVote(true);
+        setWaitingVote(true);
       }
 
-      await handleVoteAxios(vote, post_id, user_id!);
+      await handleVoteAxios(vote, post_id, userId!);
       const post = await getPostAxios(_id);
       setUpdatePost(post);
     } catch (e: any) {
       throw new Error(e.message);
     }
-    if (vote === 1) {
-      setWaitingUpVote(false);
-    }
-    if (vote === 0) {
-      setWaitingDownVote(false);
-    }
+    setWaitingVote(false);
   };
 
   const navigation = useNavigation<StackNavigationProp<HomeStackParams>>();
@@ -159,13 +149,17 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     width: deviceWidth,
   };
 
+  const dynamicFooter = () => {
+    return IconToCommentsScreen ? 'space-between' : 'flex-end';
+  };
+
   return (
     <PostFullWidth>
       <PostWrapper>
         <PostHeader>
           <PostHeaderTop>
             <PostHeaderTopText>
-              {category} ● {dateCreated}
+              {category} ● {timeAgo(dateCreated)}
             </PostHeaderTopText>
           </PostHeaderTop>
           <PostTitle>{title}</PostTitle>
@@ -193,32 +187,35 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
             </PostDescriptionWrapper>
           ) : null}
         </PostBody>
-        <PostFooter>
+        <PostFooter
+          style={{
+            justifyContent: dynamicFooter(),
+          }}>
           <PostValuesWrapper>
             <PostValues>
               {updatePost ? updatePost.up_votes : up_votes}
             </PostValues>
-            <PostButtonIcon
-              disabled={waitingUpVote}
-              onPress={() => handleVote(1, _id, userId)}>
-              <PostUpVoteIcon
+            <VoteButton
+              disabled={waitingVote}
+              onPress={() => handleVote(1, _id)}>
+              <UpVoteIcon
                 source={userVote?.vote === 1 ? activeUpvote : upVoteIcon}
                 accessibilityLabel="Up vote Icon"
               />
-            </PostButtonIcon>
+            </VoteButton>
             <PostValues>
               {updatePost ? updatePost.down_votes : down_votes}
             </PostValues>
-            <PostButtonIcon
-              disabled={waitingDownVote}
-              onPress={() => handleVote(0, _id, userId)}>
-              <PostDownVoteIcon
+            <VoteButton
+              disabled={waitingVote}
+              onPress={() => handleVote(0, _id)}>
+              <DownVoteIcon
                 source={userVote?.vote === 0 ? activeDownvote : downVoteIcon}
                 accessibilityLabel="Down vote Icon"
               />
-            </PostButtonIcon>
+            </VoteButton>
           </PostValuesWrapper>
-          <PostValuesWrapper>
+          <PostCommentIconWrapper>
             {IconToCommentsScreen && (
               <>
                 <PostButtonIcon onPress={() => handleCommentsScreen()}>
@@ -227,10 +224,10 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
                     accessibilityLabel="Comments Icon, redirects to IconToCommentsScreen screen"
                   />
                 </PostButtonIcon>
-                <PostValues>{comments?.length}</PostValues>
+                <PostValues>{comments.length}</PostValues>
               </>
             )}
-          </PostValuesWrapper>
+          </PostCommentIconWrapper>
         </PostFooter>
       </PostWrapper>
     </PostFullWidth>

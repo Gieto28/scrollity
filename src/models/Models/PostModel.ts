@@ -1,3 +1,4 @@
+import CommentModel from './CommentModel';
 import UserModel from './UserModel';
 
 interface PostModel {
@@ -10,7 +11,7 @@ interface PostModel {
   up_votes: number;
   down_votes: number;
   user: UserModel;
-  comments: any;
+  comments: CommentModel[];
 }
 
 export default PostModel;

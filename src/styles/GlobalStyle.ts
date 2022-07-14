@@ -1,8 +1,16 @@
-import {ViewProps} from 'react-native';
+import {ImageProps, TouchableOpacityProps, ViewProps} from 'react-native';
 import styled from 'styled-components/native';
 import {ThemeProps} from './theme';
 
 interface ScreenProps extends ViewProps {
+  theme: ThemeProps;
+}
+
+interface PropsImage extends ImageProps {
+  theme: ThemeProps;
+}
+
+interface PropsTouchable extends TouchableOpacityProps {
   theme: ThemeProps;
 }
 
@@ -49,7 +57,22 @@ const StyledView = styled.View<ScreenProps>`
   background-color: ${props => props.theme.screen.background};
 `;
 
+const DownVoteIcon = styled.Image<PropsImage>`
+  width: ${props => props.theme.posts.icons.width};
+  height: ${props => props.theme.posts.icons.height};
+`;
+
+const UpVoteIcon = styled.Image<PropsImage>`
+  width: ${props => props.theme.posts.icons.width};
+  height: ${props => props.theme.posts.icons.height};
+`;
+
+const VoteButton = styled.TouchableOpacity<PropsTouchable>``;
+
 export {
+  UpVoteIcon,
+  DownVoteIcon,
+  VoteButton,
   StyledView,
   GlobalView,
   AuthScrollView,

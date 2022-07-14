@@ -18,10 +18,6 @@ const uploadFileAxios = async (
 ): Promise<SuccessResponse> => {
   const formData: FormData = new FormData();
 
-  console.log(mediaUri);
-  console.log(media_id);
-  console.log(mediaType);
-
   const media: MediaPostModel = {
     uri: mediaUri,
     type: mediaType,
@@ -42,7 +38,6 @@ const uploadFileAxios = async (
     );
     return res.data;
   } catch (e: any) {
-    console.log('error while sending file to back end');
     throw new Error(e.message);
   }
 };

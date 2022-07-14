@@ -15,7 +15,6 @@ const getProfileAxios = async (id: string): Promise<UserModel> => {
     );
     return res.data;
   } catch (e: any) {
-    // reportError({message: getErrorMessage(e)});
     throw new Error(e.message);
   }
 };

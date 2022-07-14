@@ -1,6 +1,6 @@
 // import {AxiosResponse} from 'axios';
 import {api} from '..';
-import {POST_CHECK_USER_VOTES} from '../../utils/env';
+import {COMMENT_CHECK_USER_VOTES} from '../../utils/env';
 
 /**
  *
@@ -15,8 +15,8 @@ const getUserVoteCommentAxios = async (
   user_id: string | null,
 ) => {
   try {
-    const path: string = `${POST_CHECK_USER_VOTES}${comment_id}/${user_id}`;
-    const res = await api.get(path);
+    const path: string = `${COMMENT_CHECK_USER_VOTES}${comment_id}/${user_id}`;
+    const res = await api.post(path);
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

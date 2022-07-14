@@ -31,7 +31,6 @@ type SettingsNavigationProp = StackNavigationProp<
 const ProfileScreen = () => {
   const {theme} = useAppSettings();
   const {user} = useAuth();
-  console.log('profile user', user);
 
   const lightDarkIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/settings-32-dark.png')
@@ -41,7 +40,6 @@ const ProfileScreen = () => {
 
   const handleSettings = () => {
     navigation.navigate('SettingsScreen');
-    console.log('settings button is working');
   };
 
   const handleShowPosts = () => {
@@ -51,8 +49,6 @@ const ProfileScreen = () => {
   const handleShowLikes = () => {
     console.log('show likes button is working');
   };
-
-  console.log(user);
 
   return (
     <AppScrollView>

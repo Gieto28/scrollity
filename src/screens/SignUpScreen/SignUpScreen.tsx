@@ -65,14 +65,12 @@ const SignUpScreen = () => {
     try {
       await signUp(data);
 
-      console.log('register successful');
       reset();
     } catch (error) {
       setErrorWhileSignUp(true);
       setTimeout(() => {
         setErrorWhileSignUp(false);
       }, 8000);
-      console.log('Email already exists or missing/wrong data ');
       throw new Error('error while submitting form in file signUpScreen');
     }
 
@@ -128,6 +126,7 @@ const SignUpScreen = () => {
           control={control}
           errors={errors.email}
           label="Your Email"
+          keyboard="email-address"
         />
         <InputTextComponent
           placeholder="Your Password"

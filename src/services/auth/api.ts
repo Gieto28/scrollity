@@ -15,7 +15,6 @@ api.interceptors.request.use(
   },
   error => {
     if (error.response.status === 401) {
-      console.log('error 401');
       throw new Error(error.response.message);
     }
   },

@@ -33,7 +33,6 @@ const createCommentAxios = async (
     );
     return res.data;
   } catch (e: any) {
-    console.log('error while sending comment to back end');
     throw new Error(e.message);
   }
 };

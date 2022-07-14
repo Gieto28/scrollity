@@ -88,8 +88,6 @@ const SettingsScreen = () => {
         return;
       }
       await updateProfile(data);
-      console.log('update successful');
-
       reset();
     } catch (error) {
       resetField('name');
