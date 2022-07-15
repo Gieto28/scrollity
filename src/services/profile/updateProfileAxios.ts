@@ -11,6 +11,7 @@ import {PROFILE_UPDATE} from '../../utils/env';
  * @returns res.data which should be a very long token with the user information or if error should catch and show it on the screen
  */
 const updateProfileAxios = async (
+  user_id: string | null,
   name: string | null,
   password: string | null,
   passwordConfirmation: string | null,
@@ -19,6 +20,7 @@ const updateProfileAxios = async (
     const res: AxiosResponse<TokenResponse> = await api.post<TokenResponse>(
       PROFILE_UPDATE,
       {
+        user_id,
         name,
         password,
         passwordConfirmation,

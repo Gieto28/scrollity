@@ -7,15 +7,15 @@ moment.updateLocale('en', {
     s: function (number, withoutSuffix) {
       return withoutSuffix ? 'now' : 'a few seconds';
     },
-    m: '1m',
+    m: '1 m',
     mm: '%dm',
-    h: '1h',
+    h: '1 h',
     hh: '%dh',
-    d: '1d',
+    d: '1 d',
     dd: '%dd',
-    M: '1mth',
-    MM: '%dmth',
-    y: '1y',
+    M: '1 mth',
+    MM: '%dm',
+    y: '1 y',
     yy: '%dy',
   },
 });

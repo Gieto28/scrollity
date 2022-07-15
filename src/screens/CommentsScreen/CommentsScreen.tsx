@@ -7,8 +7,6 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   CommentsView,
-  NoCommentsText,
-  NoCommentsView,
   ScreenWrapper,
   ScrollComments,
   SendMessageView,
@@ -28,6 +26,7 @@ import {
   SchemaComment,
 } from '../../models';
 import {createCommentAxios, getAllCommentsAxios} from '../../services';
+import {NoContentText, NoContentView} from '../../styles/GlobalStyle';
 
 type Props = NativeStackScreenProps<HomeStackParams, 'CommentsScreen'>;
 
@@ -97,12 +96,12 @@ const CommentsScreen: React.FC<Props> = ({route}) => {
         ))}
       </ViewComments>
     ) : (
-      <NoCommentsView>
-        <NoCommentsText>Oops! No comments found.</NoCommentsText>
-        <NoCommentsText>
+      <NoContentView>
+        <NoContentText>Oops! No comments found.</NoContentText>
+        <NoContentText>
           Be the first one to say something about it!
-        </NoCommentsText>
-      </NoCommentsView>
+        </NoContentText>
+      </NoContentView>
     );
   };
 

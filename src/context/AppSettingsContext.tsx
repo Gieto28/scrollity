@@ -3,6 +3,7 @@ import {AppSettingsContextModel, ReactChildrenProps} from '../models';
 import AsyncStorage from '@react-native-community/async-storage';
 import {darkTheme, lightTheme, ThemeProps} from '../styles/theme';
 import {ColorSchemeName, useColorScheme} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 export const AppSettingsContext: React.Context<AppSettingsContextModel> =
   createContext<AppSettingsContextModel>({} as AppSettingsContextModel);
@@ -13,8 +14,10 @@ export const AppSettingsContext: React.Context<AppSettingsContextModel> =
  * @returns AppSettings Provider being used in the app.tsx file
  */
 const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
+  const {t, i18n} = useTranslation();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [language, setLanguage] = useState<string>('pt');
+  const [language, setLanguage] = useState<string>('en');
   const [theme, setTheme] = useState<ThemeProps>(lightTheme);
 
   const deviceTheme: ColorSchemeName = useColorScheme();
@@ -60,12 +63,19 @@ const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
     }
   };
 
+  const changeLanguage = async (lang: string) => {
+    console.log(lang);
+  };
+
   return (
     <AppSettingsContext.Provider
       value={{
+        t,
+        i18n,
         //states
         theme,
         language,
+        changeLanguage,
 
         //functions
         changeTheme,

@@ -1,23 +1,28 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useState} from 'react';
-import {ImageSourcePropType} from 'react-native';
-import {IconComponent} from '../../components';
+import React, {useEffect, useState} from 'react';
+import {ImageSourcePropType, RefreshControl} from 'react-native';
+import {IconComponent, PostComponent} from '../../components';
 import {useAuth, useAppSettings} from '../../context';
-import {ProfileStackParams} from '../../models';
+import {PostModel, ProfileStackParams} from '../../models';
 import {getProfilePostsAxios} from '../../services';
-import {AppScrollView} from '../../styles/GlobalStyle';
+import {NoContentText, NoContentView} from '../../styles/GlobalStyle';
+import {timeAgo} from '../../utils/timeAgo';
 import {
   ProfileHeader,
   ProfileInfoAccAge,
   ProfileInfoWrapper,
   ProfileMediaOptionsText,
-  ProfileMediaOptionsWrapper,
+  ProfileFilter,
   ProfileName,
   ProfileNameWrapper,
   ProfileOptionsButton,
   ProfilePicture,
   ProfilePictureWrapper,
+  ProfilePostsWrapper,
+  ProfileScroll,
+  ProfileWrapper,
+  RenderPosts,
 } from './Styled.ProfileScreen';
 
 type SettingsNavigationProp = StackNavigationProp<
@@ -33,7 +38,9 @@ const ProfileScreen = () => {
   const {theme} = useAppSettings();
   const {user, userId} = useAuth();
 
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [filter, setFilter] = useState<string>('posts');
 
   const lightDarkIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/settings-32-dark.png')
@@ -45,19 +52,56 @@ const ProfileScreen = () => {
     navigation.navigate('SettingsScreen');
   };
 
-  const fetchPosts = async (option: string) => {
+  const loadPosts = async (option: string) => {
+    setFilter(option);
+
     try {
+      setLoading(true);
       const res = await getProfilePostsAxios(userId, option);
-      console.log(res.data[0].posts);
-      console.log(res.data[0].likes);
-      setPosts(res.data);
+      option === 'posts' && setPosts(res.data[0].posts);
+      option === 'likes' && setPosts(res.data[1]);
     } catch (e: any) {
       throw new Error(e.message);
     }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    loadPosts('posts');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onRefresh = async () => {
+    loadPosts('posts');
+  };
+
+  const renderPhrase = () => {
+    switch (filter) {
+      case 'posts':
+        return 'posts';
+
+      case 'likes':
+        return 'likes';
+    }
+  };
+
+  const renderPosts = () => {
+    return posts.length > 0 ? (
+      posts.map((post: PostModel) => (
+        <ProfilePostsWrapper key={post._id}>
+          <PostComponent IconToCommentsScreen={true} postObject={post} />
+        </ProfilePostsWrapper>
+      ))
+    ) : (
+      <NoContentView>
+        <NoContentText>No {renderPhrase()} found...</NoContentText>
+        <NoContentText>Go to Home screen and add some!</NoContentText>
+      </NoContentView>
+    );
   };
 
   return (
-    <AppScrollView>
+    <ProfileWrapper>
       <ProfileHeader>
         <ProfilePictureWrapper>
           <ProfilePicture
@@ -70,22 +114,50 @@ const ProfileScreen = () => {
         </ProfileNameWrapper>
       </ProfileHeader>
       <ProfileInfoWrapper>
-        <ProfileInfoAccAge>Age: 200 days</ProfileInfoAccAge>
+        <ProfileInfoAccAge>
+          Created: {timeAgo(user!.dateCreated)}
+        </ProfileInfoAccAge>
         <IconComponent
           image={lightDarkIcon}
           onPress={handleSettings}
           altText="Click this button to go to the settings page"
         />
       </ProfileInfoWrapper>
-      <ProfileMediaOptionsWrapper>
-        <ProfileOptionsButton onPress={() => fetchPosts('posts')}>
+      <ProfileFilter>
+        <ProfileOptionsButton
+          style={{
+            backgroundColor:
+              filter === 'posts'
+                ? theme.screen.primaryColor
+                : theme.screen.background,
+          }}
+          onPress={() => loadPosts('posts')}>
           <ProfileMediaOptionsText>Posts</ProfileMediaOptionsText>
         </ProfileOptionsButton>
-        <ProfileOptionsButton onPress={() => fetchPosts('likes')}>
+        <ProfileOptionsButton
+          style={{
+            backgroundColor:
+              filter === 'likes'
+                ? theme.screen.primaryColor
+                : theme.screen.background,
+          }}
+          onPress={() => loadPosts('likes')}>
           <ProfileMediaOptionsText>Likes</ProfileMediaOptionsText>
         </ProfileOptionsButton>
-      </ProfileMediaOptionsWrapper>
-    </AppScrollView>
+      </ProfileFilter>
+      <ProfileScroll
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={onRefresh}
+            colors={[theme.screen.secondaryColor]}
+            tintColor={theme.screen.secondaryColor}
+            progressViewOffset={0}
+          />
+        }>
+        <RenderPosts>{!loading && renderPosts()}</RenderPosts>
+      </ProfileScroll>
+    </ProfileWrapper>
   );
 };
 

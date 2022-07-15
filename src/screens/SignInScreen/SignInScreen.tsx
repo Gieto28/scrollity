@@ -23,6 +23,7 @@ import {
   SchemaSignIn,
 } from '../../models';
 import {useAuth, useAppSettings} from '../../context';
+import {useTranslation} from 'react-i18next';
 
 type SignUpNavigationProp = StackNavigationProp<
   AuthStackParams,
@@ -36,7 +37,7 @@ type SignUpNavigationProp = StackNavigationProp<
 const SignInScreen: React.FC = () => {
   const {theme, changeTheme} = useAppSettings();
   const {signIn} = useAuth();
-
+  const {t} = useTranslation();
   // States
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
   const [badCredentials, setBadCredentials] = useState<boolean>(false);
@@ -122,7 +123,7 @@ const SignInScreen: React.FC = () => {
           <BadCredentialsText>Bad credentials...</BadCredentialsText>
         )}
         <InputTextComponent
-          placeholder="E-mail"
+          placeholder={t('yourEmail')}
           controllerName={FormControllerName.EMAIL}
           control={control}
           errors={errors.email}

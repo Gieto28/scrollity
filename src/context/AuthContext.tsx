@@ -125,6 +125,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
 
     try {
       const res: TokenResponse = await updateProfileAxios(
+        userId,
         name,
         password,
         passwordConfirmation,

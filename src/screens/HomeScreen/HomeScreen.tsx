@@ -30,8 +30,6 @@ import {
   HomeContentView,
   PostWrapper,
   HomeScreenScroll,
-  NoPostsView,
-  NoPostsText,
 } from './Styled.HomeScreen';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -46,6 +44,7 @@ import {
 } from '../../models';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {getAllPostsAxios} from '../../services';
+import {NoContentText, NoContentView} from '../../styles/GlobalStyle';
 
 type CreatePostNavigationProp = StackNavigationProp<
   HomeStackParams,
@@ -150,12 +149,12 @@ const HomeScreen: React.FC = () => {
         </PostWrapper>
       ))
     ) : (
-      <NoPostsView>
-        <NoPostsText>No posts found...</NoPostsText>
-        <NoPostsText>
+      <NoContentView>
+        <NoContentText>No posts found...</NoContentText>
+        <NoContentText>
           Please select another category or try again later..
-        </NoPostsText>
-      </NoPostsView>
+        </NoContentText>
+      </NoContentView>
     );
   };
 

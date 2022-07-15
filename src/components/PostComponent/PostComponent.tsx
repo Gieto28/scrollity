@@ -224,7 +224,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
                     accessibilityLabel="Comments Icon, redirects to IconToCommentsScreen screen"
                   />
                 </PostButtonIcon>
-                <PostValues>{comments.length}</PostValues>
+                <PostValues>{comments ? comments.length : 0}</PostValues>
               </>
             )}
           </PostCommentIconWrapper>
