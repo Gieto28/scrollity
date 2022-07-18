@@ -1,6 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {TokenResponse} from '../../models';
-import {AUTH_LOGIN} from '../../utils/env';
+import {AUTH_LOGIN} from '../../../env';
 import {api} from '..';
 
 /**

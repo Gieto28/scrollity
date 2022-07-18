@@ -3,7 +3,7 @@ interface GetUserVote {
     _id: number;
     date: Date;
     vote: number;
-  } | null;
+  };
 }
 
 export default GetUserVote;

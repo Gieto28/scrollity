@@ -1,7 +1,7 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {UserModel} from '../../models';
-import {PROFILE_GET} from '../../utils/env';
+import {PROFILE_GET} from '../../../env';
 
 /**
  *

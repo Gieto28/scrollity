@@ -1,7 +1,7 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {AllPostsResponse} from '../../models';
-import {POST_GET_ALL} from '../../utils/env';
+import {POST_GET_ALL} from '../../../env';
 
 /**
  *

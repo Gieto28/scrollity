@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {ImageSourcePropType, RefreshControl} from 'react-native';
 import {IconComponent, PostComponent} from '../../components';
 import {useAuth, useAppSettings} from '../../context';
@@ -37,6 +38,7 @@ type SettingsNavigationProp = StackNavigationProp<
 const ProfileScreen = () => {
   const {theme} = useAppSettings();
   const {user, userId} = useAuth();
+  const {t} = useTranslation();
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -78,10 +80,10 @@ const ProfileScreen = () => {
   const renderPhrase = () => {
     switch (filter) {
       case 'posts':
-        return 'posts';
+        return t('posts');
 
       case 'likes':
-        return 'likes';
+        return t('likes');
     }
   };
 
@@ -94,8 +96,10 @@ const ProfileScreen = () => {
       ))
     ) : (
       <NoContentView>
-        <NoContentText>No {renderPhrase()} found...</NoContentText>
-        <NoContentText>Go to Home screen and add some!</NoContentText>
+        <NoContentText>
+          {t('no')} {renderPhrase()} {t('found')}
+        </NoContentText>
+        <NoContentText>{t('noProfilePostsText')}</NoContentText>
       </NoContentView>
     );
   };
@@ -115,7 +119,7 @@ const ProfileScreen = () => {
       </ProfileHeader>
       <ProfileInfoWrapper>
         <ProfileInfoAccAge>
-          Created: {timeAgo(user!.dateCreated)}
+          {t('created')}: {timeAgo(user!.dateCreated)}
         </ProfileInfoAccAge>
         <IconComponent
           image={lightDarkIcon}
@@ -132,7 +136,7 @@ const ProfileScreen = () => {
                 : theme.screen.background,
           }}
           onPress={() => loadPosts('posts')}>
-          <ProfileMediaOptionsText>Posts</ProfileMediaOptionsText>
+          <ProfileMediaOptionsText>{t('posts')}</ProfileMediaOptionsText>
         </ProfileOptionsButton>
         <ProfileOptionsButton
           style={{
@@ -142,7 +146,7 @@ const ProfileScreen = () => {
                 : theme.screen.background,
           }}
           onPress={() => loadPosts('likes')}>
-          <ProfileMediaOptionsText>Likes</ProfileMediaOptionsText>
+          <ProfileMediaOptionsText>{t('likes')}</ProfileMediaOptionsText>
         </ProfileOptionsButton>
       </ProfileFilter>
       <ProfileScroll

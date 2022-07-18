@@ -15,6 +15,11 @@ const ErrorWhileSignUpText = styled.Text<PropsText>`
   margin: 0 0 5px 16px;
 `;
 
+const RightSideHeader = styled.View`
+  display: flex;
+  flex-direction: row;
+`;
+
 const IconWrapper = styled.View<PropsView>`
   display: flex;
   flex-direction: row;
@@ -22,4 +27,4 @@ const IconWrapper = styled.View<PropsView>`
   margin: 4px 24px 0 24px;
 `;
 
-export {IconWrapper, ErrorWhileSignUpText};
+export {IconWrapper, ErrorWhileSignUpText, RightSideHeader};

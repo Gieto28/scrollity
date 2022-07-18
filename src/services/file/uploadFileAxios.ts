@@ -1,6 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
-import {FILE_UPLOAD} from '../../utils/env';
+import {FILE_UPLOAD} from '../../../env';
 import {SuccessResponse, MediaPostModel} from '../../models';
 
 /**

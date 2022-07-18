@@ -7,16 +7,24 @@ import {
   IconComponent,
 } from '../../components';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {ErrorWhileSignUpText, IconWrapper} from './Styled.SignUpScreen';
+import {
+  ErrorWhileSignUpText,
+  IconWrapper,
+  RightSideHeader,
+} from './Styled.SignUpScreen';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {FormControllerName, FormSignUpModel, SchemaSignUp} from '../../models';
 import {useAuth, useAppSettings} from '../../context';
 import {ImageSourcePropType} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 const SignUpScreen = () => {
-  const {theme, changeTheme} = useAppSettings();
+  const {theme, changeTheme, changeLang} = useAppSettings();
   const navigation = useNavigation();
   const {signUp} = useAuth();
+  const {t, i18n} = useTranslation();
+
+  const lang = i18n.language;
 
   const leftArrowIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-left-dark-24.png')
@@ -33,6 +41,11 @@ const SignUpScreen = () => {
   const showingPasswordIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/show-password-24-dark.png')
     : require('../../assets/Images/show-password-24-light.png');
+
+  const imageLanguage =
+    lang === 'en'
+      ? require('../../assets/Images/portugal.png')
+      : require('../../assets/Images/united-kingdom.png');
 
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
   const [isPasswordConfirmationHidden, setIsPasswordConfirmationHidden] =
@@ -89,10 +102,6 @@ const SignUpScreen = () => {
     navigation.dispatch(CommonActions.goBack());
   };
 
-  const handleTheme = async () => {
-    await changeTheme();
-  };
-
   return (
     <AuthScrollView>
       <IconWrapper>
@@ -101,56 +110,62 @@ const SignUpScreen = () => {
           altText={'Go back to previous screen'}
           onPress={handleGoBack}
         />
-        <IconComponent
-          image={lightDarkICon}
-          altText={'Light dark icon to change theme'}
-          onPress={handleTheme}
-        />
+        <RightSideHeader>
+          <IconComponent
+            image={imageLanguage}
+            altText={'Icon to change language - current language is '}
+            onPress={() => changeLang()}
+            style={{marginRight: 15}}
+          />
+          <IconComponent
+            image={lightDarkICon}
+            altText={'Light dark icon to change theme'}
+            onPress={() => changeTheme()}
+          />
+        </RightSideHeader>
       </IconWrapper>
       <AuthView>
         {errorWhileSignUp && (
-          <ErrorWhileSignUpText>
-            Email or name already exists or missing/wrong data..
-          </ErrorWhileSignUpText>
+          <ErrorWhileSignUpText>{t('ErrorSignUp')}</ErrorWhileSignUpText>
         )}
         <InputTextComponent
-          placeholder="Your Username"
+          placeholder={t('yourName')}
           controllerName={FormControllerName.NAME}
           control={control}
           errors={errors.name}
-          label="Your Username"
+          label={t('yourName')}
         />
         <InputTextComponent
-          placeholder="Your Email"
+          placeholder={t('yourEmail')}
           controllerName={FormControllerName.EMAIL}
           control={control}
           errors={errors.email}
-          label="Your Email"
+          label={t('yourEmail')}
           keyboard="email-address"
         />
         <InputTextComponent
-          placeholder="Your Password"
+          placeholder={t('yourPassword')}
           controllerName={FormControllerName.PASSWORD}
           control={control}
           errors={errors.password}
-          label="Your Password"
+          label={t('yourPassword')}
           securedBoolean={isPasswordHidden}
           icon={isPasswordHiddenIcon}
           onPress={handleShowPassword}
         />
         <InputTextComponent
-          placeholder="Confirm Password"
+          placeholder={t('confirmPassword')}
           controllerName={FormControllerName.PASSWORDCONFIRMATION}
           control={control}
           errors={errors.passwordConfirmation}
-          label="Confirm Password"
+          label={t('confirmPassword')}
           securedBoolean={isPasswordConfirmationHidden}
           icon={isPasswordConfirmationHiddenIcon}
           onPress={handleShowPasswordConfirmation}
         />
 
         <FormButtonComponent
-          name="Sign up"
+          name={t('signUp')}
           onPress={handleSubmit(handleSignUp)}
         />
       </AuthView>

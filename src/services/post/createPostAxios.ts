@@ -1,6 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
-import {POST_CREATE} from '../../utils/env';
+import {POST_CREATE} from '../../../env';
 import {SuccessResponse} from '../../models';
 
 /**

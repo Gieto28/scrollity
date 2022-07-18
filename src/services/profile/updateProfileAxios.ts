@@ -1,7 +1,7 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {TokenResponse} from '../../models';
-import {PROFILE_UPDATE} from '../../utils/env';
+import {PROFILE_UPDATE} from '../../../env';
 
 /**
  *

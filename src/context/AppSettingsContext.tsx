@@ -15,9 +15,8 @@ export const AppSettingsContext: React.Context<AppSettingsContextModel> =
  */
 const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
   const {t, i18n} = useTranslation();
+  const lang = i18n.language;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [language, setLanguage] = useState<string>('en');
   const [theme, setTheme] = useState<ThemeProps>(lightTheme);
 
   const deviceTheme: ColorSchemeName = useColorScheme();
@@ -28,6 +27,24 @@ const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
     > => {
       const checkIfAsyncStorageHasTheme: string | null =
         await AsyncStorage.getItem('theme');
+      const storedLang: string | null = await AsyncStorage.getItem('lang');
+
+      switch (storedLang) {
+        case 'en':
+          i18n.changeLanguage('en');
+          await AsyncStorage.setItem('lang', 'en');
+          break;
+
+        case 'pt':
+          i18n.changeLanguage('pt');
+          await AsyncStorage.setItem('lang', 'pt');
+          break;
+
+        default:
+          i18n.changeLanguage('en');
+          await AsyncStorage.setItem('lang', 'en');
+          break;
+      }
 
       if (!checkIfAsyncStorageHasTheme) {
         // if error here then {} are needed
@@ -63,8 +80,18 @@ const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
     }
   };
 
-  const changeLanguage = async (lang: string) => {
-    console.log(lang);
+  const changeLang = async () => {
+    switch (lang) {
+      case 'pt':
+        i18n.changeLanguage('en');
+        await AsyncStorage.setItem('lang', 'en');
+        break;
+
+      case 'en':
+        i18n.changeLanguage('pt');
+        await AsyncStorage.setItem('lang', 'pt');
+        break;
+    }
   };
 
   return (
@@ -74,8 +101,7 @@ const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
         i18n,
         //states
         theme,
-        language,
-        changeLanguage,
+        changeLang,
 
         //functions
         changeTheme,

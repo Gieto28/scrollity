@@ -69,11 +69,6 @@ const InputTextComponent: React.FC<Props> = ({
 
   const borderColor = theme.bool ? '#fcf7fc' : '#262626';
 
-  const ifErrorStyle = {
-    borderColor: errors?.message ? '#e63225' : borderColor,
-    borderWidth: errors?.message ? 2 : 1,
-  };
-
   // {height: 100, textAlignVertical: 'top'}
 
   const iconStyles = {
@@ -91,7 +86,12 @@ const InputTextComponent: React.FC<Props> = ({
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <Input
-            style={ifErrorStyle}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              borderColor: errors?.message ? '#e63225' : borderColor,
+              borderWidth: errors?.message ? 2 : 1,
+              textAlignVertical: multiline ? 'top' : 'center',
+            }}
             keyboardType={keyboard}
             value={value}
             placeholder={placeholder}

@@ -12,6 +12,7 @@ import {useAppSettings, useAuth} from '../../context';
 import {
   EditProfileBody,
   FormErrorText,
+  RightSideHeader,
   SettingsHeader,
   SettingsLabel,
   SignOutView,
@@ -23,11 +24,13 @@ import {
   FormEditProfileModel,
   SchemaEditProfile,
 } from '../../models';
+import {useTranslation} from 'react-i18next';
 
 const SettingsScreen = () => {
-  const {theme, changeTheme} = useAppSettings();
+  const {theme, changeTheme, changeLang} = useAppSettings();
   const {signOut, updateProfile} = useAuth();
   const navigation = useNavigation();
+  const {t, i18n} = useTranslation();
 
   // States
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
@@ -50,6 +53,13 @@ const SettingsScreen = () => {
   const showingPasswordIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/show-password-24-dark.png')
     : require('../../assets/Images/show-password-24-light.png');
+
+  const lang = i18n.language;
+
+  const imageLanguage =
+    lang === 'en'
+      ? require('../../assets/Images/portugal.png')
+      : require('../../assets/Images/united-kingdom.png');
 
   //Icon depending on wether the password is hidden or not
 
@@ -124,47 +134,53 @@ const SettingsScreen = () => {
           onPress={handleGoBack}
           altText="click on this button to go back to the previous page"
         />
-        <IconComponent
-          image={lightDarkIcon}
-          onPress={handleTheme}
-          altText="click on this button to change theme to the opposite theme"
-        />
+        <RightSideHeader>
+          <IconComponent
+            image={imageLanguage}
+            altText={'Click here to change language'}
+            onPress={() => changeLang()}
+            style={{marginRight: 15}}
+          />
+          <IconComponent
+            image={lightDarkIcon}
+            onPress={handleTheme}
+            altText="click on this button to change theme to the opposite theme"
+          />
+        </RightSideHeader>
       </SettingsHeader>
       <SeparatorLineComponent />
       <EditProfileBody>
-        <SettingsLabel>Edit Profile</SettingsLabel>
-        {formError && (
-          <FormErrorText>Oops! Something went wrong.</FormErrorText>
-        )}
+        <SettingsLabel>{t('editProfile')}</SettingsLabel>
+        {formError && <FormErrorText>{t('formError')}</FormErrorText>}
         <InputTextComponent
-          placeholder={'Your new username...'}
+          placeholder={t('yourNewName')}
           controllerName={FormControllerName.NAME}
           errors={errors.name}
           control={control}
-          label="Your new username"
+          label={t('yourNewName')}
         />
         <InputTextComponent
-          placeholder={'Your new password...'}
+          placeholder={t('yourNewPassword')}
           controllerName={FormControllerName.PASSWORD}
           errors={errors.password}
           control={control}
-          label="Your new password"
+          label={t('yourNewPassword')}
           securedBoolean={isPasswordHidden}
           icon={isPasswordHiddenIcon}
           onPress={handleShowPassword}
         />
         <InputTextComponent
-          placeholder={'Confirm new password...'}
+          placeholder={t('confirmNewPassword')}
           controllerName={FormControllerName.PASSWORDCONFIRMATION}
           errors={errors.passwordConfirmation}
           control={control}
-          label="Confirm new password"
+          label={t('confirmNewPassword')}
           securedBoolean={isPasswordConfirmationHidden}
           icon={isPasswordConfirmationHiddenIcon}
           onPress={handleShowPasswordConfirmation}
         />
         <FormButtonComponent
-          name="Edit Profile"
+          name={t('editProfile')}
           onPress={handleSubmit(handleEditProfile)}
           fontSize="24px"
         />
@@ -173,7 +189,7 @@ const SettingsScreen = () => {
       <SignOutView>
         <FormButtonComponent
           fontSize="24px"
-          name="Log Out"
+          name={t('logOut')}
           onPress={handleSignOut}
         />
       </SignOutView>

@@ -35,9 +35,10 @@ type SignUpNavigationProp = StackNavigationProp<
  * @returns Sign in screen, using a form to login and calling the signIn method from the useAuth to check if user can be signed in. Authentication using yup, jwt and sending data to node typeorm and checking an mySQL database to match data and returning either an error or the token if successful.
  */
 const SignInScreen: React.FC = () => {
-  const {theme, changeTheme} = useAppSettings();
+  const {theme, changeTheme, changeLang} = useAppSettings();
   const {signIn} = useAuth();
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
+
   // States
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
   const [badCredentials, setBadCredentials] = useState<boolean>(false);
@@ -53,6 +54,13 @@ const SignInScreen: React.FC = () => {
   const showingPasswordIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/show-password-24-dark.png')
     : require('../../assets/Images/show-password-24-light.png');
+
+  const lang = i18n.language;
+
+  const imageLanguage =
+    lang === 'en'
+      ? require('../../assets/Images/portugal.png')
+      : require('../../assets/Images/united-kingdom.png');
 
   //Icon depending on wether the password is hidden or not
   const isPasswordHiddenIcon = isPasswordHidden
@@ -103,57 +111,58 @@ const SignInScreen: React.FC = () => {
     navigation.navigate('SignUpScreen');
   };
 
-  const handleTheme = async () => {
-    await changeTheme();
-  };
-
   return (
     <AuthScrollView>
       <IconWrapper>
         <IconComponent
+          image={imageLanguage}
+          altText={'Click here to change language'}
+          onPress={() => changeLang()}
+          style={{marginRight: 15}}
+        />
+        <IconComponent
           image={lightDarkIcon}
           altText={'Light dark icon to change theme'}
-          onPress={handleTheme}
+          onPress={() => changeTheme()}
         />
       </IconWrapper>
       <AuthView>
         <LoginTitle>Scrollity</LoginTitle>
 
         {badCredentials && (
-          <BadCredentialsText>Bad credentials...</BadCredentialsText>
+          <BadCredentialsText>{t('badCredentials')}</BadCredentialsText>
         )}
         <InputTextComponent
           placeholder={t('yourEmail')}
           controllerName={FormControllerName.EMAIL}
           control={control}
-          errors={errors.email}
           // label
-          label="Your email"
+          label={t('yourEmail')}
           keyboard="email-address"
         />
 
         <InputTextComponent
-          placeholder="Password"
+          placeholder={t('yourPassword')}
           controllerName={FormControllerName.PASSWORD}
           control={control}
           errors={errors.password}
           securedBoolean={isPasswordHidden}
           // label
-          label="Password"
+          label={t('yourPassword')}
           icon={isPasswordHiddenIcon}
           onPress={handleShowPassword}
         />
 
         <FormButtonComponent
-          name="Sign in"
+          name={t('signIn')}
           onPress={handleSubmit(handleSignIn)}
         />
 
-        <SeparatorLineComponent labelName="or" />
+        <SeparatorLineComponent labelName={t('or')} />
 
         <View>
           <FormButtonComponent
-            name="Sign up"
+            name={t('signUp')}
             fontSize="16px"
             fontWeight="400"
             onPress={handleRedirectToSignUp}

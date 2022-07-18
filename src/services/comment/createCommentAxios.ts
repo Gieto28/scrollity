@@ -1,6 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
-import {COMMENT_CREATE} from '../../utils/env';
+import {COMMENT_CREATE} from '../../../env';
 import {SuccessResponse} from '../../models';
 
 /**

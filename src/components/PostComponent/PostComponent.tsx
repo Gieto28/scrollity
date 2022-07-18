@@ -22,8 +22,8 @@ import {
   PostCommentIconWrapper,
 } from './Styled.PostComponent';
 import {useAppSettings, useAuth} from '../../context';
-import {HomeStackParams, PostModel} from '../../models';
-import {PUBLIC_POST_PATH_SERVER, URL} from '../../utils/env';
+import {GetUserVote, HomeStackParams, PostModel} from '../../models';
+import {PUBLIC_POST_PATH_SERVER, URL} from '../../../env';
 import {getPostAxios, handleVoteAxios} from '../../services';
 import getUserVoteAxios from '../../services/post/getUserVoteAxios';
 import {timeAgo} from '../../utils/timeAgo';
@@ -60,7 +60,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
   const [mediaHeight, setMediaHeight] = useState<number>();
   const [waitingVote, setWaitingVote] = useState<boolean>(false);
   const [updatePost, setUpdatePost] = useState<PostModel>();
-  const [userVote, setUserVote] = useState<any | null>();
+  const [userVote, setUserVote] = useState<GetUserVote>();
 
   // set values that won't change
   const deviceWidth = Dimensions.get('window').width;
@@ -89,7 +89,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     const checkUserLikes = async () => {
       try {
         const user_vote = await getUserVoteAxios(_id, userId);
-        setUserVote(user_vote.data);
+        setUserVote(user_vote);
       } catch (e: any) {
         throw new Error(e.message);
       }
@@ -199,7 +199,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
               disabled={waitingVote}
               onPress={() => handleVote(1, _id)}>
               <UpVoteIcon
-                source={userVote?.vote === 1 ? activeUpvote : upVoteIcon}
+                source={userVote?.data?.vote === 1 ? activeUpvote : upVoteIcon}
                 accessibilityLabel="Up vote Icon"
               />
             </VoteButton>
@@ -210,7 +210,9 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
               disabled={waitingVote}
               onPress={() => handleVote(0, _id)}>
               <DownVoteIcon
-                source={userVote?.vote === 0 ? activeDownvote : downVoteIcon}
+                source={
+                  userVote?.data?.vote === 0 ? activeDownvote : downVoteIcon
+                }
                 accessibilityLabel="Down vote Icon"
               />
             </VoteButton>

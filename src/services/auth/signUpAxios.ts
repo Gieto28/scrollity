@@ -1,7 +1,7 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {TokenResponse} from '../../models';
-import {AUTH_REGISTER} from '../../utils/env';
+import {AUTH_REGISTER} from '../../../env';
 
 /**
  *

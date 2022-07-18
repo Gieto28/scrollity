@@ -19,7 +19,11 @@ const CreatePostWrapper = styled.View<PropsView>`
   color: ${props => props.theme.screen.text};
 `;
 
-const CreateHeader = styled.View<PropsView>``;
+const CreateHeader = styled.View<PropsView>`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
 
 const LabelWrapper = styled.View<PropsView>`
   display: ${props => props.theme.display.display};
@@ -50,7 +54,7 @@ const SelectWrapper = styled.View<PropsView>`
 `;
 
 const ErrorLabel = styled.Text<PropsText>`
-  margin-left: 16px;
+  margin-left: 24px;
   font-weight: ${props => props.theme.fonts.fontWeight.l};
   color: ${props => props.theme.fonts.colors.primary};
 `;

@@ -1,7 +1,7 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {SuccessResponse} from '../../models';
-import {POST_VOTE} from '../../utils/env';
+import {POST_VOTE} from '../../../env';
 
 /**
  *

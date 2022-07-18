@@ -45,6 +45,7 @@ import {
 import {yupResolver} from '@hookform/resolvers/yup';
 import {getAllPostsAxios} from '../../services';
 import {NoContentText, NoContentView} from '../../styles/GlobalStyle';
+import {useTranslation} from 'react-i18next';
 
 type CreatePostNavigationProp = StackNavigationProp<
   HomeStackParams,
@@ -57,6 +58,7 @@ type CreatePostNavigationProp = StackNavigationProp<
  */
 const HomeScreen: React.FC = () => {
   const {theme} = useAppSettings();
+  const {t} = useTranslation();
   const [categoryId, setCategoryId] = useState<number>(0);
   const [category, setCategory] = useState<string>('Top');
   const [posts, setPosts] = useState<PostModel[]>([]);
@@ -100,13 +102,13 @@ const HomeScreen: React.FC = () => {
   });
 
   const categoryArray: CategoryArrayModel[] = [
-    {category: 'Top', id: 0},
-    {category: 'New', id: 1},
-    {category: 'Funny', id: 2},
-    {category: 'Pet', id: 3},
-    {category: 'Help', id: 4},
-    {category: 'Other', id: 5},
-    {category: 'Random', id: 6},
+    {category: 'Top', lang: t('top'), id: 0},
+    {category: 'New', lang: t('new'), id: 1},
+    {category: 'Funny', lang: t('funny'), id: 2},
+    {category: 'Pet', lang: t('pet'), id: 3},
+    {category: 'Help', lang: t('help'), id: 4},
+    {category: 'Other', lang: t('other'), id: 5},
+    {category: 'Random', lang: t('random'), id: 6},
   ];
 
   const currentFilter: number = categoryArray[categoryId].id;
@@ -150,10 +152,8 @@ const HomeScreen: React.FC = () => {
       ))
     ) : (
       <NoContentView>
-        <NoContentText>No posts found...</NoContentText>
-        <NoContentText>
-          Please select another category or try again later..
-        </NoContentText>
+        <NoContentText>{t('noPostsTitle')}</NoContentText>
+        <NoContentText>{t('noPostsText')}</NoContentText>
       </NoContentView>
     );
   };
@@ -164,7 +164,7 @@ const HomeScreen: React.FC = () => {
         <CategoryView>
           {categoryArray.map((cat: CategoryArrayModel, index: number) => (
             <CategoryButton key={cat.id} onPress={() => handleFilter(index)}>
-              <CategoryText>{cat.category}</CategoryText>
+              <CategoryText>{cat.lang}</CategoryText>
             </CategoryButton>
           ))}
         </CategoryView>
@@ -185,12 +185,12 @@ const HomeScreen: React.FC = () => {
         }>
         <HomeContentView>
           <LabelWrapper>
-            <HomeLabel>{categoryArray[currentFilter].category}</HomeLabel>
+            <HomeLabel>{categoryArray[currentFilter].lang}</HomeLabel>
           </LabelWrapper>
           <SearchView>
             <InputTextComponent
               controllerName={FormControllerName.SEARCH}
-              placeholder="Search.."
+              placeholder={t('search')}
               onPress={handleSubmit(searchData)}
               control={control}
               onSubmitEditing={handleSubmit(searchData)}

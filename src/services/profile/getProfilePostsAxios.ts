@@ -1,6 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
-import {PROFILE_GET_POSTS} from '../../utils/env';
+import {PROFILE_GET_POSTS} from '../../../env';
 
 // interface ProfilePosts {
 //   data: [

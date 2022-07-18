@@ -1,5 +1,5 @@
 import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
-import {X_API_KEY, URL} from '../../utils/env';
+import {X_API_KEY, URL} from '../../../env';
 
 // creating axios url and headers
 const api: AxiosInstance = axios.create({

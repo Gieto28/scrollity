@@ -2,7 +2,7 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {AllCommentsResponse} from '../../models';
-import {COMMENT_GET_ALL} from '../../utils/env';
+import {COMMENT_GET_ALL} from '../../../env';
 
 /**
  *

@@ -6,8 +6,7 @@ import {ThemeProps} from '../../styles/theme';
 interface AppSettingsContextModel {
   t: any;
   i18n: any;
-  language: string;
-  changeLanguage: (lang: string) => void;
+  changeLang: () => void;
   theme: ThemeProps;
   //functions
   changeTheme(): Promise<void>;

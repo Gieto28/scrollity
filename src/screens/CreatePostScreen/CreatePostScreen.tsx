@@ -40,14 +40,16 @@ import {
 import {AppScrollView} from '../../styles/GlobalStyle';
 import {createPostAxios, uploadFileAxios} from '../../services';
 import AsyncStorage from '@react-native-community/async-storage';
+import {useTranslation} from 'react-i18next';
 
 /**
  *
  * @returns a screen which it's only purpose is to show the user a form to create a new post
  */
 const CreatePostScreen: React.FC = () => {
-  const {theme} = useAppSettings();
+  const {theme, changeLang} = useAppSettings();
   const navigation = useNavigation();
+  const {t, i18n} = useTranslation();
 
   const [category, setCategory] = useState<string>('Other');
   const [mediaUri, setMediaUri] = useState<string | undefined>(undefined);
@@ -60,10 +62,10 @@ const CreatePostScreen: React.FC = () => {
 
   //array of category
   const categoryArray: CategoryArrayModel[] = [
-    {category: 'Funny', id: 0},
-    {category: 'Pet', id: 1},
-    {category: 'Help', id: 2},
-    {category: 'Other', id: 3},
+    {category: 'Funny', lang: t('funny'), id: 0},
+    {category: 'Pet', lang: t('pet'), id: 1},
+    {category: 'Help', lang: t('help'), id: 2},
+    {category: 'Other', lang: t('other'), id: 3},
   ];
 
   //form hook
@@ -75,6 +77,13 @@ const CreatePostScreen: React.FC = () => {
   } = useForm<FormCreatePostModel>({
     resolver: yupResolver(SchemaCreatePost),
   });
+
+  const lang = i18n.language;
+
+  const imageLanguage =
+    lang === 'en'
+      ? require('../../assets/Images/portugal.png')
+      : require('../../assets/Images/united-kingdom.png');
 
   const leftArrowIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-left-dark-24.png')
@@ -130,6 +139,7 @@ const CreatePostScreen: React.FC = () => {
     data: FormCreatePostModel,
   ) => {
     const {title, description} = data;
+    console.log(title, category, description);
 
     const uniqueId: string = uuid();
     const user_id: string | null = await AsyncStorage.getItem('userId');
@@ -168,15 +178,22 @@ const CreatePostScreen: React.FC = () => {
             image={leftArrowIcon}
             altText={'Click here to go back to the previous screen'}
             onPress={handleGoBack}
+            style={{marginLeft: 15}}
+          />
+          <IconComponent
+            image={imageLanguage}
+            altText={'Click here to change language '}
+            onPress={() => changeLang()}
+            style={{marginRight: 15}}
           />
         </CreateHeader>
         <LabelWrapper>
-          <Label>Upload Post</Label>
+          <Label>{t('upload')}</Label>
         </LabelWrapper>
         <CreateBody>
           <InputTextComponent
-            placeholder={'Title...'}
-            label="title"
+            placeholder={t('title')}
+            label={t('title')}
             controllerName={FormControllerName.TITLE}
             control={control}
             errors={errors.title}
@@ -184,22 +201,22 @@ const CreatePostScreen: React.FC = () => {
           <InputTextComponent
             multiline={true}
             numberOfLines={4}
-            label="Description"
-            placeholder={'Description...'}
+            label={t('description')}
+            placeholder={t('description')}
             controllerName={FormControllerName.DESCRIPTION}
             control={control}
             errors={errors.description}
           />
           <SelectWrapper>
             <SelectMediaWrapper onPress={handleMediaState}>
-              <SelectMediaText>Media</SelectMediaText>
+              <SelectMediaText>{t('media')}</SelectMediaText>
             </SelectMediaWrapper>
             <SelectDropdown
-              defaultButtonText="Category"
+              defaultButtonText={t('dropdownDefaultText')}
               data={categoryArray}
-              onSelect={(selectedItem, index) =>
-                handleSelectOptions(selectedItem, index)
-              }
+              onSelect={(selectedItem, index) => {
+                handleSelectOptions(selectedItem, index);
+              }}
               // eslint-disable-next-line react-native/no-inline-styles
               buttonStyle={{
                 width: 130,
@@ -211,16 +228,16 @@ const CreatePostScreen: React.FC = () => {
               }}
               buttonTextAfterSelection={(selectedItem, _index) => {
                 // text represented after item is selected
-                return selectedItem.category;
+                return selectedItem.lang;
               }}
               rowTextForSelection={(item, _index) => {
                 // text represented for each item in dropdown
-                return item.category;
+                return item.lang;
               }}
             />
           </SelectWrapper>
         </CreateBody>
-        {imageError && <ErrorLabel>Image is too tall!</ErrorLabel>}
+        {imageError && <ErrorLabel>{t('imageTooTall')}</ErrorLabel>}
         <ImageWrapper
           style={{
             height: mediaHeight,
@@ -242,7 +259,7 @@ const CreatePostScreen: React.FC = () => {
         )}
         <ButtonWrapper>
           <FormButtonComponent
-            name="Share Post"
+            name={t('sharePost')}
             onPress={handleSubmit(handleSubmitPost)}
             fontSize="28px"
           />

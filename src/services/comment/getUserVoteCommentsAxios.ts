@@ -2,7 +2,7 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {GetUserVote} from '../../models';
-import {COMMENT_CHECK_USER_VOTES} from '../../utils/env';
+import {COMMENT_CHECK_USER_VOTES} from '../../../env';
 
 /**
  *

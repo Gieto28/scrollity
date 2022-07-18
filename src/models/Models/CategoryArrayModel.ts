@@ -3,6 +3,7 @@
  */
 interface CategoryArrayModel {
   category: string;
+  lang: string;
   id: number;
 }
 

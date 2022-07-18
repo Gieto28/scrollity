@@ -1,11 +1,12 @@
 import React from 'react';
-import {ImageSourcePropType} from 'react-native';
+import {ImageSourcePropType, ViewStyle} from 'react-native';
 import {Icon, IconButton} from './Styled.IconComponent';
 
 interface Props {
   image: ImageSourcePropType;
   altText: string;
   onPress: () => void;
+  style?: ViewStyle;
 }
 
 /**
@@ -15,9 +16,9 @@ interface Props {
  * @param image - require from theme Index.ts which can be any icon available
  * @returns a simple button with a left arrow icon to go back to the previous navigation screen no matter where the user is at the moment he clicks on it
  */
-const IconComponent: React.FC<Props> = ({image, altText, onPress}) => {
+const IconComponent: React.FC<Props> = ({image, altText, onPress, style}) => {
   return (
-    <IconButton onPress={onPress}>
+    <IconButton onPress={onPress} style={style}>
       <Icon source={image} accessibilityLabel={altText} resizeMode="contain" />
     </IconButton>
   );

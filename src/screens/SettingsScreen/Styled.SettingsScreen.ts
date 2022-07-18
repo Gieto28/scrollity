@@ -35,11 +35,17 @@ const EditProfileBody = styled.View<PropsView>`
   margin: 24px 16px;
 `;
 
+const RightSideHeader = styled.View`
+  display: flex;
+  flex-direction: row;
+`;
+
 const SignOutView = styled.View<PropsView>`
   margin: 24px 16px;
 `;
 
 export {
+  RightSideHeader,
   SettingsHeader,
   SignOutView,
   EditProfileBody,
