@@ -1,5 +1,3 @@
-const X_API_KEY = 'xxxxxxxx-xxxx-xxxxx-xxxxxxxx';
-
 /**
  * Port being using in the url.
  *
@@ -51,22 +49,6 @@ const AUTH_LOGIN = '/auth/login';
  */
 const AUTH_REGISTER = '/auth/register';
 
-/**
- * Path to update profile:
- *
- * example:
- *
- * `AUTH_UPDATE_PROFILE` = /auth/update
- */
-const PROFILE_UPDATE = '/auth/update';
-
-/**
- * Path to get all profiles
- *
- * Use this path to obtain information about all profiles in db
- */
-const AUTH_ALL_PROFILES = '/auth/profiles';
-
 //  ----------------------------------------------------------------
 //  ---------------------------POST---------------------------------
 //  ----------------------------------------------------------------
@@ -81,26 +63,102 @@ const POST_CREATE = '/post/create';
  *
  * example:
  *
- * const path = `${PATH_GET_ALL_POSTS}${category}`;
+ * const path = `${POST_GET_ALL}${category}`;
  *
  */
 const POST_GET_ALL = '/post/all/';
 
+/**
+ * Path to retrieve one single post in database, you'll also need to specify the id
+ *
+ * example:
+ *
+ * const path = `${POST_GET}${id}`;
+ *
+ */
+const POST_GET = '/post/';
+
+/**
+ * path to update or upvote/downvote a post
+ *
+ * example:
+ *
+ */
+const POST_VOTE = '/post/vote';
+
+/**
+ * path to get if current user has votes in any of the posts
+ *
+ * example: `${POST_CHECK_USER_VOTES}${post_id}/${user_id}`
+ *
+ */
+const POST_CHECK_USER_VOTES = '/post/checkVote/';
+
 //  ----------------------------------------------------------------
 //  ---------------------------COMMENT------------------------------
 //  ----------------------------------------------------------------
+
+/**
+ * Path to create a new comment
+ */
+const COMMENT_CREATE = '/comment/create';
+
+/**
+ * Path to retrieve one single comment in database, you'll also need to specify the id
+ *
+ * example:
+ *
+ * const path = `${COMMENT_GET}${id}`;
+ *
+ */
+const COMMENT_GET = '/comment/';
+
+/**
+ * Path to retrieve all comments
+ *
+ * example: `${COMMENT_GET_ALL}${post_id}`
+ *
+ */
+const COMMENT_GET_ALL = '/comment/all/';
+
+/**
+ * path to update or upvote/downvote a comment
+ *
+ */
+const COMMENT_VOTE = '/comment/vote';
+
+/**
+ * path to get if current user has votes in any of the posts
+ *
+ * Example: `${COMMENT_CHECK_USER_VOTES}${comment_id}/${user_id}`
+ *
+ */
+const COMMENT_CHECK_USER_VOTES = '/comment/checkVote/';
 //  ----------------------------------------------------------------
 //  ---------------------------PROFILE------------------------------
 //  ----------------------------------------------------------------
 
 /**
+ * Path to update profile:
+ *
+ */
+const PROFILE_UPDATE = '/profile/update';
+
+/**
  * Path to get a specific profile:
  * **NEEDS THE PROFILE ID AT THE END**
  *
- * example:
+ * example: `${PROFILE_GET}${id}`
  *
  */
-const PROFILE_GET = '/auth/profile';
+const PROFILE_GET = '/profile/';
+
+/**
+ * PAth to get user posts the option is either posts or likes
+ *
+ * example: `${PROFILE_GET_POSTS}${user_id}${option}`
+ */
+const PROFILE_GET_POSTS = '/profile/posts/';
 
 //  ----------------------------------------------------------------
 //  -----------------------------FILE-------------------------------
@@ -112,7 +170,6 @@ const PROFILE_GET = '/auth/profile';
 const FILE_UPLOAD = '/file/upload';
 
 export {
-  X_API_KEY,
   PORT,
   URL,
   PUBLIC_POST_PATH_SERVER,
@@ -120,12 +177,22 @@ export {
   //AUTH
   AUTH_LOGIN,
   AUTH_REGISTER,
-  PROFILE_UPDATE,
+  //profile
   PROFILE_GET,
-  AUTH_ALL_PROFILES,
+  PROFILE_UPDATE,
+  PROFILE_GET_POSTS,
   //POST
   POST_CREATE,
   POST_GET_ALL,
+  POST_VOTE,
+  POST_GET,
+  POST_CHECK_USER_VOTES,
   //FILE
   FILE_UPLOAD,
+  // COMMENT
+  COMMENT_CREATE,
+  COMMENT_GET_ALL,
+  COMMENT_VOTE,
+  COMMENT_CHECK_USER_VOTES,
+  COMMENT_GET,
 };

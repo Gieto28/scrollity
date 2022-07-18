@@ -1,5 +1,6 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
+import {CommentModel} from '../../models';
 import {COMMENT_GET} from '../../utils/env';
 
 /**
@@ -9,10 +10,10 @@ import {COMMENT_GET} from '../../utils/env';
  * @param id the id of the post
  * @returns a post
  */
-const getPostAxios = async (id: number): Promise<any> => {
+const getPostAxios = async (id: number): Promise<CommentModel> => {
   try {
     const path: string = `${COMMENT_GET}${id}`;
-    const res: AxiosResponse<any> = await api.get<any>(path);
+    const res: AxiosResponse<CommentModel> = await api.get<CommentModel>(path);
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

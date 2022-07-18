@@ -13,7 +13,7 @@ api.interceptors.request.use(
   (res: AxiosRequestConfig) => {
     return res;
   },
-  error => {
+  (error: any) => {
     if (error.response.status === 401) {
       throw new Error(error.response.message);
     }

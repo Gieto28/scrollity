@@ -58,8 +58,8 @@ const ProfileScreen = () => {
     try {
       setLoading(true);
       const res = await getProfilePostsAxios(userId, option);
-      option === 'posts' && setPosts(res.data[0].posts);
-      option === 'likes' && setPosts(res.data[1]);
+      option === 'posts' && setPosts(res[0].posts);
+      option === 'likes' && setPosts(res);
     } catch (e: any) {
       throw new Error(e.message);
     }
