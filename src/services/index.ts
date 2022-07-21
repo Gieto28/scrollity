@@ -20,6 +20,8 @@ import getAllCommentsAxios from './comment/getAllCommentsAxios';
 import getUserVoteCommentsAxios from './comment/getUserVoteCommentsAxios';
 import handleVoteCommentAxios from './comment/handleVoteCommentAxios';
 import getCommentAxios from './comment/getCommentAxios';
+// NOTIFICATIONS
+import getHighestPostsAxios from './notifications/getHighestPostsAxios';
 
 export {
   //AUTH
@@ -44,4 +46,6 @@ export {
   getUserVoteCommentsAxios,
   handleVoteCommentAxios,
   getCommentAxios,
+  // NOTIFICATIONS
+  getHighestPostsAxios,
 };

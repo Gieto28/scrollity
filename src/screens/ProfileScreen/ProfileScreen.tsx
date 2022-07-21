@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
@@ -37,7 +38,7 @@ type SettingsNavigationProp = StackNavigationProp<
  */
 const ProfileScreen = () => {
   const {theme} = useAppSettings();
-  const {user, userId} = useAuth();
+  const {user} = useAuth();
   const {t} = useTranslation();
 
   const [posts, setPosts] = useState([]);
@@ -59,7 +60,8 @@ const ProfileScreen = () => {
 
     try {
       setLoading(true);
-      const res = await getProfilePostsAxios(userId, option);
+      const user_id = await AsyncStorage.getItem('userId');
+      const res = await getProfilePostsAxios(user_id, option);
       option === 'posts' && setPosts(res[0].posts);
       option === 'likes' && setPosts(res);
     } catch (e: any) {

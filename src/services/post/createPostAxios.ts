@@ -1,4 +1,5 @@
 import {AxiosResponse} from 'axios';
+import OneSignal from 'react-native-onesignal';
 import {api} from '..';
 import {POST_CREATE} from '../../../env';
 import {SuccessResponse} from '../../models';
@@ -24,6 +25,13 @@ const createPostAxios = async (
   if (!user_id) {
     throw new Error('user null');
   }
+
+  const data = await OneSignal.getDeviceState();
+
+  const player_id = data?.userId;
+
+  console.log('p.id', player_id);
+
   try {
     const res: AxiosResponse<SuccessResponse> = await api.post<SuccessResponse>(
       POST_CREATE,

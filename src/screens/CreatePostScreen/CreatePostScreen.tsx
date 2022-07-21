@@ -139,7 +139,6 @@ const CreatePostScreen: React.FC = () => {
     data: FormCreatePostModel,
   ) => {
     const {title, description} = data;
-    console.log(title, category, description);
 
     const uniqueId: string = uuid();
     const user_id: string | null = await AsyncStorage.getItem('userId');

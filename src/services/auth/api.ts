@@ -1,4 +1,4 @@
-import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
+import axios, {AxiosInstance} from 'axios';
 import {X_API_KEY, URL} from '../../../env';
 
 // creating axios url and headers
@@ -8,16 +8,5 @@ const api: AxiosInstance = axios.create({
     'api-key': X_API_KEY,
   },
 });
-
-api.interceptors.request.use(
-  (res: AxiosRequestConfig) => {
-    return res;
-  },
-  (error: any) => {
-    if (error.response.status === 401) {
-      throw new Error(error.response.message);
-    }
-  },
-);
 
 export default api;

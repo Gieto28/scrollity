@@ -46,6 +46,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {getAllPostsAxios} from '../../services';
 import {NoContentText, NoContentView} from '../../styles/GlobalStyle';
 import {useTranslation} from 'react-i18next';
+import getPostByTitleAxios from '../../services/post/getPostByTitleAxios';
 
 type CreatePostNavigationProp = StackNavigationProp<
   HomeStackParams,
@@ -113,8 +114,9 @@ const HomeScreen: React.FC = () => {
 
   const currentFilter: number = categoryArray[categoryId].id;
 
-  const searchData = (data: FormSearchModel) => {
-    console.log('search', data);
+  const searchData = async (data: FormSearchModel) => {
+    const res: PostModel[] = await getPostByTitleAxios(data.search);
+    setPosts(res);
   };
 
   const handleAnimateOnScroll = (
