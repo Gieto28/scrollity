@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {api, getProfileAxios, signInAxios, signUpAxios} from '../services';
 import jwt_decode from 'jwt-decode';
 import {updateProfileAxios} from '../services';
+import OneSignal from 'react-native-onesignal';
 
 export const AuthContext: React.Context<AuthContextModel> =
   createContext<AuthContextModel>({} as AuthContextModel);
@@ -36,6 +37,8 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
         const storedToken: string | null = await AsyncStorage.getItem('token');
         const storedUser: string | null = await AsyncStorage.getItem('user');
 
+        console.log('stored token', storedToken);
+        console.log('stored user', storedUser);
         if (storedUser && storedToken) {
           const userObj = JSON.parse(storedUser);
 
@@ -44,6 +47,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
           const currentUser: UserModel = await getUser(userObj._id);
           setUser(currentUser);
           setUserId(currentUser._id);
+          console.log('currentuser id', currentUser._id);
         }
       } catch (e: any) {
         throw new Error(e.message);
@@ -51,7 +55,6 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
 
       setLoading(false);
     };
-
     loadStorageData();
   }, []);
 
@@ -69,7 +72,9 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       await AsyncStorage.setItem('token', res.token);
 
       const currentUser: UserModel = await getUser(decoded._id.toString());
+      console.log('current user', currentUser);
 
+      OneSignal.setExternalUserId(currentUser._id.toString());
       await AsyncStorage.setItem('userId', currentUser._id.toString());
       await AsyncStorage.setItem('user', JSON.stringify(currentUser));
       setToken(res.token);
@@ -100,6 +105,8 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
 
       await AsyncStorage.setItem('token', res.token);
       const currentUser = await getUser(decoded._id.toString());
+
+      OneSignal.setExternalUserId(currentUser._id.toString());
       await AsyncStorage.setItem('userId', currentUser._id.toString());
       await AsyncStorage.setItem('user', JSON.stringify(currentUser));
       setToken(res.token);
@@ -164,7 +171,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
     setUser(null);
     setUserId(null);
     setToken(null);
-
+    OneSignal.removeExternalUserId();
     await AsyncStorage.multiRemove(['token', 'userId', 'user']);
   };
 

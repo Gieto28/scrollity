@@ -62,3 +62,5 @@ buck-out/
 
 # app
 /src/utils/env.ts
+
+env.ts

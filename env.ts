@@ -11,7 +11,13 @@ const PORT = '3003';
  *
  * Change this IP to your own IP if you're testing out this application in your system, everything should work fine
  */
+
+//ETIC
+// const IP = '192.168.3.243';
+
+// PROSIDE
 const IP = '192.168.0.172';
+// HOME
 // const IP = '192.168.1.230';
 
 /**
@@ -96,6 +102,13 @@ const POST_VOTE = '/post/vote';
  */
 const POST_CHECK_USER_VOTES = '/post/checkVote/';
 
+/**
+ * path to find posts by searching
+ *
+ * example: example: `${POST_GET_BY_TITLE}${title}`
+ */
+const POST_GET_BY_TITLE = '/post/search/';
+
 //  ----------------------------------------------------------------
 //  ---------------------------COMMENT------------------------------
 //  ----------------------------------------------------------------
@@ -171,6 +184,17 @@ const PROFILE_GET_POSTS = '/profile/posts/';
  */
 const FILE_UPLOAD = '/file/upload';
 
+//  ----------------------------------------------------------------
+//  ------------------------NOTIFICATIONS---------------------------
+//  ----------------------------------------------------------------
+
+/**
+ * endpoint used to get the 3 highest voted posts from that user
+ *
+ * example: `${NOTIFICATIONS_HIGHEST_VOTED}${user_id}$`
+ */
+const NOTIFICATIONS_HIGHEST_VOTED = '/notifications/highestVoted/';
+
 export {
   X_API_KEY,
   PORT,
@@ -186,6 +210,7 @@ export {
   PROFILE_GET_POSTS,
   //POST
   POST_CREATE,
+  POST_GET_BY_TITLE,
   POST_GET_ALL,
   POST_VOTE,
   POST_GET,
@@ -198,4 +223,6 @@ export {
   COMMENT_VOTE,
   COMMENT_CHECK_USER_VOTES,
   COMMENT_GET,
+  //NOTIFICATIONS
+  NOTIFICATIONS_HIGHEST_VOTED,
 };
