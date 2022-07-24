@@ -40,8 +40,6 @@ const NotificationCardComponent: React.FC<Props> = ({
     getNotifications();
   };
 
-  console.log('seen?', seen);
-
   return (
     <CardView
       style={{

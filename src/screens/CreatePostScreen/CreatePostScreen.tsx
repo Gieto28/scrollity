@@ -40,8 +40,7 @@ import {
 import {AppScrollView} from '../../styles/GlobalStyle';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useTranslation} from 'react-i18next';
-import uploadFileAxios from '../../services/file/uploadFileAxios';
-import createPostAxios from '../../services/post/createPostAxios';
+import {createPostAxios, uploadFileAxios} from '../../services';
 
 /**
  *
@@ -146,8 +145,6 @@ const CreatePostScreen: React.FC = () => {
     const media_id = mediaUri
       ? `post.${user_id}.${fileType}.${uniqueId}.${mediaUri.split('.').pop()}`
       : null;
-
-    console.log(mediaType, media_id, mediaUri);
     if (mediaType && media_id && mediaUri) {
       try {
         await uploadFileAxios(mediaUri, media_id, mediaType);

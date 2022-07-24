@@ -38,20 +38,13 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [notification, setNotifications] = useState<NotificationModel[]>([]);
-  console.log(token);
 
   useEffect(() => {
     const loadStorageData = async () => {
       const storedToken: string | null = await AsyncStorage.getItem('token');
       const storedUser: string | null = await AsyncStorage.getItem('user');
-      console.log('stored token', storedToken);
-      console.log('stored user', storedUser);
 
       try {
-        if (!storedToken || !storedUser) {
-          console.log('stored token or stored user missing');
-        }
-
         if (storedUser && storedToken) {
           const userObj = JSON.parse(storedUser);
 
@@ -60,10 +53,8 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
           const currentUser: UserModel = await getUser(userObj._id);
           setUser(currentUser);
           setUserId(currentUser._id);
-          console.log('current user id', currentUser._id);
         }
       } catch (e: any) {
-        console.log('error when loading', e);
         throw new Error(e.message);
       }
 
@@ -79,7 +70,6 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
     try {
       const storedId: string | null = await AsyncStorage.getItem('userId');
       const res: NotificationModel[] = await getUserNotifications(storedId);
-      console.log('notification answer', res);
       setNotifications(res);
     } catch (e: any) {
       throw new Error(e.message);
@@ -100,7 +90,6 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       await AsyncStorage.setItem('token', res.token);
 
       const currentUser: UserModel = await getUser(decoded._id.toString());
-      console.log('current user', currentUser);
 
       OneSignal.setExternalUserId(currentUser._id.toString());
       await AsyncStorage.setItem('userId', currentUser._id.toString());
@@ -109,9 +98,8 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       setUser(currentUser);
       setUserId(currentUser._id);
       getNotifications();
-      console.log('............................', currentUser, res.token);
     } catch (e: any) {
-      console.log(e);
+      throw new Error(e.message);
     }
   };
 

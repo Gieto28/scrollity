@@ -198,6 +198,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
                     source={{
                       uri: path,
                     }}
+                    // eslint-disable-next-line react-native/no-inline-styles
                     style={{
                       width: Dimensions.get('window').width,
                       height: 300,

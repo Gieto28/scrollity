@@ -7,16 +7,13 @@ import {
   IconComponent,
 } from '../../components';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {
-  ErrorWhileSignUpText,
-  IconWrapper,
-  RightSideHeader,
-} from './Styled.SignUpScreen';
+import {ErrorWhileSignUpText, IconWrapper} from './Styled.SignUpScreen';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {FormControllerName, FormSignUpModel, SchemaSignUp} from '../../models';
 import {useAuth, useApp} from '../../context';
 import {ImageSourcePropType} from 'react-native';
 import {useTranslation} from 'react-i18next';
+import {RightSideHeader} from './Styled.SignUpScreen';
 
 const SignUpScreen = () => {
   const {theme, changeTheme, changeLang} = useApp();

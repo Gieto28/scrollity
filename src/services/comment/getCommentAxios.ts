@@ -10,7 +10,7 @@ import {COMMENT_GET} from '../../../env';
  * @param id the id of the post
  * @returns a post
  */
-const getPostAxios = async (id: number): Promise<CommentModel> => {
+const getCommentAxios = async (id: number): Promise<CommentModel> => {
   try {
     const path: string = `${COMMENT_GET}${id}`;
     const res: AxiosResponse<CommentModel> = await api.get<CommentModel>(path);
@@ -20,4 +20,4 @@ const getPostAxios = async (id: number): Promise<CommentModel> => {
   }
 };
 
-export default getPostAxios;
+export default getCommentAxios;

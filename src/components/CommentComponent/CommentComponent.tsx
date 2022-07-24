@@ -1,13 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useEffect, useState} from 'react';
 import {ImageSourcePropType} from 'react-native';
 import {useApp, useAuth} from '../../context';
 import {CommentModel} from '../../models';
-import {
-  getCommentAxios,
-  getUserVoteCommentsAxios,
-  handleVoteCommentAxios,
-} from '../../services';
+import getCommentAxios from '../../services/comment/getCommentAxios';
+import getUserVoteCommentsAxios from '../../services/comment/getUserVoteCommentsAxios';
+import handleVoteCommentAxios from '../../services/comment/handleVoteCommentAxios';
 import {UpVoteIcon, VoteButton} from '../../styles/GlobalStyle';
 import {timeAgo} from '../../utils/timeAgo';
 import {
@@ -44,10 +41,6 @@ const CommentComponent: React.FC<Props> = ({commentObj}) => {
   const [updateComment, setUpdateComment] = useState<any>();
   const [userVote, setUserVote] = useState<any | null>();
 
-  // if (user._id === Number(userId)) {
-  //   console.log('user is the same');
-  // }
-
   const upVoteIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-24-upvote-dark.png')
     : require('../../assets/Images/arrow-24-upvote-light.png');
@@ -76,10 +69,6 @@ const CommentComponent: React.FC<Props> = ({commentObj}) => {
     checkUserLikes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateComment]);
-
-  const handleDeleteComment = () => {
-    console.log('deleting Comment - I may or may not implements deletions');
-  };
 
   const handleVote = async (vote: number, comment_id: number) => {
     try {
@@ -137,11 +126,6 @@ const CommentComponent: React.FC<Props> = ({commentObj}) => {
               />
             </VoteButton>
           </VotesWrapper>
-          {/* <IconComponent
-            image={undefined}
-            altText={'This button is used to delete the comment'}
-            onPress={handleDeleteComment}
-          /> */}
         </BodyFooter>
       </BodyWrapper>
     </CommentWrapper>

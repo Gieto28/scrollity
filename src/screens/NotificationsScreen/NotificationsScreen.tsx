@@ -8,8 +8,6 @@ import {ViewScroll} from './Styled.NotificationsScreen';
 const NotificationsScreen = () => {
   const {user, notification} = useAuth();
 
-  console.log(notification, user);
-
   return (
     <ViewScroll>
       {notification.length > 0 ? (

@@ -203,7 +203,6 @@ const HomeScreen: React.FC = () => {
         onScroll={(e: NativeSyntheticEvent<NativeScrollEvent>) => {
           handleAnimateOnScroll(e);
           if (posts.length > 0 && isCloseToBottom(e.nativeEvent)) {
-            console.log('nearing the end');
             setSkip(skip + 1);
             loadMorePosts();
           }
