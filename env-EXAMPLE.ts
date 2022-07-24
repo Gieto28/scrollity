@@ -1,16 +1,17 @@
+const X_API_KEY = 'xxxx--x-xxxx--xxxxx-x';
 /**
  * Port being using in the url.
  *
  * If back-end port is in another number then changing this number will fix the problem and everything will continue to be working without changing the url directly
  */
-const PORT = '3003';
+const PORT = 'xxxx';
 
 /**
  * IP being used in the back-end (in my case its the scrollity-api which you can download on my github: {@link https://github.com/Gieto28/scrollity-api})
  *
  * Change this IP to your own IP if you're testing out this application in your system, everything should work fine
  */
-const IP = 'xxx.x.xxx.xxx';
+const IP = 'xxxxxx';
 
 /**
  * Base url.
@@ -61,9 +62,7 @@ const POST_CREATE = '/post/create';
 /**
  * Path to retrieve posts in database, you'll also need to specify the category
  *
- * example:
- *
- * const path = `${POST_GET_ALL}${category}`;
+ * example: const path = `${POST_GET_ALL}${category}`;
  *
  */
 const POST_GET_ALL = '/post/all/';
@@ -71,17 +70,13 @@ const POST_GET_ALL = '/post/all/';
 /**
  * Path to retrieve one single post in database, you'll also need to specify the id
  *
- * example:
- *
- * const path = `${POST_GET}${id}`;
+ * example: const path = `${POST_GET}${id}`;
  *
  */
 const POST_GET = '/post/';
 
 /**
  * path to update or upvote/downvote a post
- *
- * example:
  *
  */
 const POST_VOTE = '/post/vote';
@@ -93,6 +88,13 @@ const POST_VOTE = '/post/vote';
  *
  */
 const POST_CHECK_USER_VOTES = '/post/checkVote/';
+
+/**
+ * path to find posts by searching
+ *
+ * example: example: `${POST_GET_BY_TITLE}${title}`
+ */
+const POST_GET_BY_TITLE = '/post/search/';
 
 //  ----------------------------------------------------------------
 //  ---------------------------COMMENT------------------------------
@@ -169,7 +171,26 @@ const PROFILE_GET_POSTS = '/profile/posts/';
  */
 const FILE_UPLOAD = '/file/upload';
 
+//  ----------------------------------------------------------------
+//  ------------------------NOTIFICATIONS---------------------------
+//  ----------------------------------------------------------------
+
+/**
+ * endpoint used to get the user notifications
+ *
+ * example: `${NOTIFICATIONS_GET_USER}${user_id}`
+ */
+const NOTIFICATIONS_GET_USER = '/notifications/';
+
+/**
+ * endpoint used to get the user notifications
+ *
+ * example: `${NOTIFICATIONS_UPDATE}${notification_id}`
+ */
+const NOTIFICATION_UPDATE = '/notifications/update/';
+
 export {
+  X_API_KEY,
   PORT,
   URL,
   PUBLIC_POST_PATH_SERVER,
@@ -183,6 +204,7 @@ export {
   PROFILE_GET_POSTS,
   //POST
   POST_CREATE,
+  POST_GET_BY_TITLE,
   POST_GET_ALL,
   POST_VOTE,
   POST_GET,
@@ -195,4 +217,7 @@ export {
   COMMENT_VOTE,
   COMMENT_CHECK_USER_VOTES,
   COMMENT_GET,
+  //NOTIFICATIONS
+  NOTIFICATIONS_GET_USER,
+  NOTIFICATION_UPDATE,
 };
