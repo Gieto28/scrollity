@@ -22,7 +22,7 @@ import {
   FormSignInModel,
   SchemaSignIn,
 } from '../../models';
-import {useAuth, useAppSettings} from '../../context';
+import {useAuth, useApp} from '../../context';
 import {useTranslation} from 'react-i18next';
 
 type SignUpNavigationProp = StackNavigationProp<
@@ -35,7 +35,7 @@ type SignUpNavigationProp = StackNavigationProp<
  * @returns Sign in screen, using a form to login and calling the signIn method from the useAuth to check if user can be signed in. Authentication using yup, jwt and sending data to node typeorm and checking an mySQL database to match data and returning either an error or the token if successful.
  */
 const SignInScreen: React.FC = () => {
-  const {theme, changeTheme, changeLang} = useAppSettings();
+  const {theme, changeTheme, changeLang} = useApp();
   const {signIn} = useAuth();
   const {t, i18n} = useTranslation();
 

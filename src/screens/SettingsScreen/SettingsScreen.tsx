@@ -8,7 +8,7 @@ import {
   SeparatorLineComponent,
 } from '../../components';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {useAppSettings, useAuth} from '../../context';
+import {useApp, useAuth} from '../../context';
 import {
   EditProfileBody,
   FormErrorText,
@@ -27,7 +27,7 @@ import {
 import {useTranslation} from 'react-i18next';
 
 const SettingsScreen = () => {
-  const {theme, changeTheme, changeLang} = useAppSettings();
+  const {theme, changeTheme, changeLang} = useApp();
   const {signOut, updateProfile} = useAuth();
   const navigation = useNavigation();
   const {t, i18n} = useTranslation();

@@ -15,7 +15,7 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-import {useAppSettings} from '../../context';
+import {useApp} from '../../context';
 import {FormControllerName} from '../../models';
 
 interface Props {
@@ -65,7 +65,7 @@ const InputTextComponent: React.FC<Props> = ({
   label,
   icon,
 }) => {
-  const {theme} = useAppSettings();
+  const {theme} = useApp();
 
   const borderColor = theme.bool ? '#fcf7fc' : '#262626';
 

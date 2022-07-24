@@ -11,4 +11,8 @@ const ViewScroll = styled.ScrollView<ViewScrollProps>`
   padding-top: 10px;
 `;
 
-export {ViewScroll};
+const ButtonToHomeScreen = styled.TouchableOpacity``;
+
+const ButtonText = styled.Text``;
+
+export {ViewScroll, ButtonToHomeScreen, ButtonText};

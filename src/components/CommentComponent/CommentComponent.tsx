@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useEffect, useState} from 'react';
 import {ImageSourcePropType} from 'react-native';
-import {useAppSettings, useAuth} from '../../context';
+import {useApp, useAuth} from '../../context';
 import {CommentModel} from '../../models';
 import {
   getCommentAxios,
@@ -34,7 +34,7 @@ interface Props {
  * @returns comment component being used in the comments screen, it's used in a map to iterate through all the comments of a specific post
  */
 const CommentComponent: React.FC<Props> = ({commentObj}) => {
-  const {theme} = useAppSettings();
+  const {theme} = useApp();
   const {userId} = useAuth();
 
   const placeholder = require('../../assets/Images/profile-Placeholder.png');

@@ -1,32 +1,41 @@
 import React, {createContext, useEffect, useState} from 'react';
-import {AppSettingsContextModel, ReactChildrenProps} from '../models';
+import {AppContextModel, ReactChildrenProps} from '../models';
 import AsyncStorage from '@react-native-community/async-storage';
 import {darkTheme, lightTheme, ThemeProps} from '../styles/theme';
 import {ColorSchemeName, useColorScheme} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
-export const AppSettingsContext: React.Context<AppSettingsContextModel> =
-  createContext<AppSettingsContextModel>({} as AppSettingsContextModel);
+export const AppContext: React.Context<AppContextModel> =
+  createContext<AppContextModel>({} as AppContextModel);
 
 /**
  * This provider is global, it's responsible for storing the application settings such as the theme and the language
  *
  * @returns AppSettings Provider being used in the app.tsx file
  */
-const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
-  const {t, i18n} = useTranslation();
+const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
+  const {i18n} = useTranslation();
   const lang = i18n.language;
-
+  const deviceTheme: ColorSchemeName = useColorScheme();
   const [theme, setTheme] = useState<ThemeProps>(lightTheme);
 
-  const deviceTheme: ColorSchemeName = useColorScheme();
-
   useEffect(() => {
-    const checkThemeOnAppStartUp = async (): Promise<
-      ThemeProps | undefined
-    > => {
+    const checkAppConfiguration = async (): Promise<ThemeProps | undefined> => {
       const checkIfAsyncStorageHasTheme: string | null =
         await AsyncStorage.getItem('theme');
+
+      if (!checkIfAsyncStorageHasTheme) {
+        deviceTheme === 'light' ? setTheme(lightTheme) : null;
+        deviceTheme === 'dark' ? setTheme(darkTheme) : null;
+        await AsyncStorage.setItem('theme', theme!.key);
+        return theme;
+      }
+
+      if (checkIfAsyncStorageHasTheme) {
+        checkIfAsyncStorageHasTheme === 'light' ? setTheme(lightTheme) : null;
+        checkIfAsyncStorageHasTheme === 'dark' ? setTheme(darkTheme) : null;
+      }
+
       const storedLang: string | null = await AsyncStorage.getItem('lang');
 
       switch (storedLang) {
@@ -46,21 +55,11 @@ const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
           break;
       }
 
-      if (!checkIfAsyncStorageHasTheme) {
-        // if error here then {} are needed
-        if (deviceTheme === 'light') {
-          setTheme(lightTheme);
-        }
-        if (deviceTheme === 'dark') {
-          setTheme(darkTheme);
-        }
-        await AsyncStorage.setItem('theme', theme!.key);
-        return theme;
-      }
       return;
     };
-    checkThemeOnAppStartUp();
-    //
+
+    checkAppConfiguration();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -95,10 +94,8 @@ const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
   };
 
   return (
-    <AppSettingsContext.Provider
+    <AppContext.Provider
       value={{
-        t,
-        i18n,
         //states
         theme,
         changeLang,
@@ -107,8 +104,8 @@ const AppSettingsProvider: React.FC<ReactChildrenProps> = ({children}) => {
         changeTheme,
       }}>
       {children}
-    </AppSettingsContext.Provider>
+    </AppContext.Provider>
   );
 };
 
-export {AppSettingsProvider};
+export {AppProvider};

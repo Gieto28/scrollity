@@ -23,12 +23,12 @@ import {
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {Dimensions, ImageSourcePropType} from 'react-native';
-import {useAppSettings} from '../../context';
+import {useApp, useAuth} from '../../context';
 import SelectDropdown from 'react-native-select-dropdown';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {v4 as uuid} from 'uuid';
 import {
-  CategoryArrayModel,
+  CategoryModel,
   SchemaCreatePost,
   FormCreatePostModel,
   FormControllerName,
@@ -47,7 +47,8 @@ import {useTranslation} from 'react-i18next';
  * @returns a screen which it's only purpose is to show the user a form to create a new post
  */
 const CreatePostScreen: React.FC = () => {
-  const {theme, changeLang} = useAppSettings();
+  const {theme, changeLang} = useApp();
+  const {getNotifications} = useAuth();
   const navigation = useNavigation();
   const {t, i18n} = useTranslation();
 
@@ -61,7 +62,7 @@ const CreatePostScreen: React.FC = () => {
   const screenWidth = Dimensions.get('window').width * 0.87;
 
   //array of category
-  const categoryArray: CategoryArrayModel[] = [
+  const categoryArray: CategoryModel[] = [
     {category: 'Funny', lang: t('funny'), id: 0},
     {category: 'Pet', lang: t('pet'), id: 1},
     {category: 'Help', lang: t('help'), id: 2},
@@ -128,10 +129,7 @@ const CreatePostScreen: React.FC = () => {
     navigation.dispatch(CommonActions.goBack());
   };
 
-  const handleSelectOptions = (
-    option: CategoryArrayModel,
-    index: number,
-  ): void => {
+  const handleSelectOptions = (option: CategoryModel, index: number): void => {
     setCategory(categoryArray[index].category);
   };
 
@@ -160,6 +158,7 @@ const CreatePostScreen: React.FC = () => {
 
     try {
       await createPostAxios(user_id, title, description, media_id, category);
+      getNotifications();
     } catch (e: any) {
       throw new Error(e.message);
     }

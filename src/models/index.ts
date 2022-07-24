@@ -15,7 +15,7 @@ import AllCommentsResponse from './AxiosResponse/AllComments';
 import GetUserVote from './AxiosResponse/GetUserVote';
 import ErrorMessage from './AxiosResponse/ErrorMessage';
 // - context
-import AppSettingsContextModel from './Context/AppSettingsContextModel';
+import AppContextModel from './Context/AppContextModel';
 import AuthContextModel from './Context/AuthContextModel';
 import JwtDecodedModel from './Context/JwtDecodedModel';
 // - form
@@ -34,10 +34,11 @@ import AppStackParams from './ScreenStackModels/AppStackParams';
 import HomeStackParams from './ScreenStackModels/HomeStackParams';
 import ProfileStackParams from './ScreenStackModels/ProfileStackParams';
 //Models
-import CategoryArrayModel from './Models/CategoryArrayModel';
+import CategoryModel from './Models/CategoryModel';
 import PostModel from './Models/PostModel';
 import UserModel from './Models/UserModel';
 import CommentModel from './Models/CommentModel';
+import NotificationModel from './Models/NotificationModel';
 //Props
 import ReactChildrenProps from './Context/ReactChildProps';
 
@@ -70,7 +71,7 @@ export type {
   FormControlType,
   FormCreatePostModel,
   // - Context
-  AppSettingsContextModel,
+  AppContextModel,
   AuthContextModel,
   JwtDecodedModel,
   //ScreensStacks
@@ -80,7 +81,8 @@ export type {
   HomeStackParams,
   ProfileStackParams,
   //Model
-  CategoryArrayModel,
+  NotificationModel,
+  CategoryModel,
   PostModel,
   UserModel,
   CommentModel,

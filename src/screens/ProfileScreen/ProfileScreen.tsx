@@ -5,7 +5,7 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ImageSourcePropType, RefreshControl} from 'react-native';
 import {IconComponent, PostComponent} from '../../components';
-import {useAuth, useAppSettings} from '../../context';
+import {useAuth, useApp} from '../../context';
 import {PostModel, ProfileStackParams} from '../../models';
 import {getProfilePostsAxios} from '../../services';
 import {NoContentText, NoContentView} from '../../styles/GlobalStyle';
@@ -37,7 +37,7 @@ type SettingsNavigationProp = StackNavigationProp<
  * @returns the profile screen
  */
 const ProfileScreen = () => {
-  const {theme} = useAppSettings();
+  const {theme} = useApp();
   const {user} = useAuth();
   const {t} = useTranslation();
 

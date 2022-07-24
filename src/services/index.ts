@@ -21,7 +21,8 @@ import getUserVoteCommentsAxios from './comment/getUserVoteCommentsAxios';
 import handleVoteCommentAxios from './comment/handleVoteCommentAxios';
 import getCommentAxios from './comment/getCommentAxios';
 // NOTIFICATIONS
-import getHighestPostsAxios from './notifications/getHighestPostsAxios';
+import getUserNotifications from './notifications/getUserNotifications';
+import updateNotification from './notifications/updateNotification';
 
 export {
   //AUTH
@@ -47,5 +48,6 @@ export {
   handleVoteCommentAxios,
   getCommentAxios,
   // NOTIFICATIONS
-  getHighestPostsAxios,
+  getUserNotifications,
+  updateNotification,
 };

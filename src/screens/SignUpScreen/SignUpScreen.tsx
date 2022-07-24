@@ -14,12 +14,12 @@ import {
 } from './Styled.SignUpScreen';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {FormControllerName, FormSignUpModel, SchemaSignUp} from '../../models';
-import {useAuth, useAppSettings} from '../../context';
+import {useAuth, useApp} from '../../context';
 import {ImageSourcePropType} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 const SignUpScreen = () => {
-  const {theme, changeTheme, changeLang} = useAppSettings();
+  const {theme, changeTheme, changeLang} = useApp();
   const navigation = useNavigation();
   const {signUp} = useAuth();
   const {t, i18n} = useTranslation();

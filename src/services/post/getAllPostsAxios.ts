@@ -12,9 +12,11 @@ import {POST_GET_ALL} from '../../../env';
  */
 const getAllPostsAxios = async (
   category: string,
+  limit: number,
+  skip: number,
 ): Promise<AllPostsResponse> => {
   try {
-    const path: string = `${POST_GET_ALL}${category}`;
+    const path: string = `${POST_GET_ALL}${category}/${limit}/${skip}`;
     const res: AxiosResponse<AllPostsResponse> =
       await api.get<AllPostsResponse>(path);
     return res.data;

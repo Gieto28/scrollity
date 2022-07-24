@@ -1,14 +1,14 @@
 import {ActivityIndicator} from 'react-native';
 import React from 'react';
 import {LoadingView} from './Styled.LoadingScreen';
-import {useAppSettings} from '../../context';
+import {useApp} from '../../context';
 
 /**
  *
  * @returns The initial loading screen on app startup.
  */
 const LoadingScreen = () => {
-  const {theme} = useAppSettings();
+  const {theme} = useApp();
 
   return (
     <LoadingView>

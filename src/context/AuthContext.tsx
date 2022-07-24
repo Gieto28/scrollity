@@ -5,12 +5,19 @@ import {
   FormSignInModel,
   FormSignUpModel,
   JwtDecodedModel,
+  NotificationModel,
   ReactChildrenProps,
   TokenResponse,
   UserModel,
 } from '../models';
 import AsyncStorage from '@react-native-community/async-storage';
-import {api, getProfileAxios, signInAxios, signUpAxios} from '../services';
+import {
+  api,
+  getProfileAxios,
+  getUserNotifications,
+  signInAxios,
+  signUpAxios,
+} from '../services';
 import jwt_decode from 'jwt-decode';
 import {updateProfileAxios} from '../services';
 import OneSignal from 'react-native-onesignal';
@@ -30,15 +37,21 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   const [userId, setUserId] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [notification, setNotifications] = useState<NotificationModel[]>([]);
+  console.log(token);
 
   useEffect(() => {
     const loadStorageData = async () => {
-      try {
-        const storedToken: string | null = await AsyncStorage.getItem('token');
-        const storedUser: string | null = await AsyncStorage.getItem('user');
+      const storedToken: string | null = await AsyncStorage.getItem('token');
+      const storedUser: string | null = await AsyncStorage.getItem('user');
+      console.log('stored token', storedToken);
+      console.log('stored user', storedUser);
 
-        console.log('stored token', storedToken);
-        console.log('stored user', storedUser);
+      try {
+        if (!storedToken || !storedUser) {
+          console.log('stored token or stored user missing');
+        }
+
         if (storedUser && storedToken) {
           const userObj = JSON.parse(storedUser);
 
@@ -47,16 +60,31 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
           const currentUser: UserModel = await getUser(userObj._id);
           setUser(currentUser);
           setUserId(currentUser._id);
-          console.log('currentuser id', currentUser._id);
+          console.log('current user id', currentUser._id);
         }
       } catch (e: any) {
+        console.log('error when loading', e);
         throw new Error(e.message);
       }
 
       setLoading(false);
     };
+
     loadStorageData();
+    getNotifications();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getNotifications = async () => {
+    try {
+      const storedId: string | null = await AsyncStorage.getItem('userId');
+      const res: NotificationModel[] = await getUserNotifications(storedId);
+      console.log('notification answer', res);
+      setNotifications(res);
+    } catch (e: any) {
+      throw new Error(e.message);
+    }
+  };
 
   const signIn = async (data: FormSignInModel): Promise<void> => {
     const {email, password} = data;
@@ -80,8 +108,10 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       setToken(res.token);
       setUser(currentUser);
       setUserId(currentUser._id);
+      getNotifications();
+      console.log('............................', currentUser, res.token);
     } catch (e: any) {
-      throw new Error(e.message);
+      console.log(e);
     }
   };
 
@@ -112,8 +142,9 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       setToken(res.token);
       setUser(currentUser);
       setUserId(currentUser._id);
+      getNotifications();
     } catch (e) {
-      throw new Error('Token exists but found an error while signing up');
+      throw new Error('Found an error while signing up');
     }
   };
 
@@ -184,6 +215,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
         userId,
         loading,
         token,
+        notification,
 
         // functions
         signIn,
@@ -191,6 +223,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
         updateProfile,
         getUser,
         signOut,
+        getNotifications,
       }}>
       {children}
     </AuthContext.Provider>

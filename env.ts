@@ -14,11 +14,12 @@ const PORT = '3003';
 
 //ETIC
 // const IP = '192.168.3.243';
-
 // PROSIDE
-const IP = '192.168.0.172';
+// const IP = '192.168.0.172';
 // HOME
 // const IP = '192.168.1.230';
+// or
+const IP = '192.168.1.245';
 
 /**
  * Base url.
@@ -69,9 +70,7 @@ const POST_CREATE = '/post/create';
 /**
  * Path to retrieve posts in database, you'll also need to specify the category
  *
- * example:
- *
- * const path = `${POST_GET_ALL}${category}`;
+ * example: const path = `${POST_GET_ALL}${category}`;
  *
  */
 const POST_GET_ALL = '/post/all/';
@@ -79,17 +78,13 @@ const POST_GET_ALL = '/post/all/';
 /**
  * Path to retrieve one single post in database, you'll also need to specify the id
  *
- * example:
- *
- * const path = `${POST_GET}${id}`;
+ * example: const path = `${POST_GET}${id}`;
  *
  */
 const POST_GET = '/post/';
 
 /**
  * path to update or upvote/downvote a post
- *
- * example:
  *
  */
 const POST_VOTE = '/post/vote';
@@ -189,11 +184,18 @@ const FILE_UPLOAD = '/file/upload';
 //  ----------------------------------------------------------------
 
 /**
- * endpoint used to get the 3 highest voted posts from that user
+ * endpoint used to get the user notifications
  *
- * example: `${NOTIFICATIONS_HIGHEST_VOTED}${user_id}$`
+ * example: `${NOTIFICATIONS_GET_USER}${user_id}`
  */
-const NOTIFICATIONS_HIGHEST_VOTED = '/notifications/highestVoted/';
+const NOTIFICATIONS_GET_USER = '/notifications/';
+
+/**
+ * endpoint used to get the user notifications
+ *
+ * example: `${NOTIFICATIONS_UPDATE}${notification_id}`
+ */
+const NOTIFICATION_UPDATE = '/notifications/update/';
 
 export {
   X_API_KEY,
@@ -224,5 +226,6 @@ export {
   COMMENT_CHECK_USER_VOTES,
   COMMENT_GET,
   //NOTIFICATIONS
-  NOTIFICATIONS_HIGHEST_VOTED,
+  NOTIFICATIONS_GET_USER,
+  NOTIFICATION_UPDATE,
 };

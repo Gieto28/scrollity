@@ -1,34 +1,36 @@
 import React from 'react';
 import {NotificationCardComponent} from '../../components';
+import {useAuth} from '../../context';
+import {NotificationModel} from '../../models';
+import {NoContentText, NoContentView} from '../../styles/GlobalStyle';
 import {ViewScroll} from './Styled.NotificationsScreen';
 
-/**
- *
- * @returns the notifications screen
- */
 const NotificationsScreen = () => {
+  const {user, notification} = useAuth();
+
+  console.log(notification, user);
+
   return (
     <ViewScroll>
-      <NotificationCardComponent
-        username="John Doe"
-        likes="8"
-        postId="01010101"
-      />
-      <NotificationCardComponent
-        username="Matateu"
-        likes="7"
-        postId="02020202"
-      />
-      <NotificationCardComponent
-        username="Mario Santos"
-        likes="9"
-        postId="03030303"
-      />
-      <NotificationCardComponent
-        username="Ernesto"
-        likes="1"
-        postId="04040404"
-      />
+      {notification.length > 0 ? (
+        notification.map((n: NotificationModel, i: number) => (
+          <NotificationCardComponent
+            key={i}
+            username={user!.name}
+            title={n.title}
+            body={n.body}
+            seen={n.seen}
+            notification_id={n._id}
+          />
+        ))
+      ) : (
+        <NoContentView>
+          <NoContentText>No notifications?</NoContentText>
+          <NoContentText>
+            Create a post or a comment and be notified when it's published!
+          </NoContentText>
+        </NoContentView>
+      )}
     </ViewScroll>
   );
 };

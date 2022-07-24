@@ -1,10 +1,14 @@
 import React from 'react';
+import {useApp, useAuth} from '../../context';
+import {updateNotification} from '../../services';
 
 // defining props type to be used in notification
 interface Props {
+  notification_id: number;
   username: string;
-  likes: string;
-  postId: string;
+  title: string;
+  body: string;
+  seen: boolean;
 }
 
 import {
@@ -15,26 +19,39 @@ import {
 } from './Styled.NotificationCardComponent';
 
 /**
- * @param postId - id of the post it relates to, we'll use the postId to redirect the user to that post on click
- * @param likes - amount of likes passed into the component relative to the post
- * @param username - username of the user that is correctly logged in
+ * @param notification_id - id of the notification
+ * @param title - title of the notification
+ * @param username - username of the persons notification it corresponds to
+ * @param body- body of the notification
  * @returns
  */
 const NotificationCardComponent: React.FC<Props> = ({
+  notification_id,
   username,
-  likes,
-  postId,
+  title,
+  body,
+  seen,
 }) => {
-  const handleNotificationRedirectToPost = (id: string) => {
-    console.log('redirect to post with id:', id);
-    // on click goes to post then we filter all notifications and remove that post from the notifications
+  const {theme} = useApp();
+  const {getNotifications} = useAuth();
+
+  const handleSeen = () => {
+    updateNotification(notification_id);
+    getNotifications();
   };
 
+  console.log('seen?', seen);
+
   return (
-    <CardView>
-      <CardButton onPress={() => handleNotificationRedirectToPost(postId)}>
-        <CardTitle>Congrats {username}!</CardTitle>
-        <CardMessage>Your post has reached {likes} likes!</CardMessage>
+    <CardView
+      style={{
+        borderColor: seen ? theme.button.border : theme.fonts.colors.primary,
+      }}>
+      <CardButton onPress={() => handleSeen()}>
+        <CardTitle>{title}</CardTitle>
+        <CardMessage>
+          {body} {username}!
+        </CardMessage>
       </CardButton>
     </CardView>
   );

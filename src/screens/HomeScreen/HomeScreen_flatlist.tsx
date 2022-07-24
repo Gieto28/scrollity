@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  ActivityIndicator,
   Animated,
+  FlatList,
   ImageSourcePropType,
   NativeScrollEvent,
   NativeSyntheticEvent,
   RefreshControl,
+  Text,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {
@@ -61,14 +63,14 @@ type CreatePostNavigationProp = StackNavigationProp<
 const HomeScreen: React.FC = () => {
   const {theme} = useApp();
   const {t} = useTranslation();
-  const take: number = 6;
+  const refFlatList: any = useRef<any>(null);
 
   const [categoryId, setCategoryId] = useState<number>(0);
+  const [take, setTake] = useState<number>(5);
   const [skip, setSkip] = useState<number>(0);
   const [category, setCategory] = useState<string>('Top');
   const [posts, setPosts] = useState<PostModel[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [loadingMore, setLoadingMore] = useState<boolean>(false);
 
   const searchIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/search-24-dark.png')
@@ -83,7 +85,6 @@ const HomeScreen: React.FC = () => {
     : require('../../assets/Images/to-top-46-light.png');
 
   const loadPosts = async (): Promise<void> => {
-    setSkip(0);
     try {
       setLoading(true);
       const res: {data: PostModel[]} = await getAllPostsAxios(
@@ -99,9 +100,8 @@ const HomeScreen: React.FC = () => {
   };
 
   const loadMorePosts = async () => {
-    setSkip(skip + 1);
     try {
-      setLoadingMore(true);
+      setSkip(skip + 1);
       const res: {data: PostModel[]} = await getAllPostsAxios(
         category,
         take,
@@ -111,7 +111,6 @@ const HomeScreen: React.FC = () => {
     } catch (e: any) {
       throw new Error(e.message);
     }
-    setLoadingMore(false);
   };
 
   useEffect(() => {
@@ -146,6 +145,9 @@ const HomeScreen: React.FC = () => {
     setPosts(res);
   };
 
+  const navigation: CreatePostNavigationProp =
+    useNavigation<CreatePostNavigationProp>();
+
   const handleAnimateOnScroll = (
     e: NativeSyntheticEvent<NativeScrollEvent>,
   ) => {
@@ -153,39 +155,73 @@ const HomeScreen: React.FC = () => {
     scrollYIconsWrapper.setValue(e.nativeEvent.contentOffset.y);
   };
 
-  const refScroll: any = useRef<any>(null);
-
-  const handleFilter = async (index: number) => {
-    setSkip(0);
-    await refScroll?.current?.scrollTo({x: 0, y: 0, animated: true});
+  const handleFilter = (index: number) => {
+    refFlatList?.current?.scrollToOffset({
+      animated: true,
+      offset: 0,
+    });
     setCategoryId(index);
     setCategory(categoryArray[index].category);
   };
 
-  const renderPosts = () => {
-    return posts.length > 0 ? (
-      posts.map((post: PostModel, index: number) => (
-        <PostWrapper key={index}>
-          <PostComponent IconToCommentsScreen={true} postObject={post} />
-        </PostWrapper>
-      ))
-    ) : (
-      <NoContentView>
-        <NoContentText>{t('noPostsTitle')}</NoContentText>
-        <NoContentText>{t('noPostsText')}</NoContentText>
-      </NoContentView>
-    );
-  };
+  const header = () => (
+    <>
+      <LabelWrapper>
+        <HomeLabel>{categoryArray[currentFilter].lang}</HomeLabel>
+      </LabelWrapper>
+      <SearchView>
+        <InputTextComponent
+          controllerName={FormControllerName.SEARCH}
+          placeholder={t('search')}
+          onPress={handleSubmit(searchData)}
+          control={control}
+          onSubmitEditing={handleSubmit(searchData)}
+          icon={searchIcon}
+        />
+      </SearchView>
+    </>
+  );
 
-  const isCloseToBottom = (e: NativeScrollEvent) => {
-    return (
-      e.layoutMeasurement.height + e.contentOffset.y >=
-      e.contentSize.height - 200
-    );
-  };
+  const post = (item: PostModel) => (
+    <PostWrapper>
+      <PostComponent IconToCommentsScreen={true} postObject={item} />
+    </PostWrapper>
+  );
 
-  const navigation: CreatePostNavigationProp =
-    useNavigation<CreatePostNavigationProp>();
+  const emptyArrayOfPosts = () => (
+    <NoContentView>
+      <NoContentText>{t('noPostsTitle')}</NoContentText>
+      <NoContentText>{t('noPostsText')}</NoContentText>
+    </NoContentView>
+  );
+
+  const renderPosts = () => (
+    <FlatList
+      data={posts}
+      //two children with same key when loading more posts so only fix at the moment was to get random n
+      keyExtractor={() => Math.ceil(Math.random() * (1000 - 1) * 1).toString()}
+      renderItem={({item}) => post(item)}
+      ListEmptyComponent={emptyArrayOfPosts}
+      ListHeaderComponent={header}
+      ref={refFlatList}
+      onScroll={(e: NativeSyntheticEvent<NativeScrollEvent>) =>
+        handleAnimateOnScroll(e)
+      }
+      removeClippedSubviews={false}
+      onEndReached={() => loadMorePosts()}
+      initialNumToRender={10}
+      onEndReachedThreshold={0}
+      refreshControl={
+        <RefreshControl
+          refreshing={loading}
+          onRefresh={onRefresh}
+          colors={[theme.screen.secondaryColor]}
+          tintColor={theme.screen.secondaryColor}
+          progressViewOffset={300}
+        />
+      }
+    />
+  );
 
   return (
     <HomeScreenWrapper>
@@ -198,43 +234,7 @@ const HomeScreen: React.FC = () => {
           ))}
         </CategoryView>
       </Animated.View>
-      <HomeScreenScroll
-        ref={refScroll}
-        onScroll={(e: NativeSyntheticEvent<NativeScrollEvent>) => {
-          handleAnimateOnScroll(e);
-          if (posts.length > 0 && isCloseToBottom(e.nativeEvent)) {
-            console.log('nearing the end');
-            setSkip(skip + 1);
-            loadMorePosts();
-          }
-        }}
-        refreshControl={
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={onRefresh}
-            colors={[theme.screen.secondaryColor]}
-            tintColor={theme.screen.secondaryColor}
-            progressViewOffset={300}
-          />
-        }>
-        <HomeContentView>
-          <LabelWrapper>
-            <HomeLabel>{categoryArray[currentFilter].lang}</HomeLabel>
-          </LabelWrapper>
-          <SearchView>
-            <InputTextComponent
-              controllerName={FormControllerName.SEARCH}
-              placeholder={t('search')}
-              onPress={handleSubmit(searchData)}
-              control={control}
-              onSubmitEditing={handleSubmit(searchData)}
-              icon={searchIcon}
-            />
-          </SearchView>
-          {!loading && renderPosts()}
-          {loadingMore && <ActivityIndicator size={'large'} />}
-        </HomeContentView>
-      </HomeScreenScroll>
+      <HomeContentView>{loading ? null : renderPosts()}</HomeContentView>
       <Animated.View style={styledIConsWrapperAnimation}>
         <IconsWrapper>
           <ToTopIconView>
@@ -242,7 +242,10 @@ const HomeScreen: React.FC = () => {
               altText="This icon moves you to the top of the screen"
               image={ToTopIcon}
               onPress={() =>
-                refScroll?.current?.scrollTo({x: 0, y: 0, animated: true})
+                refFlatList?.current?.scrollToOffset({
+                  animated: true,
+                  offset: 0,
+                })
               }
             />
           </ToTopIconView>

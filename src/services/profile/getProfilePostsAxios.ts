@@ -2,18 +2,6 @@ import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {PROFILE_GET_POSTS} from '../../../env';
 
-// interface ProfilePosts {
-//   data: [
-//     | [
-//         {
-//           _id: string;
-//           posts: PostModel;
-//         },
-//       ]
-//     | [PostModel],
-//   ];
-// }
-
 /**
  *
  * @param user_id the user id in async storage or context

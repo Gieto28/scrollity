@@ -6,7 +6,6 @@ import {
   PostBody,
   PostDescription,
   PostFullWidth,
-  PostMedia,
   PostTitle,
   PostValuesWrapper,
   PostValues,
@@ -21,13 +20,14 @@ import {
   PostFooter,
   PostCommentIconWrapper,
 } from './Styled.PostComponent';
-import {useAppSettings, useAuth} from '../../context';
+import {useApp, useAuth} from '../../context';
 import {GetUserVote, HomeStackParams, PostModel} from '../../models';
 import {PUBLIC_POST_PATH_SERVER, URL} from '../../../env';
 import {getPostAxios, handleVoteAxios} from '../../services';
 import getUserVoteAxios from '../../services/post/getUserVoteAxios';
 import {timeAgo} from '../../utils/timeAgo';
 import {DownVoteIcon, UpVoteIcon, VoteButton} from '../../styles/GlobalStyle';
+import FastImage from 'react-native-fast-image';
 
 interface Props {
   postObject: PostModel;
@@ -53,7 +53,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
   } = postObject;
 
   // destructuring from context
-  const {theme} = useAppSettings();
+  const {theme} = useApp();
   const {userId} = useAuth();
 
   // states
@@ -153,6 +153,8 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     return IconToCommentsScreen ? 'space-between' : 'flex-end';
   };
 
+  const placeholder: string = `${URL}${PUBLIC_POST_PATH_SERVER}/videos/loading-media.gif`;
+
   return (
     <PostFullWidth>
       <PostWrapper>
@@ -166,17 +168,13 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
         </PostHeader>
         <PostBody>
           {media_id && (
-            <PostMediaWrapper style={mediaStyling}>
-              <PostMedia
-                source={
-                  mediaHeight
-                    ? {
-                        uri: path,
-                      }
-                    : require('../../assets/Images/loading-media.gif')
-                }
+            <PostMediaWrapper>
+              <FastImage
+                source={{
+                  uri: path,
+                }}
                 style={mediaStyling}
-                resizeMode="stretch"
+                // resizeMode="stretch"
                 accessibilityLabel={title}
               />
             </PostMediaWrapper>

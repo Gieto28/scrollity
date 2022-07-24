@@ -16,7 +16,7 @@ import {ImageSourcePropType, RefreshControl} from 'react-native';
 import {useForm} from 'react-hook-form';
 import IconComponent from '../../components/IconComponent/IconComponent';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {useAppSettings, useAuth} from '../../context';
+import {useApp, useAuth} from '../../context';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {
   CommentModel,
@@ -35,7 +35,7 @@ type Props = NativeStackScreenProps<HomeStackParams, 'CommentsScreen'>;
  * @returns A screen with the post and it's comments
  */
 const CommentsScreen: React.FC<Props> = ({route}) => {
-  const {theme} = useAppSettings();
+  const {theme} = useApp();
   const {user} = useAuth();
   const post = route.params.postObject;
   const [loading, setLoading] = useState<boolean>(false);
