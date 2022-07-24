@@ -46,8 +46,8 @@ import {
 import {yupResolver} from '@hookform/resolvers/yup';
 import {getAllPostsAxios} from '../../services';
 import {NoContentText, NoContentView} from '../../styles/GlobalStyle';
-import {useTranslation} from 'react-i18next';
 import getPostByTitleAxios from '../../services/post/getPostByTitleAxios';
+import {useTranslation} from 'react-i18next';
 
 type CreatePostNavigationProp = StackNavigationProp<
   HomeStackParams,
