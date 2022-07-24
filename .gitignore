@@ -2,6 +2,9 @@
 #
 .DS_Store
 
+env
+env.ts
+
 # Xcode
 #
 build/
@@ -62,5 +65,3 @@ buck-out/
 
 # app
 /src/utils/env.ts
-
-env.ts
