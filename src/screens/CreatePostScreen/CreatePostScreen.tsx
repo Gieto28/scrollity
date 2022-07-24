@@ -146,6 +146,7 @@ const CreatePostScreen: React.FC = () => {
       ? `post.${user_id}.${fileType}.${uniqueId}.${mediaUri.split('.').pop()}`
       : null;
 
+    console.log(mediaType, media_id, mediaUri);
     if (mediaType && media_id && mediaUri) {
       try {
         await uploadFileAxios(mediaUri, media_id, mediaType);

@@ -19,6 +19,9 @@ import {
   PostMediaWrapper,
   PostFooter,
   PostCommentIconWrapper,
+  PostMedia,
+  PauseImage,
+  VideoButton,
 } from './Styled.PostComponent';
 import {useApp, useAuth} from '../../context';
 import {GetUserVote, HomeStackParams, PostModel} from '../../models';
@@ -27,7 +30,7 @@ import {getPostAxios, handleVoteAxios} from '../../services';
 import getUserVoteAxios from '../../services/post/getUserVoteAxios';
 import {timeAgo} from '../../utils/timeAgo';
 import {DownVoteIcon, UpVoteIcon, VoteButton} from '../../styles/GlobalStyle';
-import FastImage from 'react-native-fast-image';
+import Video from 'react-native-video';
 
 interface Props {
   postObject: PostModel;
@@ -61,6 +64,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
   const [waitingVote, setWaitingVote] = useState<boolean>(false);
   const [updatePost, setUpdatePost] = useState<PostModel>();
   const [userVote, setUserVote] = useState<GetUserVote>();
+  const [paused, setPaused] = useState<boolean>();
 
   // set values that won't change
   const deviceWidth = Dimensions.get('window').width;
@@ -126,9 +130,10 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
 
   const getFolderName = () => {
     if (media_id) {
-      if (media_id.split('.')[2].toString() === 'image') {
+      if (media_id!.split('.')[2].toString() === 'image') {
         return 'images';
-      } else if (media_id.split('.')[2].toString() === 'video') {
+      }
+      if (media_id!.split('.')[2].toString() === 'video') {
         return 'videos';
       }
     }
@@ -137,12 +142,11 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
   const path: string = `${URL}${PUBLIC_POST_PATH_SERVER}/${getFolderName()}/${media_id}`;
 
   //calculating height according to device width
-  if (media_id) {
+  getFolderName() === 'images' &&
     Image.getSize(path, (width, height) => {
       const calc: number = width / deviceWidth;
       setMediaHeight(height / calc);
     });
-  }
 
   const mediaStyling = {
     height: mediaHeight ? mediaHeight : 280,
@@ -153,7 +157,7 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
     return IconToCommentsScreen ? 'space-between' : 'flex-end';
   };
 
-  const placeholder: string = `${URL}${PUBLIC_POST_PATH_SERVER}/videos/loading-media.gif`;
+  const video = React.useRef(null);
 
   return (
     <PostFullWidth>
@@ -169,16 +173,50 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
         <PostBody>
           {media_id && (
             <PostMediaWrapper>
-              <FastImage
-                source={{
-                  uri: path,
-                }}
-                style={mediaStyling}
-                // resizeMode="stretch"
-                accessibilityLabel={title}
-              />
+              {getFolderName() === 'images' && (
+                <PostMedia
+                  source={{
+                    uri: path,
+                  }}
+                  style={mediaStyling}
+                  resizeMode="contain"
+                  accessibilityLabel={title}
+                />
+              )}
+              {getFolderName() === 'videos' && (
+                <VideoButton
+                  onPress={() => {
+                    setPaused(!paused);
+                  }}>
+                  {paused && (
+                    <PauseImage
+                      source={require('../../assets/Images/play-button.png')}
+                    />
+                  )}
+                  <Video
+                    ref={video}
+                    source={{
+                      uri: path,
+                    }}
+                    style={{
+                      width: Dimensions.get('window').width,
+                      height: 300,
+                      position: 'relative',
+                      top: 0,
+                      bottom: 0,
+                    }}
+                    resizeMode="contain"
+                    repeat
+                    paused={paused}
+                    progressUpdateInterval={250.0}
+                    playWhenInactive={false}
+                    playInBackground={false}
+                  />
+                </VideoButton>
+              )}
             </PostMediaWrapper>
           )}
+
           {description ? (
             <PostDescriptionWrapper>
               <PostDescription>{description}</PostDescription>

@@ -71,11 +71,24 @@ const PostMedia = styled.Image<PropsImage>``;
 const PostDescriptionWrapper = styled.View``;
 const PostMediaWrapper = styled.View``;
 
+const VideoButton = styled.TouchableOpacity`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PauseImage = styled.Image`
+  position: absolute;
+  z-index: 1;
+`;
+
 const PostDescription = styled.Text<PropsText>`
   color: ${props => props.theme.screen.text};
   font-size: ${props => props.theme.fonts.fontSize.md};
   margin: 3px 16px;
 `;
+
 const PostFooter = styled.View<PropsView>`
   width: 100%;
   display: flex;
@@ -84,6 +97,7 @@ const PostFooter = styled.View<PropsView>`
   justify-content: space-between;
   margin: 8px 10px 14px 8px;
 `;
+
 const PostValuesWrapper = styled.View<PropsView>`
   display: flex;
   flex-direction: row;
@@ -119,6 +133,8 @@ export {
   PostMediaWrapper,
   PostMedia,
   PostHeader,
+  VideoButton,
+  PauseImage,
   PostBody,
   PostTitle,
   PostDescriptionWrapper,
