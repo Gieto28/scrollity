@@ -38,9 +38,10 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {AppScrollView} from '../../styles/GlobalStyle';
-import {createPostAxios, uploadFileAxios} from '../../services';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useTranslation} from 'react-i18next';
+import uploadFileAxios from '../../services/file/uploadFileAxios';
+import createPostAxios from '../../services/post/createPostAxios';
 
 /**
  *
@@ -103,7 +104,7 @@ const CreatePostScreen: React.FC = () => {
       videoQuality: 'low',
     });
 
-    if (res!.assets![0].height! > 900) {
+    if (res!.assets![0].height! > 2000) {
       setImageError(true);
       throw new Error('Image is too tall!');
     }
@@ -216,6 +217,7 @@ const CreatePostScreen: React.FC = () => {
               onSelect={(selectedItem, index) => {
                 handleSelectOptions(selectedItem, index);
               }}
+              buttonTextStyle={{color: theme.screen.text}}
               // eslint-disable-next-line react-native/no-inline-styles
               buttonStyle={{
                 width: 130,
