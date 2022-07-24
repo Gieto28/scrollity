@@ -170,6 +170,11 @@ const PROFILE_GET = '/profile/';
  */
 const PROFILE_GET_POSTS = '/profile/posts/';
 
+/**
+ * Endpoint used to upload files to the server
+ */
+const PROFILE_UPDATE_IMAGE = '/profile/updateProfileImage';
+
 //  ----------------------------------------------------------------
 //  -----------------------------FILE-------------------------------
 //  ----------------------------------------------------------------
@@ -210,6 +215,7 @@ export {
   PROFILE_GET,
   PROFILE_UPDATE,
   PROFILE_GET_POSTS,
+  PROFILE_UPDATE_IMAGE,
   //POST
   POST_CREATE,
   POST_GET_BY_TITLE,

@@ -5,6 +5,14 @@ import Route from './src/navigation/Route';
 import {AppProvider} from './src/context';
 import OneSignal from 'react-native-onesignal';
 
+import {LogBox} from 'react-native';
+
+LogBox.ignoreLogs([
+  'ViewPropTypes will be removed',
+  'ColorPropType will be removed',
+  'Possible Unhandled Promise Rejection',
+]);
+
 const App: React.FC = () => {
   OneSignal.setLogLevel(6, 0);
   OneSignal.setAppId('555ffc0d-356e-4403-968d-127962153363');

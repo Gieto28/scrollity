@@ -36,15 +36,18 @@ const ProfileHeader = styled.View<PropsView>`
   padding: 15px 15px 10px 15px;
 `;
 
+const ImageButton = styled.TouchableOpacity``;
+
 const ProfilePictureWrapper = styled.View<PropsView>`
   align-self: flex-start;
-  max-width: 80px;
-  max-height: 80px;
+  max-width: 90px;
+  max-height: 90px;
   background-color: ${props => props.theme.screen.background};
 `;
 
 const ProfilePicture = styled.Image`
-  height: 100%;
+  height: 90px;
+  width: 90px;
 `;
 
 const ProfileNameWrapper = styled.View<PropsView>`
@@ -129,6 +132,7 @@ export {
   ProfilePostsWrapper,
   ProfileInfoAccAge,
   ProfileFilter,
+  ImageButton,
   ProfileNameWrapper,
   ProfileName,
   ProfileMediaOptionsText,

@@ -4,10 +4,14 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ImageSourcePropType, RefreshControl} from 'react-native';
+import {
+  ImagePickerResponse,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 import {IconComponent, PostComponent} from '../../components';
 import {useAuth, useApp} from '../../context';
 import {PostModel, ProfileStackParams} from '../../models';
-import {getProfilePostsAxios} from '../../services';
+import {getProfilePostsAxios, uploadFileAxios} from '../../services';
 import {NoContentText, NoContentView} from '../../styles/GlobalStyle';
 import {timeAgo} from '../../utils/timeAgo';
 import {
@@ -25,7 +29,11 @@ import {
   ProfileScroll,
   ProfileWrapper,
   RenderPosts,
+  ImageButton,
 } from './Styled.ProfileScreen';
+import {v4 as uuid} from 'uuid';
+import updateProfileImageAxios from '../../services/profile/updateProfileImageAxios';
+import {PUBLIC_PROFILE_PATH_SERVER, URL} from '../../../env';
 
 type SettingsNavigationProp = StackNavigationProp<
   ProfileStackParams,
@@ -44,6 +52,8 @@ const ProfileScreen = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>('posts');
+  const [mediaUri, setMediaUri] = useState<string | undefined>(undefined);
+  const [mediaType, setMediaType] = useState<string | undefined>(undefined);
 
   const lightDarkIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/settings-32-dark.png')
@@ -89,6 +99,48 @@ const ProfileScreen = () => {
     }
   };
 
+  const handleMediaState = async (): Promise<void> => {
+    setMediaUri(undefined);
+    setMediaType(undefined);
+
+    const res: ImagePickerResponse = await launchImageLibrary({
+      mediaType: 'mixed',
+      maxWidth: 400,
+      videoQuality: 'low',
+    });
+
+    const media = res.assets![0];
+
+    setMediaUri(media.uri);
+    setMediaType(media.type);
+
+    const uniqueId: string = uuid();
+    const user_id: string | null = await AsyncStorage.getItem('userId');
+
+    const fileType = mediaType?.split('/')[0];
+    const media_id = mediaUri
+      ? `profile.${user_id}.${fileType}.${uniqueId}.${mediaUri
+          .split('.')
+          .pop()}`
+      : null;
+
+    console.log(mediaType, media_id, mediaUri);
+
+    if (mediaType && media_id && mediaUri) {
+      try {
+        await uploadFileAxios(mediaUri, media_id, mediaType);
+      } catch (e: any) {
+        throw new Error(e.message);
+      }
+    }
+
+    try {
+      await updateProfileImageAxios(user_id, media_id);
+    } catch (e: any) {
+      throw new Error(e.message);
+    }
+  };
+
   const renderPosts = () => {
     return posts.length > 0 ? (
       posts.map((post: PostModel) => (
@@ -106,14 +158,30 @@ const ProfileScreen = () => {
     );
   };
 
+  const media_id = user!.picture;
+
+  const path: string = `${URL}${PUBLIC_PROFILE_PATH_SERVER}/images/${media_id}`;
+
+  console.log('path for profile image', path);
+
+  console.log(user);
+
+  const ChosenImage = mediaUri ? mediaUri : path;
+
   return (
     <ProfileWrapper>
       <ProfileHeader>
         <ProfilePictureWrapper>
-          <ProfilePicture
-            resizeMode="contain"
-            source={require('../../assets/Images/profile-Placeholder.png')}
-          />
+          <ImageButton onPress={handleMediaState}>
+            <ProfilePicture
+              resizeMode="stretch"
+              source={
+                user!.picture
+                  ? {uri: ChosenImage}
+                  : require('../../assets/Images/profile-Placeholder.png')
+              }
+            />
+          </ImageButton>
         </ProfilePictureWrapper>
         <ProfileNameWrapper>
           <ProfileName>{user!.name}</ProfileName>

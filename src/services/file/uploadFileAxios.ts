@@ -4,7 +4,6 @@ import {FILE_UPLOAD} from '../../../env';
 import {SuccessResponse, MediaPostModel} from '../../models';
 
 /**
- * After using image native picker to get the image information I call this method and send all of the form information through it.To be able to get the image on the node server I have to send content-type: multipart/form-data through the headers and send the information through a new FormData object with the following keys and values:
  *
  * @param mediaUri media URI being retrieved from the form
  * @param mediaId media ID being retrieved from the create post screen
