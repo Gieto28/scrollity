@@ -40,5 +40,7 @@
   "noProfilePostsText": "Go to home screen and change that!",
   "likes": "likes",
   "congrats": "Congrats",
-  "notification": "Your post has reached"
+  "notification": "Your post has reached",
+  "noNotificationsTitle": "No notifications?",
+  "noNotificationsBody": "Create a post or a comment and be notified when it's published!"
 }

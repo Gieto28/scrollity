@@ -41,5 +41,7 @@
   "noProfilePostsText": "Vai ao ecrã principal e muda isso!",
   "likes": "gostos",
   "congrats": "Parabens",
-  "notification": "O teu post já teve"
+  "notification": "O teu post já teve",
+  "noNotificationsTitle": "Sem notificações?",
+  "noNotificationsBody": "Cria um post ou um comentário e se notificado quando for publicado!"
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {NotificationCardComponent} from '../../components';
 import {useAuth} from '../../context';
 import {NotificationModel} from '../../models';
@@ -7,6 +8,7 @@ import {ViewScroll} from './Styled.NotificationsScreen';
 
 const NotificationsScreen = () => {
   const {user, notification} = useAuth();
+  const {t} = useTranslation();
 
   return (
     <ViewScroll>
@@ -23,10 +25,8 @@ const NotificationsScreen = () => {
         ))
       ) : (
         <NoContentView>
-          <NoContentText>No notifications?</NoContentText>
-          <NoContentText>
-            Create a post or a comment and be notified when it's published!
-          </NoContentText>
+          <NoContentText>{t('noNotificationsTitle')}</NoContentText>
+          <NoContentText>{t('noNotificationsBody')}</NoContentText>
         </NoContentView>
       )}
     </ViewScroll>
