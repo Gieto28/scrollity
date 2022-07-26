@@ -37,6 +37,8 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   const [userId, setUserId] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingNotifications, setLoadingNotifications] =
+    useState<boolean>(false);
   const [notification, setNotifications] = useState<NotificationModel[]>([]);
 
   useEffect(() => {
@@ -68,12 +70,15 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
 
   const getNotifications = async () => {
     try {
+      setLoadingNotifications(true);
       const storedId: string | null = await AsyncStorage.getItem('userId');
       const res: NotificationModel[] = await getUserNotifications(storedId);
       setNotifications(res);
+      console.log('res', res);
     } catch (e: any) {
       throw new Error(e.message);
     }
+    setLoadingNotifications(false);
   };
 
   const signIn = async (data: FormSignInModel): Promise<void> => {
@@ -202,6 +207,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
         user,
         userId,
         loading,
+        loadingNotifications,
         token,
         notification,
 

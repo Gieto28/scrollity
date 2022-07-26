@@ -11,6 +11,7 @@ interface AuthContextModel {
   isSignedIn: boolean;
   user: UserModel | null;
   loading: boolean;
+  loadingNotifications: boolean;
   token: string | null;
   userId: string | null;
   notification: NotificationModel[];

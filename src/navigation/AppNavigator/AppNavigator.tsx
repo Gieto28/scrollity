@@ -36,7 +36,7 @@ const AppNavigator: React.FC = () => {
   useEffect(() => {
     setNotificationAmount(
       notification.length > 0
-        ? notification.map(n => n.seen === true).length
+        ? notification.filter(n => n.seen === false).length
         : 0,
     );
   }, [notification]);

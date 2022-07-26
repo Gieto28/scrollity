@@ -36,8 +36,8 @@ const NotificationCardComponent: React.FC<Props> = ({
   const {getNotifications} = useAuth();
 
   const handleSeen = () => {
-    updateNotification(notification_id);
-    getNotifications();
+    !seen && updateNotification(notification_id);
+    !seen && getNotifications();
   };
 
   return (

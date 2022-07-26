@@ -1,17 +1,33 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
+import {RefreshControl} from 'react-native';
 import {NotificationCardComponent} from '../../components';
-import {useAuth} from '../../context';
+import {useApp, useAuth} from '../../context';
 import {NotificationModel} from '../../models';
 import {NoContentText, NoContentView} from '../../styles/GlobalStyle';
 import {ViewScroll} from './Styled.NotificationsScreen';
 
 const NotificationsScreen = () => {
-  const {user, notification} = useAuth();
+  const {user, notification, getNotifications, loadingNotifications} =
+    useAuth();
+  const {theme} = useApp();
   const {t} = useTranslation();
 
+  const onRefresh = () => {
+    getNotifications();
+  };
+
   return (
-    <ViewScroll>
+    <ViewScroll
+      refreshControl={
+        <RefreshControl
+          refreshing={loadingNotifications}
+          onRefresh={onRefresh}
+          colors={[theme.screen.secondaryColor]}
+          tintColor={theme.screen.secondaryColor}
+          progressViewOffset={300}
+        />
+      }>
       {notification.length > 0 ? (
         notification.map((n: NotificationModel, i: number) => (
           <NotificationCardComponent
