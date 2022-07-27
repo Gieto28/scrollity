@@ -8,9 +8,9 @@ import {NoContentText, NoContentView} from '../../styles/GlobalStyle';
 import {ViewScroll} from './Styled.NotificationsScreen';
 
 const NotificationsScreen = () => {
-  const {user, notification, getNotifications, loadingNotifications} =
-    useAuth();
-  const {theme} = useApp();
+  const {user} = useAuth();
+  const {theme, notification, getNotifications, loadingNotifications} =
+    useApp();
   const {t} = useTranslation();
 
   const onRefresh = () => {

@@ -4,7 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavIconComponent} from '../../components';
 import HomeScreenStack from './HomeScreenStack';
 import ProfileScreenStack from './ProfileScreenStack';
-import {useApp, useAuth} from '../../context';
+import {useApp} from '../../context';
 import {AppStackParams} from '../../models';
 
 const App = createBottomTabNavigator<AppStackParams>();
@@ -14,8 +14,7 @@ const App = createBottomTabNavigator<AppStackParams>();
  * @returns navigator with 3 main screens, HomeScreenStack, ProfileScreenStack and NotificationsScreen
  */
 const AppNavigator: React.FC = () => {
-  const {theme} = useApp();
-  const {notification} = useAuth();
+  const {theme, notification} = useApp();
 
   const [notificationAmount, setNotificationAmount] = useState<number>(
     notification.length > 0 ? notification.map(n => n.seen === true).length : 0,

@@ -5,19 +5,12 @@ import {
   FormSignInModel,
   FormSignUpModel,
   JwtDecodedModel,
-  NotificationModel,
   ReactChildrenProps,
   TokenResponse,
   UserModel,
 } from '../models';
 import AsyncStorage from '@react-native-community/async-storage';
-import {
-  api,
-  getProfileAxios,
-  getUserNotifications,
-  signInAxios,
-  signUpAxios,
-} from '../services';
+import {api, getProfileAxios, signInAxios, signUpAxios} from '../services';
 import jwt_decode from 'jwt-decode';
 import {updateProfileAxios} from '../services';
 import OneSignal from 'react-native-onesignal';
@@ -37,9 +30,6 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   const [userId, setUserId] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [loadingNotifications, setLoadingNotifications] =
-    useState<boolean>(false);
-  const [notification, setNotifications] = useState<NotificationModel[]>([]);
 
   useEffect(() => {
     const loadStorageData = async () => {
@@ -64,22 +54,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
     };
 
     loadStorageData();
-    getNotifications();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const getNotifications = async () => {
-    try {
-      setLoadingNotifications(true);
-      const storedId: string | null = await AsyncStorage.getItem('userId');
-      const res: NotificationModel[] = await getUserNotifications(storedId);
-      setNotifications(res);
-      console.log('res', res);
-    } catch (e: any) {
-      throw new Error(e.message);
-    }
-    setLoadingNotifications(false);
-  };
 
   const signIn = async (data: FormSignInModel): Promise<void> => {
     const {email, password} = data;
@@ -102,7 +77,6 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       setToken(res.token);
       setUser(currentUser);
       setUserId(currentUser._id);
-      getNotifications();
     } catch (e: any) {
       throw new Error(e.message);
     }
@@ -135,7 +109,6 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       setToken(res.token);
       setUser(currentUser);
       setUserId(currentUser._id);
-      getNotifications();
     } catch (e) {
       throw new Error('Found an error while signing up');
     }
@@ -207,9 +180,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
         user,
         userId,
         loading,
-        loadingNotifications,
         token,
-        notification,
 
         // functions
         signIn,
@@ -217,7 +188,6 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
         updateProfile,
         getUser,
         signOut,
-        getNotifications,
       }}>
       {children}
     </AuthContext.Provider>

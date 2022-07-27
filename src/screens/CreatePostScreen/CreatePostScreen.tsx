@@ -23,7 +23,7 @@ import {
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import {Dimensions, ImageSourcePropType} from 'react-native';
-import {useApp, useAuth} from '../../context';
+import {useApp} from '../../context';
 import SelectDropdown from 'react-native-select-dropdown';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {v4 as uuid} from 'uuid';
@@ -47,8 +47,7 @@ import {createPostAxios, uploadFileAxios} from '../../services';
  * @returns a screen which it's only purpose is to show the user a form to create a new post
  */
 const CreatePostScreen: React.FC = () => {
-  const {theme, changeLang} = useApp();
-  const {getNotifications} = useAuth();
+  const {theme, changeLang, getNotifications} = useApp();
   const navigation = useNavigation();
   const {t, i18n} = useTranslation();
 

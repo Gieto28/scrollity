@@ -1,9 +1,14 @@
 import React, {createContext, useEffect, useState} from 'react';
-import {AppContextModel, ReactChildrenProps} from '../models';
+import {
+  AppContextModel,
+  NotificationModel,
+  ReactChildrenProps,
+} from '../models';
 import AsyncStorage from '@react-native-community/async-storage';
 import {darkTheme, lightTheme, ThemeProps} from '../styles/theme';
 import {ColorSchemeName, useColorScheme} from 'react-native';
 import {useTranslation} from 'react-i18next';
+import {getUserNotifications} from '../services';
 
 export const AppContext: React.Context<AppContextModel> =
   createContext<AppContextModel>({} as AppContextModel);
@@ -18,6 +23,9 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
   const lang = i18n.language;
   const deviceTheme: ColorSchemeName = useColorScheme();
   const [theme, setTheme] = useState<ThemeProps>(lightTheme);
+  const [notification, setNotifications] = useState<NotificationModel[]>([]);
+  const [loadingNotifications, setLoadingNotifications] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const checkAppConfiguration = async (): Promise<ThemeProps | undefined> => {
@@ -58,10 +66,24 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
       return;
     };
 
+    getNotifications();
     checkAppConfiguration();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getNotifications = async () => {
+    try {
+      setLoadingNotifications(true);
+      const storedId: string | null = await AsyncStorage.getItem('userId');
+      const res: NotificationModel[] = await getUserNotifications(storedId);
+      setNotifications(res);
+      console.log('res', res);
+    } catch (e: any) {
+      throw new Error(e.message);
+    }
+    setLoadingNotifications(false);
+  };
 
   const changeTheme = async (): Promise<void> => {
     const currentTheme: string | null = await AsyncStorage.getItem('theme');
@@ -99,9 +121,12 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
         //states
         theme,
         changeLang,
+        loadingNotifications,
+        notification,
 
         //functions
         changeTheme,
+        getNotifications,
       }}>
       {children}
     </AppContext.Provider>
