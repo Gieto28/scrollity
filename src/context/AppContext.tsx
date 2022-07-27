@@ -35,9 +35,6 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
       if (!checkIfAsyncStorageHasTheme) {
         deviceTheme === 'light' ? setTheme(lightTheme) : null;
         deviceTheme === 'dark' ? setTheme(darkTheme) : null;
-        if (deviceTheme === undefined || null) {
-          setTheme(darkTheme);
-        }
         await AsyncStorage.setItem('theme', theme.key);
         return theme;
       }
