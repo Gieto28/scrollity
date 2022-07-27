@@ -21,14 +21,14 @@ interface ButtonProps extends TouchableOpacityProps {
 
 const HomeScreenWrapper = styled.View<PropsView>`
   min-height: 100%;
-  background-color: ${props => props.theme.screen.primaryColor};
+  /* background-color: ${props => props.theme.screen.primaryColor}; */
 `;
 
 const HomeContentView = styled.View<PropsView>`
   flex: 1;
   display: flex;
   justify-content: center;
-  background-color: ${props => props.theme.screen.primaryColor};
+  /* background-color: ${props => props.theme.screen.primaryColor}; */
 `;
 
 const HomeLabel = styled.Text<PropsText>`
@@ -45,7 +45,7 @@ const LabelWrapper = styled.View<PropsView>`
 `;
 
 const SearchView = styled.View<PropsView>`
-  background-color: ${props => props.theme.screen.primaryColor};
+  /* background-color: ${props => props.theme.screen.primaryColor}; */
   margin: 0 15px 24px 15px;
   flex: 1;
 `;

@@ -59,7 +59,7 @@ const AppView = styled.View<PropsView>`
   flex: 1;
   display: flex;
   justify-content: center;
-  background-color: ${props => props.theme.fonts.colors.secondary};
+  background-color: ${props => props.theme.screen.primaryColor};
 `;
 
 const StyledView = styled.View<PropsView>`

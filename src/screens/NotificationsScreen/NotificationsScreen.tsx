@@ -1,4 +1,5 @@
-import React from 'react';
+import {useIsFocused} from '@react-navigation/native';
+import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {RefreshControl} from 'react-native';
 import {NotificationCardComponent} from '../../components';
@@ -12,6 +13,13 @@ const NotificationsScreen = () => {
     useAuth();
   const {theme} = useApp();
   const {t} = useTranslation();
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    onRefresh();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFocused]);
 
   const onRefresh = () => {
     getNotifications();

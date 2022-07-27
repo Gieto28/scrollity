@@ -112,9 +112,9 @@ const RenderPosts = styled.View<PropsView>`
 const ProfileMediaOptionsText = styled.Text<PropsText>`
   color: ${props => props.theme.screen.text};
 `;
-const ProfileMediaWrapper = styled.View`
+const ProfileMediaWrapper = styled.View<PropsView>`
   display: flex;
-
+  background-color: ${props => props.theme.screen.background};
   margin: 15px;
 `;
 

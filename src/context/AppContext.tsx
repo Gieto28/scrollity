@@ -54,8 +54,6 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
           await AsyncStorage.setItem('lang', 'en');
           break;
       }
-
-      return;
     };
 
     checkAppConfiguration();

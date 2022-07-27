@@ -69,12 +69,11 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
   }, []);
 
   const getNotifications = async () => {
+    setLoadingNotifications(true);
     try {
-      setLoadingNotifications(true);
       const storedId: string | null = await AsyncStorage.getItem('userId');
       const res: NotificationModel[] = await getUserNotifications(storedId);
       setNotifications(res);
-      console.log('res', res);
     } catch (e: any) {
       throw new Error(e.message);
     }
