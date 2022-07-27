@@ -7,12 +7,6 @@ import {
 import styled from 'styled-components/native';
 import {ThemeProps} from '../../styles/theme';
 
-// interface Zacarias {
-//   theme: ThemeProps;
-// }
-
-// type PropsImage = ImageProps | Zacarias;
-
 interface PropsImage extends ImageProps {
   theme: ThemeProps;
 }

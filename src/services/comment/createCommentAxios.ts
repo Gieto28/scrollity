@@ -23,14 +23,11 @@ const createCommentAxios = async (
     throw new Error('user null');
   }
   try {
-    const res: AxiosResponse<SuccessResponse> = await api.post<SuccessResponse>(
-      COMMENT_CREATE,
-      {
-        user_id,
-        post_id,
-        comment,
-      },
-    );
+    const res: AxiosResponse<SuccessResponse> = await api.post(COMMENT_CREATE, {
+      user_id,
+      post_id,
+      comment,
+    });
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

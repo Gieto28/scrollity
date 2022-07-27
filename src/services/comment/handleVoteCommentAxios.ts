@@ -16,14 +16,11 @@ const handleVoteCommentAxios = async (
   user_id: string | null,
 ): Promise<SuccessResponse | undefined> => {
   try {
-    const res: AxiosResponse<SuccessResponse> = await api.post<SuccessResponse>(
-      COMMENT_VOTE,
-      {
-        vote,
-        comment_id,
-        user_id,
-      },
-    );
+    const res: AxiosResponse<SuccessResponse> = await api.post(COMMENT_VOTE, {
+      vote,
+      comment_id,
+      user_id,
+    });
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

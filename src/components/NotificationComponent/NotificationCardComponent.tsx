@@ -1,5 +1,5 @@
 import React from 'react';
-import {useApp, useAuth} from '../../context';
+import {useApp} from '../../context';
 import {updateNotification} from '../../services';
 
 // defining props type to be used in notification
@@ -32,8 +32,7 @@ const NotificationCardComponent: React.FC<Props> = ({
   body,
   seen,
 }) => {
-  const {theme} = useApp();
-  const {getNotifications} = useAuth();
+  const {theme, getNotifications} = useApp();
 
   const handleSeen = () => {
     !seen && updateNotification(notification_id);

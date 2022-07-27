@@ -9,9 +9,7 @@ const getUserNotifications = async (
   try {
     const path: string = `${NOTIFICATIONS_GET_USER}${user_id}`;
 
-    const res: AxiosResponse<NotificationModel[]> = await api.get<
-      NotificationModel[]
-    >(path);
+    const res: AxiosResponse<NotificationModel[]> = await api.get(path);
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

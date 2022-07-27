@@ -1,6 +1,7 @@
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {PROFILE_GET_POSTS} from '../../../env';
+import {PostModel, ProfilePostModel} from '../../models';
 
 /**
  *
@@ -11,9 +12,9 @@ import {PROFILE_GET_POSTS} from '../../../env';
 const getProfilePostsAxios = async (
   user_id: string | null,
   option: string,
-): Promise<any> => {
+): Promise<ProfilePostModel | PostModel> => {
   try {
-    const res: AxiosResponse<any> = await api.get<any>(
+    const res: AxiosResponse<ProfilePostModel | PostModel> = await api.get(
       `${PROFILE_GET_POSTS}${user_id}/${option}`,
     );
     return res.data;

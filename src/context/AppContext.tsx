@@ -35,31 +35,31 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
       if (!checkIfAsyncStorageHasTheme) {
         deviceTheme === 'light' ? setTheme(lightTheme) : null;
         deviceTheme === 'dark' ? setTheme(darkTheme) : null;
-        await AsyncStorage.setItem('theme', theme!.key);
+        if (deviceTheme === undefined || null) {
+          setTheme(darkTheme);
+        }
+        await AsyncStorage.setItem('theme', theme.key);
         return theme;
       }
 
       if (checkIfAsyncStorageHasTheme) {
-        checkIfAsyncStorageHasTheme === 'light' ? setTheme(lightTheme) : null;
-        checkIfAsyncStorageHasTheme === 'dark' ? setTheme(darkTheme) : null;
+        checkIfAsyncStorageHasTheme === 'light' && setTheme(lightTheme);
+        checkIfAsyncStorageHasTheme === 'dark' && setTheme(darkTheme);
       }
 
       const storedLang: string | null = await AsyncStorage.getItem('lang');
 
       switch (storedLang) {
         case 'en':
-          i18n.changeLanguage('en');
-          await AsyncStorage.setItem('lang', 'en');
+          setEn();
           break;
 
         case 'pt':
-          i18n.changeLanguage('pt');
-          await AsyncStorage.setItem('lang', 'pt');
+          setPt();
           break;
 
         default:
-          i18n.changeLanguage('en');
-          await AsyncStorage.setItem('lang', 'en');
+          setEn();
           break;
       }
     };
@@ -76,7 +76,6 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
       const storedId: string | null = await AsyncStorage.getItem('userId');
       const res: NotificationModel[] = await getUserNotifications(storedId);
       setNotifications(res);
-      console.log('res', res);
     } catch (e: any) {
       throw new Error(e.message);
     }
@@ -102,15 +101,23 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
   const changeLang = async () => {
     switch (lang) {
       case 'pt':
-        i18n.changeLanguage('en');
-        await AsyncStorage.setItem('lang', 'en');
+        setEn();
         break;
 
       case 'en':
-        i18n.changeLanguage('pt');
-        await AsyncStorage.setItem('lang', 'pt');
+        setPt();
         break;
     }
+  };
+
+  const setEn = async () => {
+    i18n.changeLanguage('en');
+    await AsyncStorage.setItem('lang', 'en');
+  };
+
+  const setPt = async () => {
+    i18n.changeLanguage('pt');
+    await AsyncStorage.setItem('lang', 'pt');
   };
 
   return (

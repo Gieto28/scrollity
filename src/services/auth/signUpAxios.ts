@@ -18,15 +18,12 @@ const signUpAxios = async (
   passwordConfirmation: string,
 ): Promise<TokenResponse> => {
   try {
-    const res: AxiosResponse<TokenResponse> = await api.post<TokenResponse>(
-      AUTH_REGISTER,
-      {
-        name,
-        email,
-        password,
-        passwordConfirmation,
-      },
-    );
+    const res: AxiosResponse<TokenResponse> = await api.post(AUTH_REGISTER, {
+      name,
+      email,
+      password,
+      passwordConfirmation,
+    });
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

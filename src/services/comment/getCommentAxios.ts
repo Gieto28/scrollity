@@ -13,7 +13,7 @@ import {COMMENT_GET} from '../../../env';
 const getCommentAxios = async (id: number): Promise<CommentModel> => {
   try {
     const path: string = `${COMMENT_GET}${id}`;
-    const res: AxiosResponse<CommentModel> = await api.get<CommentModel>(path);
+    const res: AxiosResponse<CommentModel> = await api.get(path);
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

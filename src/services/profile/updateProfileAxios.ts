@@ -17,15 +17,12 @@ const updateProfileAxios = async (
   passwordConfirmation: string | null,
 ): Promise<TokenResponse> => {
   try {
-    const res: AxiosResponse<TokenResponse> = await api.post<TokenResponse>(
-      PROFILE_UPDATE,
-      {
-        user_id,
-        name,
-        password,
-        passwordConfirmation,
-      },
-    );
+    const res: AxiosResponse<TokenResponse> = await api.post(PROFILE_UPDATE, {
+      user_id,
+      name,
+      password,
+      passwordConfirmation,
+    });
     return res.data;
   } catch (e) {
     throw new Error('Error while updating profile');

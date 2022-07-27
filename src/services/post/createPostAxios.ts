@@ -1,5 +1,4 @@
 import {AxiosResponse} from 'axios';
-import OneSignal from 'react-native-onesignal';
 import {api} from '..';
 import {POST_CREATE} from '../../../env';
 import {SuccessResponse} from '../../models';
@@ -27,16 +26,13 @@ const createPostAxios = async (
   }
 
   try {
-    const res: AxiosResponse<SuccessResponse> = await api.post<SuccessResponse>(
-      POST_CREATE,
-      {
-        user_id,
-        title,
-        description,
-        media_id,
-        category,
-      },
-    );
+    const res: AxiosResponse<SuccessResponse> = await api.post(POST_CREATE, {
+      user_id,
+      title,
+      description,
+      media_id,
+      category,
+    });
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

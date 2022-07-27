@@ -92,7 +92,6 @@ const ProfilePostsWrapper = styled.View`
 `;
 
 const ProfileScroll = styled.ScrollView<ScrollProps>`
-  background-color: ${props => props.theme.screen.primaryColor};
   margin-bottom: 180px;
 `;
 
@@ -105,7 +104,6 @@ const ProfileOptionsButton = styled.TouchableOpacity<ButtonProps>`
 `;
 
 const RenderPosts = styled.View<PropsView>`
-  background-color: ${props => props.theme.screen.primaryColor};
   min-height: 100%;
 `;
 

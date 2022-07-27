@@ -17,8 +17,7 @@ const getAllPostsAxios = async (
 ): Promise<AllPostsResponse> => {
   try {
     const path: string = `${POST_GET_ALL}${category}/${limit}/${skip}`;
-    const res: AxiosResponse<AllPostsResponse> =
-      await api.get<AllPostsResponse>(path);
+    const res: AxiosResponse<AllPostsResponse> = await api.get(path);
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

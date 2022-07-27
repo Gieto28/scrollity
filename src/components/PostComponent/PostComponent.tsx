@@ -218,11 +218,11 @@ const PostComponent: React.FC<Props> = ({postObject, IconToCommentsScreen}) => {
             </PostMediaWrapper>
           )}
 
-          {description ? (
+          {description && (
             <PostDescriptionWrapper>
               <PostDescription>{description}</PostDescription>
             </PostDescriptionWrapper>
-          ) : null}
+          )}
         </PostBody>
         <PostFooter
           style={{

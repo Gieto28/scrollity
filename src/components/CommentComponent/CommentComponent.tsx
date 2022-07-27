@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ImageSourcePropType} from 'react-native';
 import {useApp, useAuth} from '../../context';
-import {CommentModel} from '../../models';
+import {CommentModel, GetUserVote} from '../../models';
 import getCommentAxios from '../../services/comment/getCommentAxios';
 import getUserVoteCommentsAxios from '../../services/comment/getUserVoteCommentsAxios';
 import handleVoteCommentAxios from '../../services/comment/handleVoteCommentAxios';
@@ -34,12 +34,12 @@ const CommentComponent: React.FC<Props> = ({commentObj}) => {
   const {theme} = useApp();
   const {userId} = useAuth();
 
-  const placeholder = require('../../assets/Images/profile-Placeholder.png');
   const {_id, comment, dateCreated, up_votes, down_votes, user} = commentObj;
+  const placeholder = require('../../assets/Images/profile-Placeholder.png');
 
   const [waitingVote, setWaitingVote] = useState<boolean>(false);
-  const [updateComment, setUpdateComment] = useState<any>();
-  const [userVote, setUserVote] = useState<any | null>();
+  const [updateComment, setUpdateComment] = useState<CommentModel>();
+  const [userVote, setUserVote] = useState<GetUserVote>();
 
   const upVoteIcon: ImageSourcePropType = theme.bool
     ? require('../../assets/Images/arrow-24-upvote-dark.png')
@@ -60,8 +60,11 @@ const CommentComponent: React.FC<Props> = ({commentObj}) => {
   useEffect(() => {
     const checkUserLikes = async () => {
       try {
-        const user_vote = await getUserVoteCommentsAxios(_id, userId);
-        setUserVote(user_vote.data);
+        const user_vote: GetUserVote = await getUserVoteCommentsAxios(
+          _id,
+          userId,
+        );
+        setUserVote(user_vote);
       } catch (e: any) {
         throw new Error(e.message);
       }
@@ -80,7 +83,7 @@ const CommentComponent: React.FC<Props> = ({commentObj}) => {
       }
 
       await handleVoteCommentAxios(vote, comment_id, userId!);
-      const post = await getCommentAxios(_id);
+      const post: CommentModel = await getCommentAxios(_id);
       setUpdateComment(post);
     } catch (e: any) {
       throw new Error(e.message);
@@ -110,7 +113,7 @@ const CommentComponent: React.FC<Props> = ({commentObj}) => {
               disabled={waitingVote}
               onPress={() => handleVote(1, _id)}>
               <UpVoteIcon
-                source={userVote?.vote === 1 ? activeUpvote : upVoteIcon}
+                source={userVote?.data?.vote === 1 ? activeUpvote : upVoteIcon}
                 accessibilityLabel="Up vote Icon"
               />
             </VoteButton>
@@ -121,7 +124,9 @@ const CommentComponent: React.FC<Props> = ({commentObj}) => {
               disabled={waitingVote}
               onPress={() => handleVote(0, _id)}>
               <UpVoteIcon
-                source={userVote?.vote === 0 ? activeDownvote : downVoteIcon}
+                source={
+                  userVote?.data?.vote === 0 ? activeDownvote : downVoteIcon
+                }
                 accessibilityLabel="Down vote Icon"
               />
             </VoteButton>

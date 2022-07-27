@@ -16,14 +16,11 @@ const handleVoteAxios = async (
   user_id: string | null,
 ): Promise<SuccessResponse | undefined> => {
   try {
-    const res: AxiosResponse<SuccessResponse> = await api.post<SuccessResponse>(
-      POST_VOTE,
-      {
-        vote,
-        post_id,
-        user_id,
-      },
-    );
+    const res: AxiosResponse<SuccessResponse> = await api.post(POST_VOTE, {
+      vote,
+      post_id,
+      user_id,
+    });
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

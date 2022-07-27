@@ -14,7 +14,6 @@ interface Props {
 
 /**
  *
- * Scalable component to be used anywhere, simple to add functionality and customization
  *
  * @param { string } name
  * @param { function } onPress **used to handle the functions on click**

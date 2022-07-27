@@ -10,9 +10,7 @@ import {PROFILE_GET} from '../../../env';
  */
 const getProfileAxios = async (id: string): Promise<UserModel> => {
   try {
-    const res: AxiosResponse<UserModel> = await api.get<UserModel>(
-      `${PROFILE_GET}${id}`,
-    );
+    const res: AxiosResponse<UserModel> = await api.get(`${PROFILE_GET}${id}`);
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

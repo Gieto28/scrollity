@@ -13,7 +13,7 @@ import {POST_GET_BY_TITLE} from '../../../env';
 const getPostByTitleAxios = async (title: string): Promise<PostModel[]> => {
   try {
     const path: string = `${POST_GET_BY_TITLE}${title}`;
-    const res: AxiosResponse<PostModel[]> = await api.get<PostModel[]>(path);
+    const res: AxiosResponse<PostModel[]> = await api.get(path);
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

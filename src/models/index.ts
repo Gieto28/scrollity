@@ -39,6 +39,7 @@ import PostModel from './Models/PostModel';
 import UserModel from './Models/UserModel';
 import CommentModel from './Models/CommentModel';
 import NotificationModel from './Models/NotificationModel';
+import ProfilePostModel from './Models/ProfilePostsModel';
 //Props
 import ReactChildrenProps from './Context/ReactChildProps';
 
@@ -86,6 +87,7 @@ export type {
   PostModel,
   UserModel,
   CommentModel,
+  ProfilePostModel,
   //Props
   ReactChildrenProps,
 };

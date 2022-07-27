@@ -18,7 +18,7 @@ const getUserVoteCommentAxios = async (
 ): Promise<GetUserVote> => {
   try {
     const path: string = `${COMMENT_CHECK_USER_VOTES}${comment_id}/${user_id}`;
-    const res: AxiosResponse<GetUserVote> = await api.post<GetUserVote>(path);
+    const res: AxiosResponse<GetUserVote> = await api.post(path);
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);

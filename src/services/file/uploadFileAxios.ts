@@ -27,7 +27,7 @@ const uploadFileAxios = async (
   formData.append('media', media);
 
   try {
-    const res: AxiosResponse<SuccessResponse> = await api.post<SuccessResponse>(
+    const res: AxiosResponse<SuccessResponse> = await api.post(
       FILE_UPLOAD,
       formData,
       {

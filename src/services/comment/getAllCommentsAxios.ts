@@ -15,8 +15,7 @@ const getAllCommentsAxios = async (
 ): Promise<AllCommentsResponse> => {
   try {
     const path = `${COMMENT_GET_ALL}${post_id}`;
-    const res: AxiosResponse<AllCommentsResponse> =
-      await api.get<AllCommentsResponse>(path);
+    const res: AxiosResponse<AllCommentsResponse> = await api.get(path);
     return res.data;
   } catch (e: any) {
     throw new Error(e.message);
