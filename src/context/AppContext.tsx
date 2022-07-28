@@ -72,7 +72,6 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
     try {
       setLoadingNotifications(true);
       const storedId: string | null = await AsyncStorage.getItem('userId');
-      console.log(storedId);
       const res: NotificationModel[] = await getUserNotifications(storedId);
       setNotifications(res);
     } catch (e: any) {
