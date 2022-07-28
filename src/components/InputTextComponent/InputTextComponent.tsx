@@ -67,10 +67,6 @@ const InputTextComponent: React.FC<Props> = ({
 }) => {
   const {theme} = useApp();
 
-  const borderColor = theme.bool ? '#fcf7fc' : '#262626';
-
-  // {height: 100, textAlignVertical: 'top'}
-
   const iconStyles = {
     marginTop: label ? 16 : 0,
     marginRight: 5,
@@ -88,7 +84,7 @@ const InputTextComponent: React.FC<Props> = ({
           <Input
             // eslint-disable-next-line react-native/no-inline-styles
             style={{
-              borderColor: errors?.message ? '#e63225' : borderColor,
+              borderColor: errors?.message ? '#e63225' : theme.screen.text,
               borderWidth: errors?.message ? 2 : 1,
               textAlignVertical: multiline ? 'top' : 'center',
             }}

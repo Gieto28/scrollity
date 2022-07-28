@@ -33,8 +33,9 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
         await AsyncStorage.getItem('theme');
 
       if (!checkIfAsyncStorageHasTheme) {
-        deviceTheme === 'light' ? setTheme(lightTheme) : null;
-        deviceTheme === 'dark' ? setTheme(darkTheme) : null;
+        deviceTheme === 'light' && setTheme(lightTheme);
+        deviceTheme === 'dark' && setTheme(darkTheme);
+        deviceTheme === undefined || null ? setTheme(darkTheme) : null;
         await AsyncStorage.setItem('theme', theme.key);
         return theme;
       }
@@ -71,6 +72,7 @@ const AppProvider: React.FC<ReactChildrenProps> = ({children}) => {
     try {
       setLoadingNotifications(true);
       const storedId: string | null = await AsyncStorage.getItem('userId');
+      console.log(storedId);
       const res: NotificationModel[] = await getUserNotifications(storedId);
       setNotifications(res);
     } catch (e: any) {
