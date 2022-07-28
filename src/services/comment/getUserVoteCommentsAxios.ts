@@ -8,9 +8,9 @@ import {COMMENT_CHECK_USER_VOTES} from '../../../env';
  *
  * responsible for getting the value of the vote
  *
- * @param comment_id the id of the post
+ * @param comment_id the id of the comment
  * @param user_id the id of the user
- * @returns a value, either 0 or 1, 0 being dislike and 1 being like
+ * @returns the user vote
  */
 const getUserVoteCommentAxios = async (
   comment_id: number,

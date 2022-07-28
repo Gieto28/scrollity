@@ -3,6 +3,11 @@ import {NOTIFICATIONS_GET_USER} from '../../../env';
 import {NotificationModel} from '../../models';
 import api from '../auth/api';
 
+/**
+ *
+ * @param user_id get user notifications
+ * @returns notificationsModel
+ */
 const getUserNotifications = async (
   user_id: string | null,
 ): Promise<NotificationModel[]> => {

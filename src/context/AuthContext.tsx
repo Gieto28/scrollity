@@ -101,7 +101,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       api.defaults.headers.common.Authorization = `Bearer ${res.token}`;
 
       await AsyncStorage.setItem('token', res.token);
-      const currentUser = await getUser(decoded._id.toString());
+      const currentUser: UserModel = await getUser(decoded._id.toString());
 
       OneSignal.setExternalUserId(currentUser._id.toString());
       await AsyncStorage.setItem('userId', currentUser._id.toString());
@@ -144,7 +144,7 @@ const AuthProvider: React.FC<ReactChildrenProps> = ({children}) => {
       api.defaults.headers.common.Authorization = `Bearer ${res.token}`;
       await AsyncStorage.setItem('token', res.token);
 
-      const currentUser = await getUser(decoded._id.toString());
+      const currentUser: UserModel = await getUser(decoded._id.toString());
 
       await AsyncStorage.setItem('user', JSON.stringify(currentUser));
       setToken(res.token);

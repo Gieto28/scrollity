@@ -4,15 +4,11 @@ import {COMMENT_CREATE} from '../../../env';
 import {SuccessResponse} from '../../models';
 
 /**
- * After using image native picker to get the image information I call this method and send all of the form information through it.To be able to get the image on the node server I have to send content-type: multipart/form-data through the headers and send the information through a new FormData object with the following keys and values:
  *
- * @param user_id user_id being retrieved from the form
- * @param title post title being retrieved from the form
- * @param description post description being retrieved from the form
- * @param media_id media URI being retrieved from the form
- * @param mediaType media type being retrieved from the form
- * @param category category being retrieved from the form
- * @returns res.data which should be upload: success or if error should catch and show error message
+ * @param user_id user id of the user who created the comment
+ * @param post_id id of the post it belongs to
+ * @param comment comment being retrieved from the form
+ * @returns success response
  */
 const createCommentAxios = async (
   user_id: string | undefined,

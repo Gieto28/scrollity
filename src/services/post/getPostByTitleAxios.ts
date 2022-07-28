@@ -5,9 +5,9 @@ import {POST_GET_BY_TITLE} from '../../../env';
 
 /**
  *
- * responsible for getting one single post based on the id
+ * responsible for getting one single post based on the title
  *
- * @param id the id of the post
+ * @param title title of the post we want to find
  * @returns a post
  */
 const getPostByTitleAxios = async (title: string): Promise<PostModel[]> => {

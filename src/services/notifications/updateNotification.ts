@@ -3,6 +3,11 @@ import {NOTIFICATION_UPDATE} from '../../../env';
 import {SuccessResponse} from '../../models';
 import api from '../auth/api';
 
+/**
+ *
+ * @param notification_id notification id that is used to update the notification
+ * @returns success response
+ */
 const updateNotification = async (
   notification_id: number,
 ): Promise<SuccessResponse> => {

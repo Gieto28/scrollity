@@ -6,7 +6,8 @@ import {POST_GET_ALL} from '../../../env';
 /**
  *
  * responsible for getting all of the posts based on the category currently selected
- *
+ * @param limit limit of posts to get
+ * @param skip skips an amount of posts
  * @param category category chosen by user in the home screen, when page load, useEffect will dispatch and call the default category which is "Top"
  * @returns
  */

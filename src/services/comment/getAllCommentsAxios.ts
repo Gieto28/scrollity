@@ -1,4 +1,3 @@
-// import {AxiosResponse} from 'axios';
 import {AxiosResponse} from 'axios';
 import {api} from '..';
 import {AllCommentsResponse} from '../../models';
@@ -6,9 +5,8 @@ import {COMMENT_GET_ALL} from '../../../env';
 
 /**
  *
- * responsible for getting all of the comments
- *
- * @returns
+ * @post_id Post id used to get all comments of that post
+ * @returns comments model
  */
 const getAllCommentsAxios = async (
   post_id: number,

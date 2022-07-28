@@ -4,7 +4,7 @@ import {TokenResponse} from '../../models';
 import {PROFILE_UPDATE} from '../../../env';
 
 /**
- *
+ * @param user_id user id to be updated
  * @param name name being retrieved from the update form
  * @param password password being retrieved from the update form
  * @param passwordConfirmation password confirmation being retrieved from the update form
